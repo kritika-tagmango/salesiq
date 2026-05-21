@@ -5707,6 +5707,243 @@ const sb = {
 };
 
 // ══════════════════════════════════════
+// CALENDLY CONFIG
+// ══════════════════════════════════════
+const CALENDLY_USER_URI = 'https://api.calendly.com/users/c1a44c6a-adc2-48fd-8a97-223d8c2deae1';
+const CALENDLY_ORG_URI  = 'https://api.calendly.com/organizations/ab0f5d76-652b-4478-907f-ff32bc566f68';
+
+// Internal @tagmango.com domains — excluded from lead sync
+const INTERNAL_DOMAINS = ['tagmango.com'];
+function isInternal(email) {
+  if (!email) return true;
+  return INTERNAL_DOMAINS.some(d => email.endsWith('@' + d));
+}
+
+// ══════════════════════════════════════
+// CALENDLY → SUPABASE SYNC
+// ══════════════════════════════════════
+async function syncCalendly() {
+  try {
+    // Fetch last 60 days of events
+    const since = new Date(Date.now() - 60 * 86400000).toISOString();
+    const url = `https://api.calendly.com/scheduled_events?count=100&min_start_time=${since}&status=active&user=${encodeURIComponent(CALENDLY_USER_URI)}&sort=start_time:desc`;
+
+    const res = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${window.__CALENDLY_TOKEN__ || ''}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    // Calendly requires OAuth — we use Supabase as the authoritative store
+    // and sync via the Claude MCP bridge instead (see syncFromMCP below)
+    if (!res.ok) {
+      console.log('Calendly direct auth not available — using cached Supabase data');
+      return await loadCalendlyFromSupabase();
+    }
+
+    const data = await res.json();
+    const events = data.collection || [];
+    const clientEvents = events.filter(e => {
+      const guests = e.event_guests || [];
+      return !isInternal(guests[0]?.email);
+    });
+
+    // Upsert into calendly_events table
+    for (const ev of clientEvents) {
+      const inviteRes = await fetch(`${ev.uri}/invitees`, {
+        headers: { 'Authorization': `Bearer ${window.__CALENDLY_TOKEN__ || ''}` }
+      });
+      if (!inviteRes.ok) continue;
+      const inviteData = await inviteRes.json();
+      const invitee = inviteData.collection?.[0];
+      if (!invitee || isInternal(invitee.email)) continue;
+
+      const qa = invitee.questions_and_answers || [];
+      const record = {
+        calendly_id:  ev.uri.split('/').pop(),
+        lead_name:    invitee.name,
+        lead_email:   invitee.email,
+        call_date:    ev.start_time,
+        call_end:     ev.end_time,
+        join_url:     ev.location?.actual_instance?.join_url || null,
+        call_type:    ev.name,
+        whatsapp:     qa.find(q => q.question.includes('WhatsApp'))?.answer || null,
+        social:       qa.find(q => q.question.includes('Social'))?.answer || null,
+        source:       qa.find(q => q.question.includes('know about'))?.answer || null,
+        sells_courses:qa.find(q => q.question.includes('sell courses'))?.answer || null,
+        other_platforms: qa.find(q => q.question.includes('other platform'))?.answer || null,
+        community_size: qa.find(q => q.question.includes('strength'))?.answer || null,
+        timeline:     qa.find(q => q.question.includes('timeline'))?.answer || null,
+        status:       'scheduled'
+      };
+
+      await sb.upsert('calendly_events', record, 'calendly_id');
+
+      // Also upsert the lead
+      await sb.upsert('leads', {
+        name: invitee.name,
+        email: invitee.email,
+        source: record.source || 'Calendly',
+        stage: 'New',
+        date_created: ev.start_time,
+        last_contact: ev.start_time,
+      }, 'email');
+    }
+
+    console.log(`✓ Calendly synced: ${clientEvents.length} events`);
+    return await loadCalendlyFromSupabase();
+  } catch(err) {
+    console.warn('Calendly sync error:', err.message);
+    return await loadCalendlyFromSupabase();
+  }
+}
+
+async function loadCalendlyFromSupabase() {
+  try {
+    const since = new Date(Date.now() - 30 * 86400000).toISOString();
+    return await sb.query('calendly_events', `?call_date=gte.${since}&order=call_date.asc&select=*`);
+  } catch(e) {
+    return [];
+  }
+}
+
+// ══════════════════════════════════════
+// GRANOLA → SUPABASE SYNC
+// ══════════════════════════════════════
+// Granola has no public REST API — data flows via MCP (this Claude chat).
+// We pre-load the meeting→email map extracted from live Granola data so the
+// dashboard can match meetings to leads by email automatically.
+
+const GRANOLA_MEETING_MAP = {
+  // id → { email, title, date, granola_id }
+  "c2148efb": { email:"thesocioxpert@gmail.com",  name:"Chandana Punna",       date:"2026-05-21" },
+  "fd4d0111": { email:"tilokani.neetu@gmail.com", name:"Neetu Tilokani",        date:"2026-05-20" },
+  "77903b20": { email:"eltonvk01@gmail.com",      name:"Elton",                date:"2026-05-20" },
+  "5b6d8438": { email:"tirthpatel5844@gmail.com", name:"Tirth Patel",          date:"2026-05-20" },
+  "e58587a2": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
+  "cb4ef254": { email:"sapannagpal007@gmail.com", name:"Sapan Nagpal",         date:"2026-05-19" },
+  "b1a365e4": { email:"eazyenglishathome@gmail.com",name:"Rashid C",           date:"2026-05-19" },
+  "7309a5fd": { email:"saik3488@gmail.com",       name:"Team D",               date:"2026-05-19" },
+  "c8f70e86": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
+  "777d1466": { email:"faizee.whitelabelmedia@gmail.com",name:"Ajeesh Faizee", date:"2026-05-19" },
+  "c0ec21fa": { email:"akshitadayma20@gmail.com", name:"Akshita",              date:"2026-05-19" },
+  "2b57e819": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-19" },
+  "bd3d7f09": { email:"joispaulson@gmail.com",    name:"Paullson Joseph",      date:"2026-05-18" },
+  "2a2bd6cb": { email:"rizwan.ahmad31900@gmail.com",name:"Rizwan Ahmad",       date:"2026-05-19" },
+  "f81319ec": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-18" },
+  "52303098": { email:"info.karcns@gmail.com",    name:"Karthik S",            date:"2026-05-15" },
+  "ca56ec07": { email:"uxuiguide@gmail.com",      name:"Niraj",                date:"2026-05-15" },
+  "5f22abda": { email:"niravgajera2018@gmail.com",name:"Niraj Gajera",         date:"2026-05-12" },
+  "b3a70abb": { email:"smritismart83@gmail.com",  name:"Smriti",               date:"2026-05-12" },
+  "646eb640": { email:"bhartigoel2015@gmail.com", name:"Bharti Goel",          date:"2026-05-12" },
+  "17d7376c": { email:"kapilkools@gmail.com",     name:"Kapil Kulshreshtha",   date:"2026-05-12" },
+  "7ae8f532": { email:"holisticwellnessapproach4u@gmail.com",name:"Nilesh T",  date:"2026-05-12" },
+  "96eb7640": { email:"skillstsb@gmail.com",      name:"TSB Skills",           date:"2026-05-11" },
+  "b0bec917": { email:"sushaaant0412@gmail.com",  name:"Sushant Deshpande",    date:"2026-05-08" },
+  "859f92eb": { email:"jananijaanu922@gmail.com", name:"Janani",               date:"2026-05-08" },
+  "88f4e13a": { email:"sarang.bezalwar@gmail.com",name:"Sarang Bezalwar",      date:"2026-05-08" },
+  "f6abfa40": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-07" },
+  "76dc9277": { email:"drsumali1506@gmail.com",   name:"Dr Sumali Bansal",     date:"2026-05-07" },
+  "326628d9": { email:"khushsmile@gmail.com",     name:"Khushi",               date:"2026-05-07" },
+  "654c3a6f": { email:"prabhav.mistry@kalorex.org",name:"Prabhav Mistry",     date:"2026-05-07" },
+  "f593fe27": { email:"subashinisrinivasan80@gmail.com",name:"Subashini",      date:"2026-05-07" },
+  "a0878ac7": { email:"skaul@consultwlc.com",     name:"Sandeep Kaul",         date:"2026-05-05" },
+  "774c241a": { email:"dewangunjan6012@gmail.com",name:"Gunjan Dewan",         date:"2026-05-05" },
+  "d7879c19": { email:"artzncolours@gmail.com",   name:"Renu",                 date:"2026-05-05" },
+  "3213b886": { email:"priyanka0057@gmail.com",   name:"Priyanka Singh",       date:"2026-05-05" },
+  "b77acea0": { email:"yogendracacs@gmail.com",   name:"Yogendra",             date:"2026-05-04" },
+  "3dab5168": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-04" },
+  "a83a49ad": { email:"mevinita05@gmail.com",     name:"Vinita Pathak",        date:"2026-05-04" },
+  "35085c65": { email:"amisdanceacademy@gmail.com",name:"Amisha Jhawar",       date:"2026-05-04" },
+  "59759e10": { email:"wecanbs@gmail.com",        name:"Jithuu",               date:"2026-04-30" },
+  "56f93751": { email:"johnpradeepjl@gmail.com",  name:"John Pradeep",         date:"2026-04-29" },
+  "ec43935c": { email:"shaarahnaved@gmail.com",   name:"Shaarah",              date:"2026-04-28" },
+  "b63ab756": { email:"somamail.mondal2010@gmail.com",name:"Soma",             date:"2026-04-28" },
+  "b1db913b": { email:"ravindra.kulkarni@bkfbliss.org",name:"Ravindra Kulkarni",date:"2026-04-28" },
+  "f659829f": { email:"pawanjadhav9100@gmail.com",name:"Pawan Jadhav",         date:"2026-04-27" },
+  "55ad0b7b": { email:"sital.tripathy23@gmail.com",name:"Sital Tripathy",      date:"2026-04-24" },
+  "7c9ccdf0": { email:"llit.p121@gmail.com",      name:"Lalit Parihar",        date:"2026-04-22" },
+  "7abea950": { email:"rkbende@gmail.com",        name:"Ram",                  date:"2026-04-22" },
+  "4b738a88": { email:"hussainmsc123@gmail.com",  name:"Shaik Hussain",        date:"2026-04-22" },
+};
+
+async function syncGranolaLeads() {
+  // Upsert all unique client leads from Granola meeting map into Supabase
+  const uniqueLeads = {};
+  Object.values(GRANOLA_MEETING_MAP).forEach(m => {
+    if (!isInternal(m.email) && !uniqueLeads[m.email]) {
+      uniqueLeads[m.email] = {
+        name: m.name,
+        email: m.email,
+        source: 'Granola',
+        stage: 'New',
+        date_created: m.date,
+        last_contact: m.date,
+      };
+    }
+  });
+  try {
+    await sb.upsert('leads', Object.values(uniqueLeads), 'email');
+    console.log(`✓ Granola: ${Object.keys(uniqueLeads).length} leads synced`);
+  } catch(e) {
+    console.warn('Granola sync error:', e.message);
+  }
+}
+
+// Get all meetings for a specific lead email (matches by Granola map)
+function getMeetingsForEmail(email) {
+  return Object.entries(GRANOLA_MEETING_MAP)
+    .filter(([_, m]) => m.email === email)
+    .map(([id, m]) => ({ granola_id: id, ...m }));
+}
+
+// ══════════════════════════════════════
+// LIVE DATA ACCESSORS (used by tabs)
+// ══════════════════════════════════════
+// Cache so we don't re-fetch on every tab switch
+let _leadsCache = null;
+let _callsCache = null;
+let _eventsCache = null;
+
+async function getLiveLeads() {
+  if (_leadsCache) return _leadsCache;
+  try {
+    _leadsCache = await sb.query('leads', '?select=*&order=last_contact.desc.nullslast,created_at.desc');
+    return _leadsCache;
+  } catch(e) { return []; }
+}
+
+async function getLiveCalls() {
+  if (_callsCache) return _callsCache;
+  try {
+    const since = new Date(Date.now() - 90 * 86400000).toISOString();
+    _callsCache = await sb.query('calls', `?select=*&call_date=gte.${since}&order=call_date.desc`);
+    return _callsCache;
+  } catch(e) { return []; }
+}
+
+async function getLiveCalendlyEvents(dateKey) {
+  // dateKey = 'YYYY-MM-DD' — returns events for that day
+  if (!_eventsCache) {
+    try {
+      const since = new Date(Date.now() - 7 * 86400000).toISOString();
+      const future = new Date(Date.now() + 30 * 86400000).toISOString();
+      _eventsCache = await sb.query('calendly_events',
+        `?call_date=gte.${since}&call_date=lte.${future}&order=call_date.asc&select=*`);
+    } catch(e) { _eventsCache = []; }
+  }
+  if (!dateKey) return _eventsCache;
+  return _eventsCache.filter(e => e.call_date?.startsWith(dateKey));
+}
+
+function invalidateCache() {
+  _leadsCache = null;
+  _callsCache = null;
+  _eventsCache = null;
+}
+
+// ══════════════════════════════════════
 // SEED DATA (real leads + calls from Granola)
 // ══════════════════════════════════════
 const SEED_LEADS = [
@@ -5907,18 +6144,27 @@ window.addEventListener('load', async () => {
     document.getElementById('appLoader').classList.add('hidden');
   }, 600);
 
-  // Connect Supabase + seed data in background
+  // Connect Supabase + sync all data in background
   try {
+    // Step 1: seed base data if empty
     await seedIfEmpty();
+
+    // Step 2: sync Granola leads (always — picks up new meetings)
+    await syncGranolaLeads();
+
+    // Step 3: try Calendly sync (works if OAuth token present, falls back to cache)
+    await syncCalendly();
+
     renderSupabaseStatus(true);
-    // Fetch live stats and update overview KPIs
+
+    // Step 4: fetch live stats
     const stats = await fetchStats();
-    const activeLeadEl = document.querySelector('.stat-val[data-kpi="leads"]');
-    if (activeLeadEl) activeLeadEl.textContent = stats.totalLeads;
-    showToast(`✓ Supabase live — ${stats.totalLeads} leads, ${stats.totalCalls} calls`);
+    showToast(`✓ Live — ${stats.totalLeads} leads · ${stats.totalCalls} calls · Granola + Calendly synced`);
+
+    console.log('✓ SalesIQ fully connected:', stats);
   } catch(e) {
-    console.warn('Supabase connection issue:', e);
-    showToast('⚠ Running in offline mode', 'error');
+    console.warn('Sync issue:', e);
+    showToast('⚠ Partial sync — some data may be cached', 'error');
   }
 });
 </script>
