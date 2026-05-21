@@ -6031,13 +6031,6 @@ function renderSupabaseStatus(connected) {
 // UNIFIED BOOT
 // ══════════════════════════════════════
 window.addEventListener('load', async () => {
-  // Global failsafe — hide loader after 4s no matter what
-  setTimeout(() => {
-    const el = document.getElementById('appLoader');
-    if (el) el.classList.add('hidden');
-  }, 4000);
-
-  try {
   // Init overview (already visible)
   TAB_INIT['overview'] = true;
 
@@ -6060,13 +6053,10 @@ window.addEventListener('load', async () => {
     }
   } catch(e) { console.warn('Daily init:', e); }
 
-  // ALWAYS hide loader — failsafe so it never gets stuck
-  const hideLoader = () => {
-    const el = document.getElementById('appLoader');
-    if (el) el.classList.add('hidden');
-  };
-  setTimeout(hideLoader, 400);
-  setTimeout(hideLoader, 3000); // hard failsafe
+  // Hide loading screen
+  setTimeout(() => {
+    document.getElementById('appLoader').classList.add('hidden');
+  }, 600);
 
   // Connect Supabase + sync all data in background
   try {
@@ -6089,12 +6079,6 @@ window.addEventListener('load', async () => {
   } catch(e) {
     console.warn('Sync issue:', e);
     showToast('⚠ Partial sync — some data may be cached', 'error');
-  }
-
-  } catch(globalErr) {
-    console.error('Boot error:', globalErr);
-    const el = document.getElementById('appLoader');
-    if (el) el.classList.add('hidden');
   }
 });
 </script>
