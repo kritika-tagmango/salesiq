@@ -1,0 +1,11 @@
+[functions.sync-calendly]
+verify_jwt = false
+
+[functions.sync-granola]
+verify_jwt = false
+
+[functions.ai-coach-update]
+verify_jwt = false
+
+[functions.get-dashboard-stats]
+verify_jwt = false
