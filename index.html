@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="SalesIQ Dashboard">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SalesIQ — Sales Intelligence Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -756,9 +758,6 @@ html, body {
 
 /* ── DAILY TAB ── */
 
-
-
-
 .shell{display:flex;height:100vh}
 
 /* ── SIDEBAR ── */
@@ -953,9 +952,6 @@ html, body {
 .fadein{animation:fadeUp .3s ease both}
 
 /* ── WEEKLY TAB ── */
-
-
-
 
 .shell{display:flex;height:100vh}
 
@@ -1161,9 +1157,6 @@ html, body {
 ${tagStyles}
 /* ── MONTHLY TAB ── */
 
-
-
-
 .shell{display:flex;height:100vh}
 
 /* SIDEBAR */
@@ -1358,10 +1351,6 @@ ${tagStyles}
 .kn-card:nth-child(4){animation:fadeUp .4s .16s ease both}
 
 /* ── DEEPDIVE TAB ── */
-
-
-
-
 
 /* SHELL */
 .shell { display: flex; height: 100vh; overflow: hidden; }
@@ -1588,9 +1577,6 @@ ${tagStyles}
 
 /* ── COACHING TAB ── */
 
-
-
-
 .shell { display:flex; height:100vh; }
 
 /* SIDEBAR */
@@ -1780,9 +1766,9 @@ ${tagStyles}
 @keyframes slideIn { from{opacity:0;transform:translateX(10px)} to{opacity:1;transform:translateX(0)} }
 .slide-in { animation:slideIn .25s ease both; }
 
-
 /* ── UNIFIED SHELL ── */
-.tab-pane { display:none; flex:1; flex-direction:column; overflow:hidden; min-width:0; }
+.tab-pane { display:none; flex:1; flex-direction:column; overflow:hidden; min-width:0; content-visibility:auto; }
+.tab-pane.active { display:flex; }
 .tab-pane.active { display:flex; }
 
 /* Loading overlay */
@@ -2534,7 +2520,6 @@ ${tagStyles}
   </div>
   </div>
 
-
 </div><!-- /shell -->
 
 <script>
@@ -2595,7 +2580,6 @@ function navTo(tab) {
 // ALL TAB SCRIPTS
 // ══════════════════════════════════════
 
-
 // ══════════════════════════════════════
 // OVERVIEW TAB
 // ══════════════════════════════════════
@@ -2616,7 +2600,6 @@ function overviewSwitchTab(el, tab) {
   document.querySelector('.topbar-title').innerHTML =
     `${titles[tab]} <span>— May 2026</span>`;
 }
-
 
 // ══════════════════════════════════════
 // DAILY TAB
@@ -3262,7 +3245,6 @@ window.onload = () => {
   }
 };
 
-
 // ══════════════════════════════════════
 // WEEKLY TAB
 // ══════════════════════════════════════
@@ -3803,7 +3785,6 @@ document.head.insertAdjacentHTML('beforeend', `<style>${tagStyles}</style>`);
 
 // ── INIT ──
 window.onload = renderAll;
-
 
 // ══════════════════════════════════════
 // MONTHLY TAB
@@ -4405,7 +4386,6 @@ function buildPage(D) {
 window.onload = () => {
   render();
 };
-
 
 // ══════════════════════════════════════
 // DEEPDIVE TAB
@@ -5085,7 +5065,6 @@ function refreshCalls() {
   setTimeout(() => { overlay.classList.add('hidden'); }, 1400);
 }
 
-
 // ══════════════════════════════════════
 // COACHING TAB
 // ══════════════════════════════════════
@@ -5639,7 +5618,6 @@ window.onload = () => {
   }, 400);
 };
 
-
 // ══════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════
@@ -5808,66 +5786,6 @@ async function loadCalendlyFromSupabase() {
   }
 }
 
-// ══════════════════════════════════════
-// GRANOLA → SUPABASE SYNC
-// ══════════════════════════════════════
-// Granola has no public REST API — data flows via MCP (this Claude chat).
-// We pre-load the meeting→email map extracted from live Granola data so the
-// dashboard can match meetings to leads by email automatically.
-
-const GRANOLA_MEETING_MAP = {
-  // id → { email, title, date, granola_id }
-  "c2148efb": { email:"thesocioxpert@gmail.com",  name:"Chandana Punna",       date:"2026-05-21" },
-  "fd4d0111": { email:"tilokani.neetu@gmail.com", name:"Neetu Tilokani",        date:"2026-05-20" },
-  "77903b20": { email:"eltonvk01@gmail.com",      name:"Elton",                date:"2026-05-20" },
-  "5b6d8438": { email:"tirthpatel5844@gmail.com", name:"Tirth Patel",          date:"2026-05-20" },
-  "e58587a2": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
-  "cb4ef254": { email:"sapannagpal007@gmail.com", name:"Sapan Nagpal",         date:"2026-05-19" },
-  "b1a365e4": { email:"eazyenglishathome@gmail.com",name:"Rashid C",           date:"2026-05-19" },
-  "7309a5fd": { email:"saik3488@gmail.com",       name:"Team D",               date:"2026-05-19" },
-  "c8f70e86": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
-  "777d1466": { email:"faizee.whitelabelmedia@gmail.com",name:"Ajeesh Faizee", date:"2026-05-19" },
-  "c0ec21fa": { email:"akshitadayma20@gmail.com", name:"Akshita",              date:"2026-05-19" },
-  "2b57e819": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-19" },
-  "bd3d7f09": { email:"joispaulson@gmail.com",    name:"Paullson Joseph",      date:"2026-05-18" },
-  "2a2bd6cb": { email:"rizwan.ahmad31900@gmail.com",name:"Rizwan Ahmad",       date:"2026-05-19" },
-  "f81319ec": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-18" },
-  "52303098": { email:"info.karcns@gmail.com",    name:"Karthik S",            date:"2026-05-15" },
-  "ca56ec07": { email:"uxuiguide@gmail.com",      name:"Niraj",                date:"2026-05-15" },
-  "5f22abda": { email:"niravgajera2018@gmail.com",name:"Niraj Gajera",         date:"2026-05-12" },
-  "b3a70abb": { email:"smritismart83@gmail.com",  name:"Smriti",               date:"2026-05-12" },
-  "646eb640": { email:"bhartigoel2015@gmail.com", name:"Bharti Goel",          date:"2026-05-12" },
-  "17d7376c": { email:"kapilkools@gmail.com",     name:"Kapil Kulshreshtha",   date:"2026-05-12" },
-  "7ae8f532": { email:"holisticwellnessapproach4u@gmail.com",name:"Nilesh T",  date:"2026-05-12" },
-  "96eb7640": { email:"skillstsb@gmail.com",      name:"TSB Skills",           date:"2026-05-11" },
-  "b0bec917": { email:"sushaaant0412@gmail.com",  name:"Sushant Deshpande",    date:"2026-05-08" },
-  "859f92eb": { email:"jananijaanu922@gmail.com", name:"Janani",               date:"2026-05-08" },
-  "88f4e13a": { email:"sarang.bezalwar@gmail.com",name:"Sarang Bezalwar",      date:"2026-05-08" },
-  "f6abfa40": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-07" },
-  "76dc9277": { email:"drsumali1506@gmail.com",   name:"Dr Sumali Bansal",     date:"2026-05-07" },
-  "326628d9": { email:"khushsmile@gmail.com",     name:"Khushi",               date:"2026-05-07" },
-  "654c3a6f": { email:"prabhav.mistry@kalorex.org",name:"Prabhav Mistry",     date:"2026-05-07" },
-  "f593fe27": { email:"subashinisrinivasan80@gmail.com",name:"Subashini",      date:"2026-05-07" },
-  "a0878ac7": { email:"skaul@consultwlc.com",     name:"Sandeep Kaul",         date:"2026-05-05" },
-  "774c241a": { email:"dewangunjan6012@gmail.com",name:"Gunjan Dewan",         date:"2026-05-05" },
-  "d7879c19": { email:"artzncolours@gmail.com",   name:"Renu",                 date:"2026-05-05" },
-  "3213b886": { email:"priyanka0057@gmail.com",   name:"Priyanka Singh",       date:"2026-05-05" },
-  "b77acea0": { email:"yogendracacs@gmail.com",   name:"Yogendra",             date:"2026-05-04" },
-  "3dab5168": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-04" },
-  "a83a49ad": { email:"mevinita05@gmail.com",     name:"Vinita Pathak",        date:"2026-05-04" },
-  "35085c65": { email:"amisdanceacademy@gmail.com",name:"Amisha Jhawar",       date:"2026-05-04" },
-  "59759e10": { email:"wecanbs@gmail.com",        name:"Jithuu",               date:"2026-04-30" },
-  "56f93751": { email:"johnpradeepjl@gmail.com",  name:"John Pradeep",         date:"2026-04-29" },
-  "ec43935c": { email:"shaarahnaved@gmail.com",   name:"Shaarah",              date:"2026-04-28" },
-  "b63ab756": { email:"somamail.mondal2010@gmail.com",name:"Soma",             date:"2026-04-28" },
-  "b1db913b": { email:"ravindra.kulkarni@bkfbliss.org",name:"Ravindra Kulkarni",date:"2026-04-28" },
-  "f659829f": { email:"pawanjadhav9100@gmail.com",name:"Pawan Jadhav",         date:"2026-04-27" },
-  "55ad0b7b": { email:"sital.tripathy23@gmail.com",name:"Sital Tripathy",      date:"2026-04-24" },
-  "7c9ccdf0": { email:"llit.p121@gmail.com",      name:"Lalit Parihar",        date:"2026-04-22" },
-  "7abea950": { email:"rkbende@gmail.com",        name:"Ram",                  date:"2026-04-22" },
-  "4b738a88": { email:"hussainmsc123@gmail.com",  name:"Shaik Hussain",        date:"2026-04-22" },
-};
-
 async function syncGranolaLeads() {
   // Upsert all unique client leads from Granola meeting map into Supabase
   const uniqueLeads = {};
@@ -5943,7 +5861,6 @@ function invalidateCache() {
   _eventsCache = null;
 }
 
-
 // ══════════════════════════════════════
 // CALENDLY EVENTS — SYNCED FROM MCP
 // Last synced: May 21 2026 · 50 events
@@ -6018,61 +5935,6 @@ async function runCalendlySyncToDB() {
 // ══════════════════════════════════════
 // SEED DATA (real leads + calls from Granola)
 // ══════════════════════════════════════
-const SEED_LEADS = [
-  { name:'Niraj Gajera',       email:'niravgajera2018@gmail.com',     stage:'Negotiation', source:'Calendly', phone:'+91 82848 38475' },
-  { name:'Sarang Bezalwar',    email:'sarang.bezalwar@gmail.com',     stage:'Demo',        source:'Calendly' },
-  { name:'Prakash Kumar',      email:'prakash.inet@gmail.com',        stage:'Technical',   source:'Calendly' },
-  { name:'Smriti',             email:'smritismart83@gmail.com',       stage:'Pricing',     source:'Calendly' },
-  { name:'Kapil Kulshreshtha', email:'kapilkools@gmail.com',          stage:'Hot',         source:'Calendly' },
-  { name:'Bharti Goel',        email:'bhartigoel2015@gmail.com',      stage:'Hot',         source:'Granola' },
-  { name:'Ravi Kumar',         email:'ravi8284838475@gmail.com',      stage:'New',         source:'Calendly' },
-  { name:'Ruchal Humbare',     email:'partner@growthssavy.com',       stage:'New',         source:'Calendly' },
-  { name:'TSB Skills',         email:'skillstsb@gmail.com',           stage:'Warm',        source:'Calendly' },
-  { name:'Nilesh T',           email:'holisticwellnessapproach4u@gmail.com', stage:'Trial', source:'Calendly' },
-  { name:'Subashini',          email:'subashinisrinivasan80@gmail.com',stage:'Demo',        source:'Calendly' },
-  { name:'Janani',             email:'jananijaanu922@gmail.com',       stage:'Demo',        source:'Calendly' },
-  { name:'Sushant Deshpande',  email:'sushaaant0412@gmail.com',       stage:'Pricing',     source:'Calendly' },
-  { name:'Vinita Pathak',      email:'mevinita05@gmail.com',          stage:'Demo',        source:'Calendly' },
-  { name:'Amisha Jhawar',      email:'amisdanceacademy@gmail.com',    stage:'Demo',        source:'Calendly' },
-  { name:'Priyanka Singh',     email:'priyanka0057@gmail.com',        stage:'Demo',        source:'Calendly' },
-  { name:'Lakshmi Gopal',      email:'lakshmigopal@gmail.com',        stage:'Trial',       source:'Granola' },
-  { name:'Yogendra',           email:'yogendra@gmail.com',            stage:'Warm',        source:'Granola' },
-  { name:'Sandeep Kaul',       email:'sandeepkaul@gmail.com',         stage:'Closed',      source:'Granola' },
-  { name:'Santhosh G',         email:'santhoshg@gmail.com',           stage:'Closed',      source:'Granola' },
-  { name:'Jithuu',             email:'jithuu@gmail.com',              stage:'Closed',      source:'Granola' },
-  { name:'John Pradeep',       email:'johnpradeep@gmail.com',         stage:'Closed',      source:'Granola' },
-];
-
-const SEED_CALLS = [
-  { lead_email:'niravgajera2018@gmail.com',  lead_name:'Niraj Gajera',   call_date:'2026-05-12T10:00:00+05:30', duration_mins:40, call_type:'Demo + Pricing', call_number:1, score:78,  talk_ratio_you:62, talk_ratio_them:38, next_step:'Send Freedom plan breakdown, confirm offer extension', granola_id:'5f22abda-aa59-47d9-a6b1-a98b4196bc9a' },
-  { lead_email:'sarang.bezalwar@gmail.com',  lead_name:'Sarang Bezalwar', call_date:'2026-05-08T11:00:00+05:30', duration_mins:55, call_type:'Full Demo',       call_number:1, score:72,  talk_ratio_you:58, talk_ratio_them:42, next_step:'Send Freedom plan PDF + testimonials', granola_id:'88f4e13a-1bd0-4620-84a0-2d7d833aa2b4' },
-  { lead_email:'prakash.inet@gmail.com',     lead_name:'Prakash Kumar',   call_date:'2026-05-07T10:30:00+05:30', duration_mins:30, call_type:'Technical Q&A',   call_number:2, score:65,  talk_ratio_you:55, talk_ratio_them:45, next_step:'Send international payment gateway FAQ', granola_id:'f6abfa40-dfb3-4de9-bfca-176275e834f5' },
-  { lead_email:'smritismart83@gmail.com',    lead_name:'Smriti',          call_date:'2026-05-12T07:00:00+05:30', duration_mins:10, call_type:'Pricing Follow-up',call_number:2, score:55,  talk_ratio_you:60, talk_ratio_them:40, next_step:'Send pricing comparison email', granola_id:'b3a70abb-c9f9-4ee1-a027-74022b0716e2' },
-  { lead_email:'kapilkools@gmail.com',       lead_name:'Kapil Kulshreshtha',call_date:'2026-05-12T09:30:00+05:30',duration_mins:30,call_type:'Demo',            call_number:1, score:74, talk_ratio_you:57, talk_ratio_them:43, next_step:'Send GST refund info + custom pricing' },
-  { lead_email:'bhartigoel2015@gmail.com',   lead_name:'Bharti Goel',     call_date:'2026-05-11T15:00:00+05:30', duration_mins:30, call_type:'Demo',            call_number:1, score:70,  talk_ratio_you:59, talk_ratio_them:41, next_step:'Send WhatsApp alternatives + GA demo' },
-  { lead_email:'sandeepkaul@gmail.com',      lead_name:'Sandeep Kaul',    call_date:'2026-05-05T11:00:00+05:30', duration_mins:45, call_type:'Pricing + Close', call_number:3, score:90,  talk_ratio_you:52, talk_ratio_them:48, next_step:'Send flow diagram + payment link — CLOSED ₹1L' },
-  { lead_email:'santhoshg@gmail.com',        lead_name:'Santhosh G',      call_date:'2026-04-20T10:00:00+05:30', duration_mins:30, call_type:'Pricing + Close', call_number:1, score:88,  talk_ratio_you:54, talk_ratio_them:46, next_step:'Send EMI quotation — CLOSED ₹75K' },
-  { lead_email:'jithuu@gmail.com',           lead_name:'Jithuu',          call_date:'2026-04-30T11:00:00+05:30', duration_mins:40, call_type:'Negotiation + Close',call_number:2,score:92, talk_ratio_you:50, talk_ratio_them:50, next_step:'International payment link sent — CLOSED ₹3L' },
-  { lead_email:'johnpradeep@gmail.com',      lead_name:'John Pradeep',    call_date:'2026-04-29T10:00:00+05:30', duration_mins:45, call_type:'Negotiation + Close',call_number:2,score:89, talk_ratio_you:53, talk_ratio_them:47, next_step:'Setup waived — CLOSED ₹3.6L' },
-];
-
-const SEED_OBJECTIONS = [
-  { lead_email:'niravgajera2018@gmail.com',  question:'Can the May 17 offer deadline be extended?',       rating:'missed',  category:'pricing',    your_answer:'Said you\'d check with team — left unresolved.', better_answer:'Offer conditional extension with token amount to lock pricing.' },
-  { lead_email:'niravgajera2018@gmail.com',  question:'Multiple language audio tracks on same course?',   rating:'partial', category:'product',    your_answer:'Said separate courses needed but didn\'t explain workflow.', better_answer:'Separate course per language + 100% coupon on Pro plan for existing students.' },
-  { lead_email:'sarang.bezalwar@gmail.com',  question:'How does this compare to ClassPlus?',              rating:'partial', category:'competitor', your_answer:'Community features as USP — good but could be sharper.', better_answer:'Lead with creator-first vs institute-first positioning and Razorpay advantage.' },
-  { lead_email:'prakash.inet@gmail.com',     question:'What international payment gateways are supported?',rating:'missed', category:'technical',  your_answer:'Only mentioned Stripe briefly, no full answer.', better_answer:'Stripe for international — USD/EUR/GBP. Indian creators need Stripe with international payments enabled. Gateway fee 5% intl vs 1.5% Razorpay.' },
-  { lead_email:'smritismart83@gmail.com',    question:'What is included in Enterprise vs Standard plan?', rating:'partial', category:'pricing',    your_answer:'Deferred to email — missed chance to anchor value on call.', better_answer:'60-second verbal summary: Standard ₹25K = branded dashboard + unlimited courses. Enterprise ₹1L adds custom apps, dedicated manager, custom website, Zoom 300.' },
-];
-
-const SEED_FOLLOWUPS = [
-  { lead_email:'niravgajera2018@gmail.com',  action:'Send Freedom plan offer — deadline May 17',         urgency:'hot',  done:false },
-  { lead_email:'smritismart83@gmail.com',    action:'Send pricing email (₹25K vs ₹1L breakdown)',        urgency:'hot',  done:false },
-  { lead_email:'kapilkools@gmail.com',       action:'GST refund + custom pricing confirmation',          urgency:'hot',  done:false },
-  { lead_email:'bhartigoel2015@gmail.com',   action:'WhatsApp alternatives + Google Analytics demo',    urgency:'warm', done:false },
-  { lead_email:'skillstsb@gmail.com',        action:'Send brochure — team is reviewing',                urgency:'warm', done:false },
-  { lead_email:'holisticwellnessapproach4u@gmail.com', action:'Reach out after Siddharth community session', urgency:'cool', done:false },
-  { lead_email:'sarang.bezalwar@gmail.com',  action:'Follow up with Freedom plan PDF + testimonials',   urgency:'warm', done:false },
-];
 
 // ══════════════════════════════════════
 // SUPABASE DATA LAYER
@@ -6080,28 +5942,8 @@ const SEED_FOLLOWUPS = [
 
 // Seed all data on first load if tables are empty
 async function seedIfEmpty() {
-  try {
-    const existing = await sb.query('leads', '?select=id&limit=1');
-    if (existing.length > 0) {
-      console.log('✓ Supabase already has data — skipping seed');
-      return;
-    }
-    console.log('Seeding Supabase with real call data…');
-    await sb.upsert('leads', SEED_LEADS, 'email');
-    console.log('✓ Leads seeded');
-    // Insert calls after leads exist
-    for (const call of SEED_CALLS) {
-      try { await sb.insert('calls', call); } catch(e) { console.warn('Call insert:', e.message); }
-    }
-    console.log('✓ Calls seeded');
-    await sb.insert('objections', SEED_OBJECTIONS);
-    console.log('✓ Objections seeded');
-    await sb.insert('follow_ups', SEED_FOLLOWUPS);
-    console.log('✓ Follow-ups seeded');
-    showToast('✓ SalesIQ connected to Supabase — data loaded');
-  } catch(e) {
-    console.error('Seed error:', e);
-  }
+  // Data seeded via runCalendlySyncToDB on first load
+  return;
 }
 
 // Live data fetchers — used by tabs
