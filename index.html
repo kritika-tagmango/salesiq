@@ -5643,11 +5643,247 @@ window.onload = () => {
 // ══════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════
-window.addEventListener('load', () => {
+// ══════════════════════════════════════
+// SUPABASE CLIENT
+// ══════════════════════════════════════
+const SUPABASE_URL = 'https://ieoojycxxmsaneuoxvxc.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imllb29qeWN4eG1zYW5ldW94dnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMjEyMTIsImV4cCI6MjA5NDg5NzIxMn0.FTAJQYnSQUY_h5zhhK7kFtKF7jiQ_aj8AkvOZifDPHY';
+
+const sb = {
+  async query(table, params = '') {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      }
+    });
+    if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+    return res.json();
+  },
+  async insert(table, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(Array.isArray(data) ? data : [data])
+    });
+    if (!res.ok) { const e = await res.text(); throw new Error(e); }
+    return res.json();
+  },
+  async update(table, id, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(`Update error: ${res.status}`);
+    return res.json();
+  },
+  async upsert(table, data, onConflict = 'email') {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${onConflict}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=representation'
+      },
+      body: JSON.stringify(Array.isArray(data) ? data : [data])
+    });
+    if (!res.ok) { const e = await res.text(); console.error('Upsert error:', e); return null; }
+    return res.json();
+  }
+};
+
+// ══════════════════════════════════════
+// SEED DATA (real leads + calls from Granola)
+// ══════════════════════════════════════
+const SEED_LEADS = [
+  { name:'Niraj Gajera',       email:'niravgajera2018@gmail.com',     stage:'Negotiation', source:'Calendly', phone:'+91 82848 38475' },
+  { name:'Sarang Bezalwar',    email:'sarang.bezalwar@gmail.com',     stage:'Demo',        source:'Calendly' },
+  { name:'Prakash Kumar',      email:'prakash.inet@gmail.com',        stage:'Technical',   source:'Calendly' },
+  { name:'Smriti',             email:'smritismart83@gmail.com',       stage:'Pricing',     source:'Calendly' },
+  { name:'Kapil Kulshreshtha', email:'kapilkools@gmail.com',          stage:'Hot',         source:'Calendly' },
+  { name:'Bharti Goel',        email:'bhartigoel2015@gmail.com',      stage:'Hot',         source:'Granola' },
+  { name:'Ravi Kumar',         email:'ravi8284838475@gmail.com',      stage:'New',         source:'Calendly' },
+  { name:'Ruchal Humbare',     email:'partner@growthssavy.com',       stage:'New',         source:'Calendly' },
+  { name:'TSB Skills',         email:'skillstsb@gmail.com',           stage:'Warm',        source:'Calendly' },
+  { name:'Nilesh T',           email:'holisticwellnessapproach4u@gmail.com', stage:'Trial', source:'Calendly' },
+  { name:'Subashini',          email:'subashinisrinivasan80@gmail.com',stage:'Demo',        source:'Calendly' },
+  { name:'Janani',             email:'jananijaanu922@gmail.com',       stage:'Demo',        source:'Calendly' },
+  { name:'Sushant Deshpande',  email:'sushaaant0412@gmail.com',       stage:'Pricing',     source:'Calendly' },
+  { name:'Vinita Pathak',      email:'mevinita05@gmail.com',          stage:'Demo',        source:'Calendly' },
+  { name:'Amisha Jhawar',      email:'amisdanceacademy@gmail.com',    stage:'Demo',        source:'Calendly' },
+  { name:'Priyanka Singh',     email:'priyanka0057@gmail.com',        stage:'Demo',        source:'Calendly' },
+  { name:'Lakshmi Gopal',      email:'lakshmigopal@gmail.com',        stage:'Trial',       source:'Granola' },
+  { name:'Yogendra',           email:'yogendra@gmail.com',            stage:'Warm',        source:'Granola' },
+  { name:'Sandeep Kaul',       email:'sandeepkaul@gmail.com',         stage:'Closed',      source:'Granola' },
+  { name:'Santhosh G',         email:'santhoshg@gmail.com',           stage:'Closed',      source:'Granola' },
+  { name:'Jithuu',             email:'jithuu@gmail.com',              stage:'Closed',      source:'Granola' },
+  { name:'John Pradeep',       email:'johnpradeep@gmail.com',         stage:'Closed',      source:'Granola' },
+];
+
+const SEED_CALLS = [
+  { lead_email:'niravgajera2018@gmail.com',  lead_name:'Niraj Gajera',   call_date:'2026-05-12T10:00:00+05:30', duration_mins:40, call_type:'Demo + Pricing', call_number:1, score:78,  talk_ratio_you:62, talk_ratio_them:38, next_step:'Send Freedom plan breakdown, confirm offer extension', granola_id:'5f22abda-aa59-47d9-a6b1-a98b4196bc9a' },
+  { lead_email:'sarang.bezalwar@gmail.com',  lead_name:'Sarang Bezalwar', call_date:'2026-05-08T11:00:00+05:30', duration_mins:55, call_type:'Full Demo',       call_number:1, score:72,  talk_ratio_you:58, talk_ratio_them:42, next_step:'Send Freedom plan PDF + testimonials', granola_id:'88f4e13a-1bd0-4620-84a0-2d7d833aa2b4' },
+  { lead_email:'prakash.inet@gmail.com',     lead_name:'Prakash Kumar',   call_date:'2026-05-07T10:30:00+05:30', duration_mins:30, call_type:'Technical Q&A',   call_number:2, score:65,  talk_ratio_you:55, talk_ratio_them:45, next_step:'Send international payment gateway FAQ', granola_id:'f6abfa40-dfb3-4de9-bfca-176275e834f5' },
+  { lead_email:'smritismart83@gmail.com',    lead_name:'Smriti',          call_date:'2026-05-12T07:00:00+05:30', duration_mins:10, call_type:'Pricing Follow-up',call_number:2, score:55,  talk_ratio_you:60, talk_ratio_them:40, next_step:'Send pricing comparison email', granola_id:'b3a70abb-c9f9-4ee1-a027-74022b0716e2' },
+  { lead_email:'kapilkools@gmail.com',       lead_name:'Kapil Kulshreshtha',call_date:'2026-05-12T09:30:00+05:30',duration_mins:30,call_type:'Demo',            call_number:1, score:74, talk_ratio_you:57, talk_ratio_them:43, next_step:'Send GST refund info + custom pricing' },
+  { lead_email:'bhartigoel2015@gmail.com',   lead_name:'Bharti Goel',     call_date:'2026-05-11T15:00:00+05:30', duration_mins:30, call_type:'Demo',            call_number:1, score:70,  talk_ratio_you:59, talk_ratio_them:41, next_step:'Send WhatsApp alternatives + GA demo' },
+  { lead_email:'sandeepkaul@gmail.com',      lead_name:'Sandeep Kaul',    call_date:'2026-05-05T11:00:00+05:30', duration_mins:45, call_type:'Pricing + Close', call_number:3, score:90,  talk_ratio_you:52, talk_ratio_them:48, next_step:'Send flow diagram + payment link — CLOSED ₹1L' },
+  { lead_email:'santhoshg@gmail.com',        lead_name:'Santhosh G',      call_date:'2026-04-20T10:00:00+05:30', duration_mins:30, call_type:'Pricing + Close', call_number:1, score:88,  talk_ratio_you:54, talk_ratio_them:46, next_step:'Send EMI quotation — CLOSED ₹75K' },
+  { lead_email:'jithuu@gmail.com',           lead_name:'Jithuu',          call_date:'2026-04-30T11:00:00+05:30', duration_mins:40, call_type:'Negotiation + Close',call_number:2,score:92, talk_ratio_you:50, talk_ratio_them:50, next_step:'International payment link sent — CLOSED ₹3L' },
+  { lead_email:'johnpradeep@gmail.com',      lead_name:'John Pradeep',    call_date:'2026-04-29T10:00:00+05:30', duration_mins:45, call_type:'Negotiation + Close',call_number:2,score:89, talk_ratio_you:53, talk_ratio_them:47, next_step:'Setup waived — CLOSED ₹3.6L' },
+];
+
+const SEED_OBJECTIONS = [
+  { lead_email:'niravgajera2018@gmail.com',  question:'Can the May 17 offer deadline be extended?',       rating:'missed',  category:'pricing',    your_answer:'Said you\'d check with team — left unresolved.', better_answer:'Offer conditional extension with token amount to lock pricing.' },
+  { lead_email:'niravgajera2018@gmail.com',  question:'Multiple language audio tracks on same course?',   rating:'partial', category:'product',    your_answer:'Said separate courses needed but didn\'t explain workflow.', better_answer:'Separate course per language + 100% coupon on Pro plan for existing students.' },
+  { lead_email:'sarang.bezalwar@gmail.com',  question:'How does this compare to ClassPlus?',              rating:'partial', category:'competitor', your_answer:'Community features as USP — good but could be sharper.', better_answer:'Lead with creator-first vs institute-first positioning and Razorpay advantage.' },
+  { lead_email:'prakash.inet@gmail.com',     question:'What international payment gateways are supported?',rating:'missed', category:'technical',  your_answer:'Only mentioned Stripe briefly, no full answer.', better_answer:'Stripe for international — USD/EUR/GBP. Indian creators need Stripe with international payments enabled. Gateway fee 5% intl vs 1.5% Razorpay.' },
+  { lead_email:'smritismart83@gmail.com',    question:'What is included in Enterprise vs Standard plan?', rating:'partial', category:'pricing',    your_answer:'Deferred to email — missed chance to anchor value on call.', better_answer:'60-second verbal summary: Standard ₹25K = branded dashboard + unlimited courses. Enterprise ₹1L adds custom apps, dedicated manager, custom website, Zoom 300.' },
+];
+
+const SEED_FOLLOWUPS = [
+  { lead_email:'niravgajera2018@gmail.com',  action:'Send Freedom plan offer — deadline May 17',         urgency:'hot',  done:false },
+  { lead_email:'smritismart83@gmail.com',    action:'Send pricing email (₹25K vs ₹1L breakdown)',        urgency:'hot',  done:false },
+  { lead_email:'kapilkools@gmail.com',       action:'GST refund + custom pricing confirmation',          urgency:'hot',  done:false },
+  { lead_email:'bhartigoel2015@gmail.com',   action:'WhatsApp alternatives + Google Analytics demo',    urgency:'warm', done:false },
+  { lead_email:'skillstsb@gmail.com',        action:'Send brochure — team is reviewing',                urgency:'warm', done:false },
+  { lead_email:'holisticwellnessapproach4u@gmail.com', action:'Reach out after Siddharth community session', urgency:'cool', done:false },
+  { lead_email:'sarang.bezalwar@gmail.com',  action:'Follow up with Freedom plan PDF + testimonials',   urgency:'warm', done:false },
+];
+
+// ══════════════════════════════════════
+// SUPABASE DATA LAYER
+// ══════════════════════════════════════
+
+// Seed all data on first load if tables are empty
+async function seedIfEmpty() {
+  try {
+    const existing = await sb.query('leads', '?select=id&limit=1');
+    if (existing.length > 0) {
+      console.log('✓ Supabase already has data — skipping seed');
+      return;
+    }
+    console.log('Seeding Supabase with real call data…');
+    await sb.upsert('leads', SEED_LEADS, 'email');
+    console.log('✓ Leads seeded');
+    // Insert calls after leads exist
+    for (const call of SEED_CALLS) {
+      try { await sb.insert('calls', call); } catch(e) { console.warn('Call insert:', e.message); }
+    }
+    console.log('✓ Calls seeded');
+    await sb.insert('objections', SEED_OBJECTIONS);
+    console.log('✓ Objections seeded');
+    await sb.insert('follow_ups', SEED_FOLLOWUPS);
+    console.log('✓ Follow-ups seeded');
+    showToast('✓ SalesIQ connected to Supabase — data loaded');
+  } catch(e) {
+    console.error('Seed error:', e);
+  }
+}
+
+// Live data fetchers — used by tabs
+async function fetchLeads() {
+  return sb.query('leads', '?select=*&order=last_contact.desc.nullslast,created_at.desc');
+}
+
+async function fetchCalls(limitDays = 30) {
+  const since = new Date(Date.now() - limitDays * 86400000).toISOString();
+  return sb.query('calls', `?select=*&call_date=gte.${since}&order=call_date.desc`);
+}
+
+async function fetchFollowUps() {
+  return sb.query('follow_ups', '?select=*&order=created_at.desc');
+}
+
+async function fetchStats() {
+  const [leads, calls, fus] = await Promise.all([
+    sb.query('leads', '?select=id,stage'),
+    sb.query('calls', '?select=id,score,talk_ratio_you,call_date'),
+    sb.query('follow_ups', '?select=id,done')
+  ]);
+  const closed = leads.filter(l => l.stage === 'Closed').length;
+  const avgScore = calls.length ? Math.round(calls.reduce((a,c) => a + (c.score||0), 0) / calls.length) : 0;
+  const avgTalk = calls.length ? Math.round(calls.reduce((a,c) => a + (c.talk_ratio_you||0), 0) / calls.length) : 0;
+  const openFUs = fus.filter(f => !f.done).length;
+  return { totalLeads: leads.length, closed, totalCalls: calls.length, avgScore, avgTalk, openFUs };
+}
+
+// Toggle follow-up done status live in Supabase
+async function toggleFollowUpDB(id, currentDone) {
+  await sb.update('follow_ups', id, { done: !currentDone });
+}
+
+// Add a new lead to Supabase (called from + Add Lead modal)
+async function addLeadDB(lead) {
+  return sb.upsert('leads', lead, 'email');
+}
+
+// ══════════════════════════════════════
+// TOAST NOTIFICATION
+// ══════════════════════════════════════
+function showToast(msg, type = 'success') {
+  const existing = document.getElementById('sb-toast');
+  if (existing) existing.remove();
+  const t = document.createElement('div');
+  t.id = 'sb-toast';
+  t.style.cssText = `
+    position:fixed;bottom:24px;right:24px;z-index:9999;
+    background:${type==='success'?'var(--surface)':'var(--rdim)'};
+    border:1px solid ${type==='success'?'var(--border3)':'var(--red)'};
+    color:${type==='success'?'var(--green)':'var(--red)'};
+    padding:10px 16px;border-radius:10px;font-size:12px;font-weight:500;
+    font-family:var(--font);box-shadow:0 4px 20px rgba(0,0,0,.3);
+    display:flex;align-items:center;gap:8px;
+    animation:fadeUp .3s ease;
+  `;
+  t.innerHTML = `<span>${msg}</span>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ══════════════════════════════════════
+// SUPABASE STATUS INDICATOR
+// ══════════════════════════════════════
+function renderSupabaseStatus(connected) {
+  // Update integration dot in sidebar
+  const rows = document.querySelectorAll('.int-row');
+  rows.forEach(row => {
+    if (row.querySelector('.int-name')?.textContent === 'CRM Sync') {
+      const dot = row.querySelector('.int-dot');
+      const st  = row.querySelector('.int-st');
+      if (connected) {
+        dot.style.background = '#22d3a0';
+        dot.style.boxShadow  = '0 0 5px #22d3a0';
+        st.textContent       = 'Live';
+        st.className         = 'int-st st-on';
+        row.querySelector('.int-name').textContent = 'Supabase';
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════
+// UNIFIED BOOT
+// ══════════════════════════════════════
+window.addEventListener('load', async () => {
   // Init overview (already visible)
   TAB_INIT['overview'] = true;
 
-  // Init daily (needs calendar + timeline)
+  // Init daily
   TAB_INIT['daily'] = true;
   try {
     renderCalendar();
@@ -5666,10 +5902,24 @@ window.addEventListener('load', () => {
     }
   } catch(e) { console.warn('Daily init:', e); }
 
-  // Hide loading
+  // Hide loading screen
   setTimeout(() => {
     document.getElementById('appLoader').classList.add('hidden');
   }, 600);
+
+  // Connect Supabase + seed data in background
+  try {
+    await seedIfEmpty();
+    renderSupabaseStatus(true);
+    // Fetch live stats and update overview KPIs
+    const stats = await fetchStats();
+    const activeLeadEl = document.querySelector('.stat-val[data-kpi="leads"]');
+    if (activeLeadEl) activeLeadEl.textContent = stats.totalLeads;
+    showToast(`✓ Supabase live — ${stats.totalLeads} leads, ${stats.totalCalls} calls`);
+  } catch(e) {
+    console.warn('Supabase connection issue:', e);
+    showToast('⚠ Running in offline mode', 'error');
+  }
 });
 </script>
 </body>
