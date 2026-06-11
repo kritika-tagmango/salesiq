@@ -1907,10 +1907,7 @@ ${tagStyles}
             <div class="stat-icon si-purple">👥</div>
           </div>
           <div class="stat-val" id="kpi-total-leads" style="color:var(--accent2)">—</div>
-          <div class="stat-foot">
-            <span class="delta d-up">▲ 4</span>
-            <span class="stat-foot-note">vs last week</span>
-          </div>
+          <div class="stat-foot"></div>
         </div>
 
         <div class="stat-card">
@@ -1919,10 +1916,7 @@ ${tagStyles}
             <div class="stat-icon si-blue">📞</div>
           </div>
           <div class="stat-val" id="kpi-closed" style="color:var(--green)">—</div>
-          <div class="stat-foot">
-            <span class="delta d-up">▲ 7</span>
-            <span class="stat-foot-note">vs last month</span>
-          </div>
+          <div class="stat-foot"></div>
         </div>
 
         <div class="stat-card">
@@ -1931,10 +1925,7 @@ ${tagStyles}
             <div class="stat-icon si-amber">💼</div>
           </div>
           <div class="stat-val" id="kpi-pipeline-val" style="color:var(--amber)">—</div>
-          <div class="stat-foot">
-            <span class="delta d-up">▲ 0.6d</span>
-            <span class="stat-foot-note">faster</span>
-          </div>
+          <div class="stat-foot"></div>
         </div>
 
         <div class="stat-card">
@@ -1943,10 +1934,7 @@ ${tagStyles}
             <div class="stat-icon si-green">🏆</div>
           </div>
           <div class="stat-val" id="kpi-revenue" style="color:var(--green)">—</div>
-          <div class="stat-foot">
-            <span class="delta d-down">▼ 2</span>
-            <span class="stat-foot-note">still open</span>
-          </div>
+          <div class="stat-foot"></div>
         </div>
       </div>
 
@@ -1963,47 +1951,12 @@ ${tagStyles}
         <div class="panel">
           <div class="panel-hdr">
             <div>
-              <div class="panel-title">Active leads</div>
-              <div class="panel-sub">Sorted by last contact</div>
+              <div class="panel-title">In progress</div>
+              <div class="panel-sub" id="active-leads-sub">Loading from pipeline…</div>
             </div>
-            <span class="panel-act">Filter</span>
           </div>
-          <div>
-            <div class="lead-row">
-              <div class="lav lav-1">PM</div>
-              <div class="l-name">Priya Menon</div>
-              <div class="l-email">priya@horizons.io</div>
-              <span class="stage-pill sp-neg">Negotiation</span>
-              <div class="l-tat">4d</div>
-            </div>
-            <div class="lead-row">
-              <div class="lav lav-2">RK</div>
-              <div class="l-name">Rahul Kapoor</div>
-              <div class="l-email">r.kapoor@nova.in</div>
-              <span class="stage-pill sp-demo">Demo</span>
-              <div class="l-tat">1d</div>
-            </div>
-            <div class="lead-row">
-              <div class="lav lav-3">SM</div>
-              <div class="l-name">Sara Mitchell</div>
-              <div class="l-email">s.m@bridgecorp.com</div>
-              <span class="stage-pill sp-tech">Tech Q</span>
-              <div class="l-tat">2d</div>
-            </div>
-            <div class="lead-row">
-              <div class="lav lav-4">AJ</div>
-              <div class="l-name">Arjun Joshi</div>
-              <div class="l-email">ajoshi@zenith.io</div>
-              <span class="stage-pill sp-prop">Proposal</span>
-              <div class="l-tat">6d</div>
-            </div>
-            <div class="lead-row">
-              <div class="lav lav-5">LT</div>
-              <div class="l-name">Lena Tran</div>
-              <div class="l-email">lena@stackify.co</div>
-              <span class="stage-pill sp-fup">Follow-up</span>
-              <div class="l-tat">3d</div>
-            </div>
+          <div id="active-leads-list" style="overflow-y:auto;max-height:240px;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent;">
+            <div style="padding:14px 16px;font-size:12px;color:var(--muted);opacity:.6">Loading…</div>
           </div>
         </div>
 
@@ -2120,24 +2073,10 @@ ${tagStyles}
           <!-- COMPETITORS -->
           <div class="panel">
             <div class="panel-hdr">
-              <div><div class="panel-title">Competitor mentions</div><div class="panel-sub">Across 38 calls</div></div>
+              <div><div class="panel-title">Competitor mentions</div><div class="panel-sub" id="comp-mentions-sub">From pipeline</div></div>
             </div>
-            <div class="panel-body">
-              <div class="comp-row">
-                <span class="comp-name">Hubspot</span>
-                <div class="comp-bar-wrap"><div class="comp-bar" style="width:78%"></div></div>
-                <span class="comp-pct">78%</span>
-              </div>
-              <div class="comp-row">
-                <span class="comp-name">Salesforce</span>
-                <div class="comp-bar-wrap"><div class="comp-bar" style="width:45%;background:linear-gradient(90deg,#f472b6,#fb923c)"></div></div>
-                <span class="comp-pct">45%</span>
-              </div>
-              <div class="comp-row">
-                <span class="comp-name">Pipedrive</span>
-                <div class="comp-bar-wrap"><div class="comp-bar" style="width:28%;background:linear-gradient(90deg,#60a5fa,#a78bfa)"></div></div>
-                <span class="comp-pct">28%</span>
-              </div>
+            <div class="panel-body" id="comp-mentions-list">
+              <div style="font-size:12px;color:var(--muted);opacity:.6">Loading…</div>
             </div>
           </div>
 
@@ -6614,6 +6553,124 @@ function updateOverviewKPIs(data) {
 // ── Hook syncCalendlyLive to also update overview ──
 const _origSync = typeof syncCalendlyLive !== 'undefined' ? syncCalendlyLive : null;
 // syncCalendlyLiveWithOverview removed — syncCalendlyLive() now handles both tabs
+
+
+// ══════════════════════════════════════
+// OVERVIEW — ACTIVE LEADS + COMPETITOR
+// Both driven by live pipeline table
+// ══════════════════════════════════════
+
+function renderActiveLeads(data) {
+  const el  = document.getElementById('active-leads-list');
+  const sub = document.getElementById('active-leads-sub');
+  if (!el) return;
+
+  const inProgress = (data || _pipelineData || [])
+    .filter(r => r.stage === 'In Conversation')
+    .sort((a,b) => new Date(b.call_date||0) - new Date(a.call_date||0));
+
+  if (sub) sub.textContent = `${inProgress.length} in conversation`;
+
+  if (!inProgress.length) {
+    el.innerHTML = '<div style="padding:14px 16px;font-size:12px;color:var(--muted);opacity:.6">No leads in conversation</div>';
+    return;
+  }
+
+  const avatarColors = [
+    'linear-gradient(135deg,#7c5cfc,#a855f7)',
+    'linear-gradient(135deg,#0ea5e9,#22d3ee)',
+    'linear-gradient(135deg,#f472b6,#fb7185)',
+    'linear-gradient(135deg,#f59e0b,#fb923c)',
+    'linear-gradient(135deg,#22d3a0,#06b6d4)'
+  ];
+
+  el.innerHTML = inProgress.map((r, i) => {
+    const initials = (r.name||'?').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    const bg = avatarColors[i % avatarColors.length];
+    const planLabel = [r.setup_plan, r.subscription_plan].filter(Boolean).join(' · ') || '—';
+    const amt = (r.setup_amt||0) + (r.subscription_amt||0);
+    const amtStr = amt > 0 ? '₹' + (amt/1000).toFixed(0) + 'K' : '—';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);cursor:default" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+      <div style="width:28px;height:28px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.name||'—'}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:1px">${planLabel}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:12px;font-weight:700;font-family:var(--mono);color:var(--amber)">${amtStr}</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:1px">${r.priority||''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderCompetitorMentions(data) {
+  const el  = document.getElementById('comp-mentions-list');
+  const sub = document.getElementById('comp-mentions-sub');
+  if (!el) return;
+
+  const allData = data || _pipelineData || [];
+
+  // Count platform mentions from current_platform field
+  const counts = {};
+  allData.forEach(r => {
+    const p = (r.current_platform||'').trim();
+    if (!p) return;
+    // Split by comma in case multiple
+    p.split(/[,/]/).forEach(platform => {
+      const name = platform.trim();
+      if (!name) return;
+      counts[name] = (counts[name] || { count: 0, leads: [] });
+      counts[name].count++;
+      counts[name].leads.push(r.name);
+    });
+  });
+
+  const sorted = Object.entries(counts).sort((a,b) => b[1].count - a[1].count);
+  const total = allData.length;
+
+  if (sub) sub.textContent = `${sorted.length} platform${sorted.length!==1?'s':''} · ${total} leads`;
+
+  if (!sorted.length) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--muted);opacity:.6">No competitor data — fill "Current Platform" in pipeline</div>';
+    return;
+  }
+
+  const maxCount = sorted[0][1].count;
+  const barColors = [
+    'linear-gradient(90deg,#f87171,#f472b6)',
+    'linear-gradient(90deg,#f59e0b,#fb923c)',
+    'linear-gradient(90deg,#60a5fa,#a78bfa)',
+    'linear-gradient(90deg,#22d3a0,#06b6d4)',
+    'linear-gradient(90deg,#7c5cfc,#a855f7)',
+  ];
+
+  el.innerHTML = sorted.map(([name, d], i) => {
+    const pct = Math.round((d.count / maxCount) * 100);
+    const leadNames = d.leads.slice(0,3).join(', ') + (d.leads.length > 3 ? ` +${d.leads.length-3}` : '');
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;font-weight:600">${name}</span>
+        <span style="font-size:10px;font-family:var(--mono);color:var(--muted2)">${d.count} lead${d.count!==1?'s':''}</span>
+      </div>
+      <div style="height:5px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-bottom:3px">
+        <div style="height:100%;width:${pct}%;background:${barColors[i%barColors.length]};border-radius:99px"></div>
+      </div>
+      <div style="font-size:10px;color:var(--muted)">${leadNames}</div>
+    </div>`;
+  }).join('');
+}
+
+// Patch loadPipeline to also render these panels
+const _origLoadPipeline = loadPipeline;
+async function loadPipeline() {
+  await _origLoadPipeline();
+  // After pipeline loads, render active leads + competitor mentions
+  if (_pipelineData && _pipelineData.length) {
+    renderActiveLeads(_pipelineData);
+    renderCompetitorMentions(_pipelineData);
+  }
+}
 
 // ══════════════════════════════════════
 // UNIFIED BOOT
