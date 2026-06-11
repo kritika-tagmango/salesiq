@@ -1873,8 +1873,8 @@ ${tagStyles}
         <input id="pipeline-search-input" type="text" placeholder="Search leads…" oninput="searchPipelineFromOverview(this.value)" style="background:none;border:none;outline:none;color:var(--text);font-size:11px;font-family:var(--font);width:140px;" />
       </div>
       <div class="tb-pill" onclick="syncCalendlyLive()" style="cursor:pointer" title="Sync Calendly bookings">
-        <div class="tb-pulse"></div>
-        <span>Sync Calendly</span>
+        <div class="tb-pulse sync-cal-pulse"></div>
+        <span class="sync-cal-label">Sync Calendly</span>
       </div>
     </div>
 
@@ -2311,7 +2311,7 @@ ${tagStyles}
   <div id="tab-daily" class="tab-pane" style="display:none;flex:1;flex-direction:column;overflow:hidden;min-width:0;">
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Daily Insights <span>— Loading…</span></div>
-    <div class="tb-pill" onclick="syncCalendlyLive()" style="cursor:pointer" title="Click to sync Calendly bookings"><div class="tb-pulse" id="syncPulse"></div><span id="liveLabel">Sync Calendly</span></div>
+    <div class="tb-pill" onclick="syncCalendlyLive()" style="cursor:pointer" title="Click to sync Calendly bookings"><div class="tb-pulse sync-cal-pulse" id="syncPulse"></div><span id="liveLabel" class="sync-cal-label">Sync Calendly</span></div>
 
     <button class="tb-btn primary" id="joinBtn" style="display:none" onclick="joinNext()">Join next call →</button>
   </div>
@@ -6348,23 +6348,20 @@ function updatePrepBanner() {
 
 
 // ══════════════════════════════════════
-// SYNC CALENDLY → DAILY TAB + OVERVIEW
+// SYNC CALENDLY — SINGLE FUNCTION
+// Works from any tab (Overview or Daily)
+// Updates both tabs simultaneously
 // ══════════════════════════════════════
 function syncCalendlyLive() {
-  const lbl   = document.getElementById('liveLabel');
-  const pulse = document.getElementById('syncPulse');
+  // Update ALL sync buttons/pills wherever they exist
+  const labels  = document.querySelectorAll('#liveLabel, .sync-cal-label');
+  const pulses  = document.querySelectorAll('#syncPulse, .sync-cal-pulse');
 
-  lbl.textContent = 'Syncing…';
-  if (pulse) { pulse.style.background='var(--amber)'; pulse.style.boxShadow='0 0 8px var(--amber)'; }
+  labels.forEach(el => el.textContent = 'Syncing…');
+  pulses.forEach(el => { el.style.background='var(--amber)'; el.style.boxShadow='0 0 8px var(--amber)'; });
 
   try {
-    // CALENDLY_SYNC_DATA uses IST timestamps (e.g. "2026-06-11T11:30:00+05:30")
-    // Convert to UTC ISO for RAW_EVENTS which expects UTC
-    function istToUtc(istStr) {
-      // Strip the +05:30 offset and subtract 5h30m
-      const d = new Date(istStr); // JS handles +05:30 correctly
-      return d.toISOString();
-    }
+    function istToUtc(istStr) { return new Date(istStr).toISOString(); }
 
     const newEvents = CALENDLY_SYNC_DATA
       .filter(e => e.call_date)
@@ -6373,25 +6370,22 @@ function syncCalendlyLive() {
         name:    e.lead_name   || 'TBD',
         email:   e.lead_email  || '',
         start:   istToUtc(e.call_date),
-        end:     e.call_end ? istToUtc(e.call_end)
-                            : new Date(new Date(e.call_date).getTime() + 30*60000).toISOString(),
+        end:     e.call_end ? istToUtc(e.call_end) : new Date(new Date(e.call_date).getTime()+30*60000).toISOString(),
         joinUrl: e.join_url || '#',
         qa: [
-          e.whatsapp        ? {q:'WhatsApp',        a:e.whatsapp}        : null,
-          e.source          ? {q:'Source',           a:e.source}          : null,
-          e.sells_courses   ? {q:'Sells courses?',   a:e.sells_courses}   : null,
-          e.other_platforms ? {q:'Other platforms',  a:e.other_platforms} : null,
-          e.community_size  ? {q:'Community size',   a:e.community_size}  : null,
-          e.timeline        ? {q:'Timeline',         a:e.timeline}        : null,
+          e.whatsapp        ? {q:'WhatsApp',       a:e.whatsapp}        : null,
+          e.source          ? {q:'Source',          a:e.source}          : null,
+          e.sells_courses   ? {q:'Sells courses?',  a:e.sells_courses}   : null,
+          e.other_platforms ? {q:'Other platforms', a:e.other_platforms} : null,
+          e.community_size  ? {q:'Community size',  a:e.community_size}  : null,
+          e.timeline        ? {q:'Timeline',        a:e.timeline}        : null,
         ].filter(Boolean)
       }));
 
-    // Merge into RAW_EVENTS — replace existing by id, add new
+    // Merge into RAW_EVENTS
     const existingIds = new Set(RAW_EVENTS.map(e => e.id));
     let added = 0;
-    newEvents.forEach(e => {
-      if (!existingIds.has(e.id)) { RAW_EVENTS.push(e); added++; }
-    });
+    newEvents.forEach(e => { if (!existingIds.has(e.id)) { RAW_EVENTS.push(e); added++; } });
 
     // Rebuild dayMap
     Object.keys(dayMap).forEach(k => delete dayMap[k]);
@@ -6400,42 +6394,45 @@ function syncCalendlyLive() {
       if (!dayMap[k]) dayMap[k] = [];
       dayMap[k].push(e);
     });
-    Object.keys(dayMap).forEach(k =>
-      dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start))
-    );
+    Object.keys(dayMap).forEach(k => dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start)));
 
-    // Re-render daily tab
-    renderCalendar();
-    renderDaySummary();
-    renderTimeline();
-    updateTopbar();
+    // ── Update DAILY INSIGHTS tab ──
+    try {
+      renderCalendar();
+      renderDaySummary();
+      renderTimeline();
+      updateTopbar();
+    } catch(e) { console.warn('Daily render:', e.message); }
 
-    // Update Overview prep banner
+    // ── Update OVERVIEW tab ──
     updatePrepBanner();
-
-    // Update Overview upcoming calls section
+    updateTodayCount();
     renderOverviewUpcoming();
 
-    // Update sidebar today badge
+    // Update sidebar badge
     const badge = document.getElementById('todayBadge');
     if (badge) badge.textContent = (dayMap[todayKey]||[]).length;
 
-    // Success
+    // Success feedback
     const todayCount = (dayMap[todayKey]||[]).length;
     const juneCount  = newEvents.filter(e => e.start.startsWith('2026-06')).length;
-    lbl.textContent = `${newEvents.length} calls synced ✓`;
-    if (pulse) { pulse.style.background='var(--green)'; pulse.style.boxShadow='0 0 8px var(--green)'; }
+    labels.forEach(el => el.textContent = `${newEvents.length} synced ✓`);
+    pulses.forEach(el => { el.style.background='var(--green)'; el.style.boxShadow='0 0 8px var(--green)'; });
     setTimeout(() => {
-      lbl.textContent = 'Sync Calendly';
-      if (pulse) { pulse.style.background=''; pulse.style.boxShadow=''; }
+      labels.forEach(el => el.textContent = 'Sync Calendly');
+      pulses.forEach(el => { el.style.background=''; el.style.boxShadow=''; });
     }, 3000);
-    showToast(`✓ Synced ${newEvents.length} calls — ${todayCount} today · ${juneCount} in June`);
+
+    showToast(`✓ Synced ${newEvents.length} calls — ${todayCount} today`);
 
   } catch(err) {
     console.error('syncCalendlyLive:', err);
-    lbl.textContent = 'Sync failed';
-    if (pulse) { pulse.style.background='var(--red)'; pulse.style.boxShadow='0 0 6px var(--red)'; }
-    setTimeout(() => { lbl.textContent='Sync Calendly'; if(pulse){pulse.style.background='';pulse.style.boxShadow='';} }, 3000);
+    labels.forEach(el => el.textContent = 'Sync failed');
+    pulses.forEach(el => { el.style.background='var(--red)'; el.style.boxShadow='0 0 6px var(--red)'; });
+    setTimeout(() => {
+      labels.forEach(el => el.textContent = 'Sync Calendly');
+      pulses.forEach(el => { el.style.background=''; el.style.boxShadow=''; });
+    }, 3000);
   }
 }
 
@@ -6616,13 +6613,7 @@ function updateOverviewKPIs(data) {
 
 // ── Hook syncCalendlyLive to also update overview ──
 const _origSync = typeof syncCalendlyLive !== 'undefined' ? syncCalendlyLive : null;
-function syncCalendlyLiveWithOverview() {
-  syncCalendlyLive();
-  // After a short delay for the sync to complete, update overview counts
-  setTimeout(() => {
-    updateTodayCount();
-  }, 500);
-}
+// syncCalendlyLiveWithOverview removed — syncCalendlyLive() now handles both tabs
 
 // ══════════════════════════════════════
 // UNIFIED BOOT
