@@ -1863,16 +1863,19 @@ ${tagStyles}
 
     <!-- TOPBAR -->
     <div class="topbar">
-      <div class="topbar-title">Overview <span>— May 2026</span></div>
+      <div class="topbar-title">Overview <span id="overview-month-label">— Loading…</span></div>
       <div class="tb-pill">
         <div class="tb-pulse"></div>
-        2 calls today
+        <span id="overview-today-count">0</span> calls today
       </div>
-      <button class="tb-btn">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="4"/><path d="M9 9l2 2"/></svg>
-        Search leads
-      </button>
-      <button class="tb-btn primary">+ Add Lead</button>
+      <div style="display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:5px 10px;transition:border-color .15s" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor=''">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5;flex-shrink:0"><circle cx="5" cy="5" r="4"/><path d="M9 9l2 2"/></svg>
+        <input id="pipeline-search-input" type="text" placeholder="Search leads…" oninput="searchPipelineFromOverview(this.value)" style="background:none;border:none;outline:none;color:var(--text);font-size:11px;font-family:var(--font);width:140px;" />
+      </div>
+      <div class="tb-pill" onclick="syncCalendlyLive()" style="cursor:pointer" title="Sync Calendly bookings">
+        <div class="tb-pulse"></div>
+        <span>Sync Calendly</span>
+      </div>
     </div>
 
     <!-- CONTENT -->
@@ -1900,7 +1903,7 @@ ${tagStyles}
       <div class="stat-grid">
         <div class="stat-card accent-card">
           <div class="stat-top">
-            <div class="stat-lbl">Active Leads</div>
+            <div class="stat-lbl">In Progress</div>
             <div class="stat-icon si-purple">👥</div>
           </div>
           <div class="stat-val" id="kpi-total-leads" style="color:var(--accent2)">—</div>
@@ -1925,7 +1928,7 @@ ${tagStyles}
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-lbl">Pipeline Value</div>
-            <div class="stat-icon si-amber">⏱</div>
+            <div class="stat-icon si-amber">💼</div>
           </div>
           <div class="stat-val" id="kpi-pipeline-val" style="color:var(--amber)">—</div>
           <div class="stat-foot">
@@ -1936,10 +1939,10 @@ ${tagStyles}
 
         <div class="stat-card">
           <div class="stat-top">
-            <div class="stat-lbl">P0 Priority</div>
-            <div class="stat-icon si-red">❓</div>
+            <div class="stat-lbl">Revenue Achieved</div>
+            <div class="stat-icon si-green">🏆</div>
           </div>
-          <div class="stat-val" id="kpi-p0" style="color:var(--red)">—</div>
+          <div class="stat-val" id="kpi-revenue" style="color:var(--green)">—</div>
           <div class="stat-foot">
             <span class="delta d-down">▼ 2</span>
             <span class="stat-foot-note">still open</span>
@@ -2008,48 +2011,14 @@ ${tagStyles}
         <div class="panel">
           <div class="panel-hdr">
             <div>
-              <div class="panel-title">Upcoming calls</div>
-              <div class="panel-sub">via Calendly · Today</div>
+              <div class="panel-title">Calls today</div>
+              <div class="panel-sub" id="overview-calls-today-sub">via Calendly · sync to load</div>
             </div>
-            <span class="panel-act">Calendar</span>
+            <span id="overview-today-date" style="font-size:11px;font-weight:600;color:var(--accent2);font-family:var(--mono)"></span>
           </div>
-          <div class="panel-body">
-            <div class="cal-strip" style="margin-bottom:12px">
-              <div class="cal-day"><div class="cal-dow">Mon</div><div class="cal-dt">12</div><div class="cal-pip"></div></div>
-              <div class="cal-day"><div class="cal-dow">Tue</div><div class="cal-dt">13</div><div class="cal-pip"><div class="cp"></div></div></div>
-              <div class="cal-day today"><div class="cal-dow">Wed</div><div class="cal-dt">14</div><div class="cal-pip"><div class="cp"></div><div class="cp g"></div></div></div>
-              <div class="cal-day"><div class="cal-dow">Thu</div><div class="cal-dt">15</div><div class="cal-pip"><div class="cp a"></div></div></div>
-              <div class="cal-day"><div class="cal-dow">Fri</div><div class="cal-dt">16</div><div class="cal-pip"></div></div>
-            </div>
-
-            <div class="call-card">
-              <div class="call-time-block"><div class="call-time">10:00</div><div class="call-ampm">AM</div></div>
-              <div class="call-info">
-                <div class="call-name">Rahul Kapoor</div>
-                <div class="call-type">Product Demo · 45 min</div>
-              </div>
-              <div class="call-dur">45m</div>
-            </div>
-
-            <div class="call-card">
-              <div class="call-time-block" style="background:var(--accent-glow2);border:1px solid var(--border3)">
-                <div class="call-time" style="color:var(--accent2)">3:30</div>
-                <div class="call-ampm" style="color:var(--accent)">PM</div>
-              </div>
-              <div class="call-info">
-                <div class="call-name">Priya Menon</div>
-                <div class="call-type">Pricing Negotiation · 30 min</div>
-              </div>
-              <div class="call-dur">30m</div>
-            </div>
-
-            <div class="call-card">
-              <div class="call-time-block"><div class="call-time">5:00</div><div class="call-ampm">PM</div></div>
-              <div class="call-info">
-                <div class="call-name">Arjun Joshi</div>
-                <div class="call-type">Proposal Review · 60 min</div>
-              </div>
-              <div class="call-dur">1h</div>
+          <div id="overview-today-calls" style="overflow-y:auto;max-height:220px;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent;">
+            <div style="padding:20px 16px;text-align:center;opacity:.5;font-size:12px;color:var(--muted2)">
+              Click Sync Calendly to load today's calls
             </div>
           </div>
         </div>
@@ -6541,6 +6510,118 @@ function renderOverviewUpcoming() {
       ${callRows}
     </div>`;
   }).join('');
+}
+
+
+// ══════════════════════════════════════
+// OVERVIEW TAB — LIVE UPDATERS
+// ══════════════════════════════════════
+
+function initOverview() {
+  // 1. Current month label
+  const now = new Date();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const label = document.getElementById('overview-month-label');
+  if (label) label.textContent = `— ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  // 2. Today's date in upcoming calls header
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dateEl = document.getElementById('overview-today-date');
+  if (dateEl) dateEl.textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`;
+
+  // 3. Today's call count from CALENDLY_SYNC_DATA
+  updateTodayCount();
+}
+
+function updateTodayCount() {
+  const today = getTodayCalendlyEvents ? getTodayCalendlyEvents() : [];
+  const countEl = document.getElementById('overview-today-count');
+  if (countEl) countEl.textContent = today.length;
+  // Also refresh the today calls panel
+  renderOverviewTodayCalls(today);
+}
+
+function renderOverviewTodayCalls(calls) {
+  const el = document.getElementById('overview-today-calls');
+  if (!el) return;
+
+  // Update sub-label
+  const sub = document.getElementById('overview-calls-today-sub');
+  if (sub) sub.textContent = calls.length
+    ? `via Calendly · ${calls.length} call${calls.length>1?'s':''} today`
+    : 'via Calendly · sync to load';
+
+  if (!calls || !calls.length) {
+    el.innerHTML = '<div style="padding:20px 16px;text-align:center;opacity:.5;font-size:12px;color:var(--muted2)">No calls today — or click Sync Calendly</div>';
+    return;
+  }
+
+  const now = new Date();
+  el.innerHTML = calls.map(c => {
+    const dt = new Date(c.call_date || c.start);
+    const h = dt.getHours(), m = dt.getMinutes();
+    const ampm = h>=12?'PM':'AM'; const h12 = h%12||12;
+    const timeStr = `${h12}:${String(m).padStart(2,'0')}`;
+    const isPast = dt < now;
+    const isNext = !isPast && calls.filter(x => new Date(x.call_date||x.start) >= now)[0] === c;
+    const initials = (c.lead_name||'?').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    const colors = ['linear-gradient(135deg,#7c5cfc,#a855f7)','linear-gradient(135deg,#0ea5e9,#22d3ee)','linear-gradient(135deg,#f472b6,#fb7185)','linear-gradient(135deg,#f59e0b,#fb923c)','linear-gradient(135deg,#22d3a0,#06b6d4)'];
+    const bg = colors[(c.lead_name||'A').charCodeAt(0)%5];
+
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .1s;opacity:${isPast?.65:1}" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+      <div style="background:${isNext?'var(--glow2)':'var(--surface2)'};border:1px solid ${isNext?'var(--border3)':'transparent'};border-radius:8px;padding:5px 8px;text-align:center;min-width:48px;flex-shrink:0">
+        <div style="font-size:13px;font-weight:700;font-family:var(--mono);line-height:1.1;${isNext?'color:var(--accent2)':''}">${timeStr}</div>
+        <div style="font-size:9px;color:var(--muted)">${ampm}</div>
+      </div>
+      <div style="width:26px;height:26px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.lead_name||'TBD'}</div>
+        <div style="font-size:10px;color:var(--muted)">${c.call_type||'Discovery Call'}</div>
+      </div>
+      ${c.join_url && c.join_url!=='#' ? `<a href="${c.join_url}" target="_blank" style="font-size:10px;color:var(--accent2);text-decoration:none;flex-shrink:0">Join →</a>` : (isPast ? '<span style="font-size:9.5px;color:var(--muted)">Done</span>' : '')}
+    </div>`;
+  }).join('');
+}
+
+// ── Pipeline search from overview ──
+function searchPipelineFromOverview(query) {
+  const q = query.toLowerCase().trim();
+  if (!_pipelineData || !_pipelineData.length) return;
+  const filtered = q
+    ? _pipelineData.filter(r =>
+        (r.name||'').toLowerCase().includes(q) ||
+        (r.email||'').toLowerCase().includes(q) ||
+        (r.niche||'').toLowerCase().includes(q) ||
+        (r.stage||'').toLowerCase().includes(q))
+    : _pipelineData;
+  renderPipelineTable(filtered);
+  // Scroll to pipeline section
+  const sec = document.getElementById('pipeline-section');
+  if (sec && q) sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Patch updateOverviewKPIs to use correct fields ──
+function updateOverviewKPIs(data) {
+  const inProgress = data.filter(r => r.stage === 'In Conversation');
+  const closed     = data.filter(r => r.stage === 'Closed Won');
+  const pipelineV  = inProgress.reduce((a,r) => a+(r.setup_amt||0)+(r.subscription_amt||0), 0);
+  const revenue    = closed.reduce((a,r) => a+(r.setup_amt||0)+(r.subscription_amt||0), 0);
+
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  set('kpi-total-leads',  inProgress.length);
+  set('kpi-closed',       closed.length);
+  set('kpi-pipeline-val', '₹' + (pipelineV/1000).toFixed(0) + 'K');
+  set('kpi-revenue',      '₹' + (revenue/1000).toFixed(0) + 'K');
+}
+
+// ── Hook syncCalendlyLive to also update overview ──
+const _origSync = typeof syncCalendlyLive !== 'undefined' ? syncCalendlyLive : null;
+function syncCalendlyLiveWithOverview() {
+  syncCalendlyLive();
+  // After a short delay for the sync to complete, update overview counts
+  setTimeout(() => {
+    updateTodayCount();
+  }, 500);
 }
 
 // ══════════════════════════════════════
