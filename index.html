@@ -6153,7 +6153,7 @@ async function loadPipeline() {
     const data = await sb.query('pipeline', '?select=*&order=call_date.desc');
     _pipelineData = data || [];
     renderPipeline(_pipelineData);
-  updateOverviewKPIs(_pipelineData);
+    updateOverviewKPIs(_pipelineData);
   } catch(e) {
     console.warn('Pipeline load error:', e.message);
     document.getElementById('pipeline-sub').textContent = 'Could not load — check Supabase connection';
@@ -6252,6 +6252,9 @@ function renderPipelineTable(data) {
   }).join('');
 
   document.getElementById('pipeline-table').innerHTML = thead + `<tbody>${rows}</tbody>`;
+  // Also update active leads + competitor mentions panels
+  renderActiveLeads(data);
+  renderCompetitorMentions(data);
 }
 
 
@@ -6661,16 +6664,7 @@ function renderCompetitorMentions(data) {
   }).join('');
 }
 
-// Patch loadPipeline to also render these panels
-const _origLoadPipeline = loadPipeline;
-async function loadPipeline() {
-  await _origLoadPipeline();
-  // After pipeline loads, render active leads + competitor mentions
-  if (_pipelineData && _pipelineData.length) {
-    renderActiveLeads(_pipelineData);
-    renderCompetitorMentions(_pipelineData);
-  }
-}
+// pipeline patch moved to renderPipeline()
 
 // ══════════════════════════════════════
 // UNIFIED BOOT
