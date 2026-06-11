@@ -2103,32 +2103,25 @@ ${tagStyles}
           <div class="panel-hdr">
             <div><div class="panel-title">Calls per week</div><div class="panel-sub">Last 8 weeks</div></div>
           </div>
-          <div class="panel-body">
-            <div class="trend-chart">
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:30px"></div><div class="trend-lbl">W1</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:38px"></div><div class="trend-lbl">W2</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:24px"></div><div class="trend-lbl">W3</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:44px"></div><div class="trend-lbl">W4</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:36px"></div><div class="trend-lbl">W5</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar half" style="height:50px"></div><div class="trend-lbl">W6</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar active" style="height:58px"></div><div class="trend-lbl">W7</div></div>
-              <div class="trend-bar-wrap"><div class="trend-bar" style="height:18px;opacity:0.3"></div><div class="trend-lbl">W8</div></div>
+          <div class="panel-body" id="weekly-trend-body">
+            <div class="trend-chart" id="weekly-trend-chart">
+              <div style="font-size:11px;color:var(--muted);padding:20px;opacity:.5">Loading from pipeline…</div>
             </div>
             <div style="display:flex;gap:16px;margin-top:8px">
               <div class="mini-block" style="flex:1">
                 <div class="mini-lbl">This week</div>
-                <div class="mini-val" style="color:var(--accent2)">9</div>
-                <div class="mini-note delta d-up">▲ 2 calls</div>
+                <div class="mini-val" id="trend-this-week" style="color:var(--accent2)">—</div>
+                <div class="mini-note" id="trend-this-week-note" style="color:var(--muted)"></div>
               </div>
               <div class="mini-block" style="flex:1">
                 <div class="mini-lbl">Avg / week</div>
-                <div class="mini-val">6.8</div>
+                <div class="mini-val" id="trend-avg-week">—</div>
                 <div class="mini-note" style="color:var(--muted)">rolling 8w</div>
               </div>
               <div class="mini-block" style="flex:1">
                 <div class="mini-lbl">Best week</div>
-                <div class="mini-val" style="color:var(--green)">12</div>
-                <div class="mini-note" style="color:var(--muted)">W4 this mo.</div>
+                <div class="mini-val" id="trend-best-week" style="color:var(--green)">—</div>
+                <div class="mini-note" id="trend-best-week-note" style="color:var(--muted)"></div>
               </div>
             </div>
           </div>
@@ -2215,8 +2208,6 @@ ${tagStyles}
         <span id="pipeline-updated" style="font-size:10px;color:var(--muted)"></span>
       </div>
       <div id="pipeline-section" style="margin-bottom:22px;display:none">
-        <!-- Stats row -->
-        <div class="stat-grid" id="pipeline-kpis" style="margin-bottom:14px"></div>
         <!-- Table -->
         <div class="panel" id="pipeline-table-wrap">
           <div class="panel-hdr">
@@ -6208,8 +6199,7 @@ function renderPipeline(data) {
   `;
 
   document.getElementById('pipeline-title').textContent = `Pipeline · ${total} leads`;
-  document.getElementById('pipeline-sub').textContent   = `${closed.length} closed · ${active.length} in conversation · last synced just now`;
-  document.getElementById('pipeline-updated').textContent = `Synced ${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}`;
+  document.getElementById('pipeline-sub').textContent   = `${closed.length} closed · ${active.length} in conversation`;
 
   renderPipelineTable(data);
 }
@@ -6252,9 +6242,10 @@ function renderPipelineTable(data) {
   }).join('');
 
   document.getElementById('pipeline-table').innerHTML = thead + `<tbody>${rows}</tbody>`;
-  // Also update active leads + competitor mentions panels
+  // Also update active leads, competitor mentions, weekly trend
   renderActiveLeads(data);
   renderCompetitorMentions(data);
+  renderWeeklyTrend(data);
 }
 
 
@@ -6665,6 +6656,97 @@ function renderCompetitorMentions(data) {
 }
 
 // pipeline patch moved to renderPipeline()
+
+
+// ══════════════════════════════════════
+// OVERVIEW — WEEKLY TREND CHART
+// Buckets pipeline call_dates into Mon–Sun
+// weeks and renders a live bar chart
+// ══════════════════════════════════════
+function renderWeeklyTrend(data) {
+  const chartEl   = document.getElementById('weekly-trend-chart');
+  const thisWeekEl = document.getElementById('trend-this-week');
+  const thisNoteEl = document.getElementById('trend-this-week-note');
+  const avgEl     = document.getElementById('trend-avg-week');
+  const bestEl    = document.getElementById('trend-best-week');
+  const bestNoteEl = document.getElementById('trend-best-week-note');
+  if (!chartEl) return;
+
+  // Get Monday of a given date
+  function getMonday(d) {
+    const dt = new Date(d);
+    const day = dt.getDay();
+    const diff = day === 0 ? -6 : 1 - day; // Mon = 0 offset
+    dt.setDate(dt.getDate() + diff);
+    dt.setHours(0,0,0,0);
+    return dt;
+  }
+
+  function weekKey(d) {
+    const mon = getMonday(d);
+    return mon.toISOString().slice(0,10);
+  }
+
+  // Bucket each pipeline row by call_date week
+  const weeks = {};
+  (data || []).forEach(r => {
+    if (!r.call_date) return;
+    const k = weekKey(new Date(r.call_date));
+    weeks[k] = (weeks[k] || 0) + 1;
+  });
+
+  // Sort week keys, take last 8
+  const allKeys = Object.keys(weeks).sort();
+  const last8   = allKeys.slice(-8);
+
+  if (!last8.length) {
+    chartEl.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:20px;opacity:.5">No call date data in pipeline</div>';
+    return;
+  }
+
+  const counts   = last8.map(k => weeks[k] || 0);
+  const maxCount = Math.max(...counts, 1);
+
+  // Current week key
+  const nowMonKey = weekKey(new Date());
+  const thisWeekCount = weeks[nowMonKey] || 0;
+  const avg = counts.length ? (counts.reduce((a,b)=>a+b,0) / counts.length).toFixed(1) : 0;
+  const bestCount = Math.max(...counts);
+  const bestKey   = last8[counts.indexOf(bestCount)];
+
+  // Format week label: "Jun 1–7"
+  function fmtWeekLabel(monKey) {
+    const mon = new Date(monKey);
+    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    if (mon.getMonth() === sun.getMonth()) {
+      return `${months[mon.getMonth()]} ${mon.getDate()}–${sun.getDate()}`;
+    }
+    return `${months[mon.getMonth()]} ${mon.getDate()}–${months[sun.getMonth()]} ${sun.getDate()}`;
+  }
+
+  // Render bars
+  chartEl.innerHTML = last8.map((k, i) => {
+    const n      = counts[i];
+    const px     = Math.max(Math.round((n / maxCount) * 60), n > 0 ? 6 : 2);
+    const isCurr = k === nowMonKey;
+    const isBest = k === bestKey;
+    const label  = fmtWeekLabel(k);
+    const barCls = isCurr ? 'trend-bar active' : isBest ? 'trend-bar half' : 'trend-bar';
+    return `<div class="trend-bar-wrap" title="${label}: ${n} calls">
+      <div style="font-size:9.5px;font-family:var(--mono);color:${isCurr?'var(--accent2)':'var(--muted)'};margin-bottom:2px;text-align:center">${n||''}</div>
+      <div class="${barCls}" style="height:${px}px${n===0?';opacity:.2':''}"></div>
+      <div class="trend-lbl" style="${isCurr?'color:var(--accent2);font-weight:600':''}">${label.split(' ')[0]+' '+label.split(' ')[1]}</div>
+    </div>`;
+  }).join('');
+
+  // Update stat blocks
+  if (thisWeekEl) thisWeekEl.textContent = thisWeekCount;
+  if (thisNoteEl) thisNoteEl.textContent = thisWeekCount > 0 ? 'this week' : 'no calls yet';
+  if (avgEl) avgEl.textContent = avg;
+  if (bestEl) bestEl.textContent = bestCount;
+  if (bestNoteEl) bestNoteEl.textContent = fmtWeekLabel(bestKey);
+}
 
 // ══════════════════════════════════════
 // UNIFIED BOOT
