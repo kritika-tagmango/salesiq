@@ -1876,6 +1876,11 @@ ${tagStyles}
         <div class="tb-pulse sync-cal-pulse"></div>
         <span class="sync-cal-label">Sync Calendly</span>
       </div>
+      <button id="granola-sync-btn" class="tb-btn" onclick="syncGranolaTranscripts()" title="Sync Granola transcripts → Claude analysis → Supabase" style="gap:6px">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5v2.5l1.5 1.5"/></svg>
+        Sync Granola
+      </button>
+      <span id="granola-sync-status" style="font-size:10px;color:var(--muted);display:none"></span>
     </div>
 
     <!-- CONTENT -->
@@ -6723,6 +6728,127 @@ function renderWeeklyTrend(data) {
   if (avgEl) avgEl.textContent = avg;
   if (bestEl) bestEl.textContent = bestCount;
   if (bestNoteEl) bestNoteEl.textContent = fmtWeekLabel(bestKey);
+}
+
+
+// ══════════════════════════════════════
+// GRANOLA SYNC — PIPELINE TRANSCRIPTS
+// 8 pipeline leads × 1 call each
+// Analysed via Claude API → Supabase
+// ══════════════════════════════════════
+const GRANOLA_PIPELINE_MEETINGS = [{"granola_id":"e58587a2","lead_name":"Chirag Chopra","lead_email":"chiragchopra786@gmail.com","call_date":"2026-05-19T18:30:00+05:30","call_type":"Competitor Pricing Discussion","summary":"Chirag runs government exam coaching on Graphy. Main requirement: AI for essay grading/descriptive answers. Was also evaluating ClassPlus and Apex. Abhinav handled with Kritika. Pricing negotiated down to 1 lakh + GST (Freedom + App, no website, no success manager, 5% commission). Price sensitive — just started as educator, capital constrained. Needs to decide by tomorrow. Graphy subscription ending in 2-3 days — urgency is real."},{"granola_id":"da41a9fe","lead_name":"Jagan","lead_email":"evcglobalventures@gmail.com","call_date":"2026-05-27T14:30:00+05:30","call_type":"Pricing Discussion","summary":"Jagan discussed Enterprise Plus (50k) vs Enterprise with website (75k = 88.5K with GST). Needs to discuss with team and confirm by Monday. Plans to use both brand name and ILH domain. Asked about WhatsApp automation (needs separate purchase). App timeline 45-60 days. Basic plan 10% commission. Parallel course upload while domain being set up. Offered flat 25% discount on enterprise, 50% without website."},{"granola_id":"4db679e7","lead_name":"Priya Lakshmi","lead_email":"priyabeautyhub@gmail.com","call_date":"2026-05-29T18:00:00+05:30","call_type":"Demo - ILH Referral","summary":"Priya is offline makeup artist going online. Enterprise Plus 50k offer. Thorough demo of email automations, zoom, storage. Confirmed can start later (2 months), domain activation starts the 3-year count. Success manager assigned post payment. Not tech savvy. Asked about zoom pricing after 3 years. Clear intent to purchase. Said she'll share payment confirmation on WhatsApp."},{"granola_id":"6a488624","lead_name":"Trisha Torcato","lead_email":"trishatorcato@gmail.com","call_date":"2026-05-29T17:00:00+05:30","call_type":"Demo - ILH Referral","summary":"Trisha is homeopathic physician, mind transformation coach. Enterprise Plus 50k discussed. Heavy discussion on success manager availability (1:50 ratio), WhatsApp API cost (1500/month), email automations vs broadcasts (10 per user limit on basic). Plans free workshops then paid courses — confirmed this workflow works. Not fully convinced. Concerned about broadcast limit. Told to decide by Monday. Platform too complex for her initial phase."},{"granola_id":"33474023","lead_name":"Pratiksha","lead_email":"pratikshapatil6933@gmail.com","call_date":"2026-06-01T12:30:00+05:30","call_type":"Demo - Moving from Graphy","summary":"Pratiksha does import-export training on Graphy. Pain: payment gateway variety, AI features, webinar technical issues. Key requirement: cash payment collection — needs advanced plan (user addition) or pro plan (100% coupon workaround). Enterprise setup discussed (1 lakh). 10-15 day purchase timeline. Wants platform trial access. Interested in gamification and community features. Showed Siddharth and Ranveer as examples."},{"granola_id":"bab04aea","lead_name":"Jaya Gophane","lead_email":"jayagt@jayagophanetrainings.com","call_date":"2026-06-01T12:00:00+05:30","call_type":"Demo - Moving from Teachable","summary":"Jaya has 750 workshops, 700 WhatsApp groups, on Teachable. Personal development + neuroscience. Very loyal students, 30%+ webinar conversion. Hybrid model needed (50% recorded, 50% live). Tech-not-savvy, lives on farm. Wants Advanced plan to start then upgrade to Ultimate for challenges/habits/sparks. Payment via webinar (razor pay external). Interested in gamification for retention. Plans to start carefully, not rush."},{"granola_id":"a1c8a2b2","lead_name":"Lasakan","lead_email":"lasakan06@gmail.com","call_date":"2026-05-29T18:30:00+05:30","call_type":"Demo - ILH Referral (International)","summary":"Lasakan from Sri Lanka. Enterprise Plus 50k. Critical issue: payment gateway shows USD via Stripe but students pay in SLR (Sri Lankan Rupees). Currency mismatch unresolved. Suggested Advanced plan with user addition as workaround (manual cash collection). International payment blocker is the main risk. No resolution found on call."},{"granola_id":"658da6f5","lead_name":"Vaishaly","lead_email":"vaishalybharambe@yahoo.co.in","call_date":"2026-06-10T16:30:00+05:30","call_type":"Pricing Negotiation","summary":"Vaishaly ILH diamond member. Discussed Enterprise 75k + Pro annual 50k = 125k total. Wants zoom webinar 500 people in pro (needs manager approval). DRM on apps for content protection (needs confirmation). 50k Enterprise Plus offer expired June 7 — cannot extend. 75k is non-negotiable. Will pay tomorrow if zoom webinar 500 confirmed. Waiting for EOD confirmation on zoom webinar, DRM, and whether further discount possible."}];
+
+async function syncGranolaTranscripts() {
+  const btn = document.getElementById('granola-sync-btn');
+  const status = document.getElementById('granola-sync-status');
+  if (btn) { btn.disabled = true; btn.textContent = 'Analysing…'; }
+  if (status) { status.style.display='inline'; status.textContent = 'Running Claude on 8 calls…'; }
+
+  const SYSTEM = `You are an AI sales coach analyzing sales calls for Kritika Gupta at TagMango.
+Analyze the call and return ONLY valid JSON:
+{
+  "score": <0-100>,
+  "talk_ratio_you": <integer %>,
+  "talk_ratio_them": <integer %>,
+  "call_summary": "<2-3 sentence summary>",
+  "next_step": "<specific next action>",
+  "coaching_tip": "<one actionable improvement>",
+  "buying_signals": ["<signal>"],
+  "risk_signals": ["<signal>"],
+  "objections": [
+    {
+      "question": "<objection>",
+      "category": "pricing|product|competitor|technical|timing",
+      "rating": "good|partial|missed",
+      "your_answer": "<what was said>",
+      "better_answer": "<improved response>"
+    }
+  ]
+}
+Return ONLY JSON.`;
+
+  let synced = 0, errors = 0;
+
+  for (const m of GRANOLA_PIPELINE_MEETINGS) {
+    try {
+      if (status) status.textContent = `Analysing ${m.lead_name}… (${synced+1}/${GRANOLA_PIPELINE_MEETINGS.length})`;
+
+      // Call Claude API
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1200,
+          system: SYSTEM,
+          messages: [{ role: 'user', content:
+            `Lead: ${m.lead_name} (${m.lead_email})\nDate: ${m.call_date}\nType: ${m.call_type}\n\nSummary: ${m.summary}`
+          }]
+        })
+      });
+
+      const data = await res.json();
+      const text = data.content?.[0]?.text || '{}';
+      let analysis;
+      try { analysis = JSON.parse(text.replace(/```json|```/g,'').trim()); }
+      catch(e) { console.warn('Parse error:', m.lead_name); errors++; continue; }
+
+      // Save call to Supabase
+      await sb.upsert('calls', {
+        lead_email:     m.lead_email,
+        lead_name:      m.lead_name,
+        call_date:      m.call_date,
+        call_type:      m.call_type,
+        granola_id:     m.granola_id,
+        duration_mins:  30,
+        score:          analysis.score,
+        talk_ratio_you: analysis.talk_ratio_you,
+        talk_ratio_them:analysis.talk_ratio_them,
+        summary:        analysis.call_summary,
+        next_step:      analysis.next_step,
+        coaching_tip:   analysis.coaching_tip
+      }, 'granola_id');
+
+      // Save objections
+      if (analysis.objections?.length) {
+        for (const o of analysis.objections) {
+          try {
+            await sb.insert('objections', {
+              lead_email:   m.lead_email,
+              question:     o.question,
+              category:     o.category,
+              rating:       o.rating,
+              your_answer:  o.your_answer,
+              better_answer:o.better_answer
+            });
+          } catch(e) { /* duplicate ok */ }
+        }
+      }
+
+      // Save follow-up
+      if (analysis.next_step) {
+        try {
+          await sb.insert('follow_ups', {
+            lead_email: m.lead_email,
+            action:     analysis.next_step,
+            urgency:    'warm',
+            done:       false
+          });
+        } catch(e) { /* duplicate ok */ }
+      }
+
+      synced++;
+    } catch(e) {
+      console.error('Error for', m.lead_name, e.message);
+      errors++;
+    }
+  }
+
+  // Done
+  invalidateCache();
+  if (btn) { btn.disabled = false; btn.textContent = 'Sync Granola'; }
+  if (status) status.textContent = `✓ ${synced} calls synced · ${errors} errors`;
+  showToast(`✓ Granola sync: ${synced}/${GRANOLA_PIPELINE_MEETINGS.length} calls analysed by Claude`);
 }
 
 // ══════════════════════════════════════
