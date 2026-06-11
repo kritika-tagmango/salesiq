@@ -1982,14 +1982,14 @@ ${tagStyles}
         <!-- CALL SCORE + TAT -->
         <div class="panel">
           <div class="panel-hdr">
-            <div><div class="panel-title">Call quality score</div><div class="panel-sub">This week avg.</div></div>
+            <div><div class="panel-title">Call quality score</div><div class="panel-sub">Avg across 8 pipeline calls</div></div>
           </div>
           <div class="panel-body">
             <div class="score-wrap">
               <svg class="score-ring-svg" width="110" height="110" viewBox="0 0 110 110">
                 <circle cx="55" cy="55" r="46" fill="none" stroke="var(--surface3)" stroke-width="8"/>
                 <circle cx="55" cy="55" r="46" fill="none" stroke="url(#ringGrad)" stroke-width="8"
-                  stroke-dasharray="289" stroke-dashoffset="72" stroke-linecap="round"
+                  stroke-dasharray="289" stroke-dashoffset="95" stroke-linecap="round"
                   transform="rotate(-90 55 55)"/>
                 <defs>
                   <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="0">
@@ -1997,7 +1997,7 @@ ${tagStyles}
                     <stop offset="100%" stop-color="#a855f7"/>
                   </linearGradient>
                 </defs>
-                <text x="55" y="52" text-anchor="middle" font-family="JetBrains Mono" font-size="22" font-weight="700" fill="var(--accent2)">75</text>
+                <text x="55" y="52" text-anchor="middle" font-family="JetBrains Mono" font-size="22" font-weight="700" fill="var(--accent2)">67</text>
                 <text x="55" y="67" text-anchor="middle" font-family="Sora" font-size="9" fill="var(--muted)">/ 100</text>
               </svg>
             </div>
@@ -2005,21 +2005,21 @@ ${tagStyles}
             <div style="margin-top:8px">
               <div class="tat-row">
                 <div class="tat-dot" style="background:var(--green)"></div>
-                <span class="tat-label">Avg first reply</span>
-                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:72%;background:var(--green)"></div></div>
-                <span class="tat-val">2.1d</span>
+                <span class="tat-label">Talk ratio (you)</span>
+                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:58%;background:var(--amber)"></div></div>
+                <span class="tat-val">58%</span>
               </div>
               <div class="tat-row">
                 <div class="tat-dot" style="background:var(--accent2)"></div>
-                <span class="tat-label">Avg close TAT</span>
-                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:52%;background:var(--accent2)"></div></div>
-                <span class="tat-val">4.2d</span>
+                <span class="tat-label">Avg call score</span>
+                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:67%;background:var(--accent2)"></div></div>
+                <span class="tat-val">67 / 100</span>
               </div>
               <div class="tat-row">
                 <div class="tat-dot" style="background:var(--amber)"></div>
-                <span class="tat-label">Qs unanswered</span>
-                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:28%;background:var(--amber)"></div></div>
-                <span class="tat-val">7</span>
+                <span class="tat-label">Missed objections</span>
+                <div class="tat-bar-track"><div class="tat-bar-fill" style="width:50%;background:var(--red)"></div></div>
+                <span class="tat-val">4 calls</span>
               </div>
             </div>
           </div>
@@ -2048,24 +2048,28 @@ ${tagStyles}
           <div class="panel-body">
             <div class="bar-list">
               <div class="bar-item">
-                <div class="bar-meta"><span class="bar-q">How does pricing scale with team size?</span><span class="bar-cnt">8×</span></div>
-                <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+                <div class="bar-meta"><span class="bar-q">Setup fee + monthly vs flat fee (like Graphy)?</span><span class="bar-cnt">5×</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
               </div>
               <div class="bar-item">
-                <div class="bar-meta"><span class="bar-q">How do you compare to Hubspot?</span><span class="bar-cnt">6×</span></div>
-                <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+                <div class="bar-meta"><span class="bar-q">What is included in Enterprise vs Freedom?</span><span class="bar-cnt">5×</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
               </div>
               <div class="bar-item">
-                <div class="bar-meta"><span class="bar-q">What does onboarding look like?</span><span class="bar-cnt">5×</span></div>
-                <div class="bar-track"><div class="bar-fill amber-fill" style="width:58%"></div></div>
+                <div class="bar-meta"><span class="bar-q">Can I collect cash payments from students?</span><span class="bar-cnt">3×</span></div>
+                <div class="bar-track"><div class="bar-fill amber-fill" style="width:60%"></div></div>
               </div>
               <div class="bar-item">
-                <div class="bar-meta"><span class="bar-q">Is there an API / integration layer?</span><span class="bar-cnt">4×</span></div>
-                <div class="bar-track"><div class="bar-fill green-fill" style="width:46%"></div></div>
+                <div class="bar-meta"><span class="bar-q">How does WhatsApp API integration work?</span><span class="bar-cnt">3×</span></div>
+                <div class="bar-track"><div class="bar-fill amber-fill" style="width:60%"></div></div>
               </div>
               <div class="bar-item">
-                <div class="bar-meta"><span class="bar-q">What's the contract lock-in period?</span><span class="bar-cnt">3×</span></div>
-                <div class="bar-track"><div class="bar-fill amber-fill" style="width:34%"></div></div>
+                <div class="bar-meta"><span class="bar-q">What are app deployment timelines?</span><span class="bar-cnt">3×</span></div>
+                <div class="bar-track"><div class="bar-fill green-fill" style="width:60%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-meta"><span class="bar-q">Zoom webinar vs meeting — what's included?</span><span class="bar-cnt">2×</span></div>
+                <div class="bar-track"><div class="bar-fill green-fill" style="width:40%"></div></div>
               </div>
             </div>
           </div>
@@ -2133,7 +2137,7 @@ ${tagStyles}
         <!-- RECENT ACTIVITY -->
         <div class="panel">
           <div class="panel-hdr">
-            <div><div class="panel-title">Recent activity</div><div class="panel-sub">Transcripts & events from Granola</div></div>
+            <div><div class="panel-title">Recent activity</div><div class="panel-sub">Pipeline calls · from Granola transcripts</div></div>
             <span class="panel-act">All →</span>
           </div>
           <div class="panel-body">
@@ -2141,42 +2145,66 @@ ${tagStyles}
               <div class="act-row">
                 <div class="act-dot-wrap"><div class="act-dot d-acc"></div></div>
                 <div class="act-body">
-                  <div class="act-title">Transcript synced — Priya Menon</div>
-                  <div class="act-sub">3 open Qs flagged · pricing objection logged</div>
+                  <div class="act-title">Vaishaly — Pricing Negotiation</div>
+                  <div class="act-sub">Score 82 · Zoom webinar 500 + DRM pending · pay tomorrow</div>
                 </div>
-                <div class="act-time">2h ago</div>
+                <div class="act-time">Jun 10</div>
               </div>
               <div class="act-row">
-                <div class="act-dot-wrap"><div class="act-dot d-grn"></div></div>
+                <div class="act-dot-wrap"><div class="act-dot d-warn"></div></div>
                 <div class="act-body">
-                  <div class="act-title">New lead created — Arjun Joshi</div>
-                  <div class="act-sub">arjun@zenith.io · first contact logged</div>
+                  <div class="act-title">Jaya Gophane — Demo (Teachable)</div>
+                  <div class="act-sub">Score 68 · Advanced plan · history of non-activation risk</div>
                 </div>
-                <div class="act-time">5h ago</div>
-              </div>
-              <div class="act-row">
-                <div class="act-dot-wrap"><div class="act-dot d-amb"></div></div>
-                <div class="act-body">
-                  <div class="act-title">Calendly booked — Sara Mitchell</div>
-                  <div class="act-sub">Tech Q session · Thu 15 May, 11 AM</div>
-                </div>
-                <div class="act-time">Yesterday</div>
+                <div class="act-time">Jun 1</div>
               </div>
               <div class="act-row">
                 <div class="act-dot-wrap"><div class="act-dot d-acc"></div></div>
                 <div class="act-body">
-                  <div class="act-title">Coaching brief ready — Rahul Kapoor</div>
-                  <div class="act-sub">Demo prep · 4 talking points generated</div>
+                  <div class="act-title">Pratiksha — Demo (Graphy)</div>
+                  <div class="act-sub">Score 70 · 10–15 day timeline · send trial access</div>
                 </div>
-                <div class="act-time">Yesterday</div>
+                <div class="act-time">Jun 1</div>
               </div>
               <div class="act-row">
-                <div class="act-dot-wrap"><div class="act-dot d-red"></div></div>
+                <div class="act-dot-wrap"><div class="act-dot d-warn"></div></div>
                 <div class="act-body">
-                  <div class="act-title">Follow-up overdue — Lena Tran</div>
-                  <div class="act-sub">3 days since last call · no response</div>
+                  <div class="act-title">Trisha Torcato — Demo (ILH)</div>
+                  <div class="act-sub">Score 55 · Not convinced · send simplified one-pager</div>
                 </div>
-                <div class="act-time">3d ago</div>
+                <div class="act-time">May 29</div>
+              </div>
+              <div class="act-row">
+                <div class="act-dot-wrap"><div class="act-dot d-acc"></div></div>
+                <div class="act-body">
+                  <div class="act-title">Priya Lakshmi — Demo (ILH)</div>
+                  <div class="act-sub">Score 78 · Confirmed on WhatsApp · check payment</div>
+                </div>
+                <div class="act-time">May 29</div>
+              </div>
+              <div class="act-row">
+                <div class="act-dot-wrap"><div class="act-dot d-err"></div></div>
+                <div class="act-body">
+                  <div class="act-title">Lasakan — ILH International</div>
+                  <div class="act-sub">Score 48 · SLR currency blocker · escalate to tech</div>
+                </div>
+                <div class="act-time">May 29</div>
+              </div>
+              <div class="act-row">
+                <div class="act-dot-wrap"><div class="act-dot d-warn"></div></div>
+                <div class="act-body">
+                  <div class="act-title">Jagan — Pricing Discussion</div>
+                  <div class="act-sub">Score 65 · Team discussion · follow up Monday</div>
+                </div>
+                <div class="act-time">May 27</div>
+              </div>
+              <div class="act-row">
+                <div class="act-dot-wrap"><div class="act-dot d-acc"></div></div>
+                <div class="act-body">
+                  <div class="act-title">Chirag Chopra — Competitor Pricing</div>
+                  <div class="act-sub">Score 72 · Agreed 1L+GST · Graphy ending — urgent</div>
+                </div>
+                <div class="act-time">May 19</div>
               </div>
             </div>
           </div>
