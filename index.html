@@ -6336,31 +6336,25 @@ window.addEventListener('load', async () => {
     document.getElementById('appLoader').classList.add('hidden');
   }, 600);
 
-  // Connect Supabase + sync all data in background
+  // Connect Supabase — each step is independent, failures don't block the dashboard
+  // Step 1: load pipeline (most important — shows your live data)
+  try { await loadPipeline(); } catch(e) { console.warn('Pipeline:', e.message); }
+
+  // Step 2: seed base data if empty
+  try { await seedIfEmpty(); } catch(e) { console.warn('Seed:', e.message); }
+
+  // Step 3: sync Granola leads
+  try { await syncGranolaLeads(); } catch(e) { console.warn('Granola:', e.message); }
+
+  // Step 4: sync Calendly (skips gracefully if calendly_events table missing)
+  try { await runCalendlySyncToDB(); } catch(e) { console.warn('Calendly:', e.message); }
+
+  // Step 5: update sidebar status + show success toast
   try {
-    // Step 1: seed base data if empty
-    await seedIfEmpty();
-
-    // Load pipeline from Supabase immediately
-    loadPipeline();
-
-    // Step 2: sync Granola leads (always — picks up new meetings)
-    await syncGranolaLeads();
-
-    // Step 3: sync all 50 Calendly events to Supabase
-    await runCalendlySyncToDB();
-
     renderSupabaseStatus(true);
-
-    // Step 4: fetch live stats
     const stats = await fetchStats();
-    showToast(`✓ Live — ${stats.totalLeads} leads · ${stats.totalCalls} calls · Granola + Calendly synced`);
-
-    console.log('✓ SalesIQ fully connected:', stats);
-  } catch(e) {
-    console.warn('Sync issue:', e);
-    showToast('⚠ Partial sync — some data may be cached', 'error');
-  }
+    showToast(`✓ Live — ${stats.totalLeads} leads · ${stats.totalCalls} calls`);
+  } catch(e) { console.warn('Stats:', e.message); }
 });
 </script>
 </body>
