@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SalesIQ — Sales Intelligence Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&font-display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <style>
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,7 +57,6 @@ html, body {
 .shell {
   display: flex;
   height: 100vh;
-  overflow: hidden;
 }
 
 /* ── SIDEBAR ── */
@@ -65,9 +65,7 @@ html, body {
   min-width: 220px;
   background: var(--bg2);
   border-right: 1px solid var(--border);
-  display: flex;
   flex-direction: column;
-  overflow: hidden;
   position: relative;
 }
 
@@ -82,7 +80,6 @@ html, body {
 
 .sidebar-brand {
   padding: 20px 18px 16px;
-  display: flex;
   align-items: center;
   gap: 10px;
   border-bottom: 1px solid var(--border);
@@ -116,8 +113,6 @@ html, body {
 }
 
 .nav-item {
-  display: flex;
-  align-items: center;
   gap: 9px;
   padding: 9px 18px;
   cursor: pointer;
@@ -126,13 +121,11 @@ html, body {
   font-weight: 400;
   border-left: 2px solid transparent;
   transition: all 0.15s ease;
-  position: relative;
   user-select: none;
 }
 
 .nav-item:hover {
   background: rgba(255,255,255,0.03);
-  color: var(--text);
 }
 
 .nav-item.active {
@@ -150,15 +143,12 @@ html, body {
 .ni {
   width: 15px; height: 15px;
   opacity: 0.5;
-  flex-shrink: 0;
 }
 
 .nav-badge {
   margin-left: auto;
   background: var(--accent-glow);
-  color: var(--accent2);
   font-size: 9.5px;
-  font-weight: 600;
   padding: 1px 6px;
   border-radius: 20px;
   font-family: var(--mono);
@@ -178,21 +168,12 @@ html, body {
 }
 
 .int-label {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
   margin-bottom: 10px;
 }
 
 .int-row {
-  display: flex;
-  align-items: center;
   gap: 8px;
   padding: 7px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
   transition: opacity 0.15s;
 }
 
@@ -201,15 +182,11 @@ html, body {
 
 .int-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  flex-shrink: 0;
 }
 
 .int-name { font-size: 11px; color: var(--muted2); flex: 1; }
 
 .int-status {
-  font-size: 9px;
-  font-weight: 600;
-  padding: 1px 6px;
   border-radius: 4px;
 }
 
@@ -218,8 +195,6 @@ html, body {
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 14px 18px;
-  border-top: 1px solid var(--border);
 }
 
 .user-row {
@@ -228,10 +203,7 @@ html, body {
 
 .user-av {
   width: 30px; height: 30px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #a855f7);
-  display: flex; align-items: center; justify-content: center;
   font-size: 11px; font-weight: 700; color: white;
-  flex-shrink: 0;
   box-shadow: 0 0 10px rgba(124,92,252,0.3);
 }
 
@@ -241,26 +213,17 @@ html, body {
 /* ── MAIN ── */
 .main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
   min-width: 0;
 }
 
 /* ── TOPBAR ── */
 .topbar {
-  display: flex;
-  align-items: center;
   padding: 14px 24px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
   gap: 12px;
-  flex-shrink: 0;
 }
 
 .topbar-title {
   font-size: 15px;
-  font-weight: 700;
   letter-spacing: -0.3px;
   flex: 1;
 }
@@ -271,10 +234,8 @@ html, body {
   display: flex; align-items: center; gap: 6px;
   background: var(--surface);
   border: 1px solid var(--border2);
-  border-radius: 20px;
   padding: 5px 12px;
   font-size: 11px;
-  color: var(--muted2);
 }
 
 .tb-pulse {
@@ -287,25 +248,16 @@ html, body {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 .tb-btn {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--surface);
-  border: 1px solid var(--border2);
   border-radius: var(--r);
   padding: 6px 12px;
   font-size: 11px; font-weight: 500;
-  color: var(--muted2);
-  cursor: pointer;
   transition: all 0.15s;
-  font-family: var(--font);
 }
 
 .tb-btn:hover { border-color: var(--accent); color: var(--accent2); }
 
 .tb-btn.primary {
-  background: linear-gradient(135deg, var(--accent), #a855f7);
   border-color: transparent;
-  color: white;
-  font-weight: 600;
   box-shadow: 0 2px 12px rgba(124,92,252,0.35);
 }
 
@@ -322,32 +274,19 @@ html, body {
 
 /* ── PREP BANNER ── */
 .prep-banner {
-  background: var(--surface);
-  border: 1px solid var(--border3);
   border-radius: var(--r2);
-  padding: 14px 18px;
   margin-bottom: 22px;
-  display: flex;
-  align-items: center;
   gap: 16px;
-  position: relative;
-  overflow: hidden;
 }
 
 .prep-banner::before {
-  content: '';
-  position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(124,92,252,0.06) 0%, transparent 60%);
-  pointer-events: none;
 }
 
 .prep-tag {
   font-size: 9px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--accent2);
-  background: var(--accent-glow);
-  border: 1px solid var(--border3);
   padding: 3px 8px; border-radius: 5px;
   white-space: nowrap;
 }
@@ -362,8 +301,6 @@ html, body {
 
 .chip {
   font-size: 10px; font-weight: 500;
-  padding: 3px 8px; border-radius: 5px;
-  white-space: nowrap;
 }
 
 .chip-amber  { background: var(--amber-dim); color: var(--amber); }
@@ -374,7 +311,6 @@ html, body {
 .chip-pink   { background: var(--pink-dim);  color: var(--pink); }
 
 .prep-cta {
-  background: linear-gradient(135deg, var(--accent), #a855f7);
   color: white; border: none; border-radius: var(--r);
   padding: 8px 16px; font-size: 12px; font-weight: 600;
   cursor: pointer; white-space: nowrap; font-family: var(--font);
@@ -393,8 +329,6 @@ html, body {
 .sec-title {
   font-size: 10px; font-weight: 600;
   letter-spacing: 0.09em; text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
 .sec-line { flex: 1; height: 1px; background: var(--border); }
@@ -407,13 +341,10 @@ html, body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-bottom: 22px;
 }
 
 .stat-card {
-  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--r2);
   padding: 16px;
   display: flex; flex-direction: column; gap: 10px;
   position: relative; overflow: hidden;
@@ -426,12 +357,9 @@ html, body {
 .stat-card.accent-card { border-color: var(--border3); }
 
 .stat-card.accent-card::after {
-  content: '';
-  position: absolute;
   top: 0; right: 0;
   width: 80px; height: 80px;
   background: radial-gradient(circle at top right, rgba(124,92,252,0.15), transparent 70%);
-  pointer-events: none;
 }
 
 .stat-top { display: flex; align-items: flex-start; justify-content: space-between; }
@@ -442,7 +370,6 @@ html, body {
 
 .stat-icon {
   width: 28px; height: 28px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
   font-size: 14px; flex-shrink: 0;
 }
 
@@ -456,12 +383,9 @@ html, body {
 .stat-val {
   font-size: 28px; font-weight: 700;
   line-height: 1; letter-spacing: -0.5px;
-  font-family: var(--mono);
 }
 
 .stat-foot {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 11px;
 }
 
 .delta { display: flex; align-items: center; gap: 3px; font-weight: 500; }
@@ -476,28 +400,20 @@ html, body {
 /* ── TWO / THREE COL ── */
 .two-col {
   display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-  margin-bottom: 22px;
 }
 
 .three-col {
   display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px;
-  margin-bottom: 22px;
 }
 
 /* ── PANEL ── */
 .panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
-  overflow: hidden;
   display: flex; flex-direction: column;
 }
 
 .panel-hdr {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
-  flex-shrink: 0;
 }
 
 .panel-title { font-size: 12px; font-weight: 600; }
@@ -508,9 +424,7 @@ html, body {
 
 /* ── LEAD LIST ── */
 .lead-row {
-  display: flex; align-items: center; gap: 10px;
   padding: 9px 16px;
-  border-bottom: 1px solid var(--border);
   cursor: pointer; transition: background 0.1s;
 }
 
@@ -519,7 +433,6 @@ html, body {
 
 .lav {
   width: 28px; height: 28px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
   font-size: 10px; font-weight: 700; color: white;
   flex-shrink: 0; letter-spacing: 0;
 }
@@ -537,7 +450,6 @@ html, body {
 .stage-pill {
   font-size: 9.5px; font-weight: 600;
   padding: 2px 7px; border-radius: 4px;
-  white-space: nowrap;
 }
 
 .sp-demo { background: var(--blue-dim); color: var(--blue); }
@@ -590,7 +502,6 @@ html, body {
 .act-row {
   display: flex; gap: 10px; align-items: flex-start;
   padding: 9px 0; border-bottom: 1px solid var(--border);
-  position: relative;
 }
 
 .act-row:last-child { border-bottom: none; }
@@ -632,9 +543,7 @@ html, body {
 .cal-day {
   display: flex; flex-direction: column; align-items: center; gap: 5px;
   min-width: 42px; padding: 8px 6px;
-  background: var(--surface2); border-radius: var(--r);
   border: 1px solid var(--border); cursor: pointer; transition: all 0.15s;
-  flex-shrink: 0;
 }
 
 .cal-day:hover { border-color: var(--border2); }
@@ -651,7 +560,6 @@ html, body {
 
 /* ── UPCOMING CALLS ── */
 .call-card {
-  display: flex; align-items: center; gap: 10px;
   padding: 10px 0; border-bottom: 1px solid var(--border);
 }
 
@@ -673,7 +581,6 @@ html, body {
 
 /* ── COMPETITOR TABLE ── */
 .comp-row {
-  display: flex; align-items: center; gap: 10px;
   padding: 8px 0; border-bottom: 1px solid var(--border);
 }
 
@@ -697,7 +604,6 @@ html, body {
   width: 100%; border-radius: 4px 4px 0 0;
   background: var(--surface3);
   transition: background 0.2s;
-  cursor: pointer;
 }
 
 .trend-bar.active { background: linear-gradient(180deg, var(--accent2), var(--accent)); }
@@ -709,17 +615,13 @@ html, body {
 /* ── INSIGHT CARD ── */
 .insight-card {
   background: linear-gradient(135deg, rgba(124,92,252,0.12), rgba(168,85,247,0.06));
-  border: 1px solid var(--border3);
   border-radius: var(--r2); padding: 16px;
-  position: relative; overflow: hidden;
 }
 
 .insight-card::before {
-  content: '';
   position: absolute; top: -30px; right: -30px;
   width: 120px; height: 120px;
   background: radial-gradient(circle, rgba(124,92,252,0.2), transparent 70%);
-  pointer-events: none;
 }
 
 .insight-icon { font-size: 20px; margin-bottom: 8px; }
@@ -753,11 +655,6 @@ html, body {
 .content::-webkit-scrollbar { width: 4px; }
 .content::-webkit-scrollbar-track { background: transparent; }
 .content::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
-
-/* ── DAILY TAB ── */
-
-
-
 
 .shell{display:flex;height:100vh}
 
@@ -952,52 +849,13 @@ html, body {
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .fadein{animation:fadeUp .3s ease both}
 
-/* ── WEEKLY TAB ── */
-
-
-
-
-.shell{display:flex;height:100vh}
-
 /* SIDEBAR */
-.sidebar{width:220px;min-width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:relative;overflow:hidden}
-.sidebar::before{content:'';position:absolute;top:-80px;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(124,92,252,.12),transparent 70%);pointer-events:none}
-.sb-brand{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-.sb-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#a855f7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(124,92,252,.4)}
-.sb-name{font-size:13px;font-weight:700}.sb-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.nav-group{padding:18px 0 4px}
-.nav-lbl{padding:0 18px 6px;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 18px;cursor:pointer;color:var(--muted2);font-size:12.5px;border-left:2px solid transparent;transition:all .15s;user-select:none}
-.nav-item:hover{background:rgba(255,255,255,.03);color:var(--text)}
-.nav-item.active{background:var(--glow2);color:var(--accent2);border-left-color:var(--accent);font-weight:500}
-.ni{width:15px;height:15px;opacity:.5;flex-shrink:0}
-.nav-item.active .ni{opacity:1;filter:drop-shadow(0 0 4px var(--accent))}
-.nbadge{margin-left:auto;background:var(--glow);color:var(--accent2);font-size:9.5px;font-weight:600;padding:1px 6px;border-radius:20px;font-family:var(--mono);border:1px solid var(--border3)}
-.nbadge.g{background:var(--gdim);color:var(--green);border-color:rgba(34,211,160,.25)}
-.sb-ints{padding:14px 18px;border-top:1px solid var(--border)}
-.int-lbl{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.int-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
-.int-row:last-child{border-bottom:none}
-.int-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.int-name{font-size:11px;color:var(--muted2);flex:1}
-.int-st{font-size:9px;font-weight:600;padding:1px 6px;border-radius:4px}
-.st-on{background:var(--gdim);color:var(--green)}.st-pend{background:var(--adim);color:var(--amber)}
-.sb-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border)}
-.user-row{display:flex;align-items:center;gap:9px}
-.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#a855f7);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
-.user-name{font-size:12px;font-weight:600}.user-role{font-size:10px;color:var(--muted)}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{display:flex;align-items:center;padding:14px 24px;background:var(--bg2);border-bottom:1px solid var(--border);gap:12px;flex-shrink:0}
-.topbar-title{font-size:15px;font-weight:700;letter-spacing:-.3px;flex:1}
-.topbar-title span{color:var(--muted2);font-weight:400;font-size:13px}
 .week-nav{display:flex;align-items:center;gap:8px}
 .wnav-btn{width:28px;height:28px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted2);transition:all .15s;font-size:12px;font-family:var(--font)}
 .wnav-btn:hover{border-color:var(--border3);color:var(--accent2)}
 .wnav-label{font-size:12px;font-weight:600;color:var(--accent2);min-width:160px;text-align:center;padding:0 4px}
-.tb-btn{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:6px 12px;font-size:11px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .15s;font-family:var(--font)}
-.tb-btn:hover{border-color:var(--accent);color:var(--accent2)}
 .tb-btn.primary{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent;color:white;box-shadow:0 2px 12px rgba(124,92,252,.35)}
 
 /* CONTENT */
@@ -1031,8 +889,6 @@ html, body {
 
 /* SECTION */
 .sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.sec-title{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.sec-line{flex:1;height:1px;background:var(--border)}
 .sec-link{font-size:11px;color:var(--accent2);cursor:pointer;white-space:nowrap;font-weight:500}
 
 /* TWO COL */
@@ -1159,58 +1015,16 @@ html, body {
 .kpi-card:nth-child(4){animation-delay:.16s}
 
 ${tagStyles}
-/* ── MONTHLY TAB ── */
-
-
-
-
-.shell{display:flex;height:100vh}
 
 /* SIDEBAR */
-.sidebar{width:220px;min-width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:relative;overflow:hidden}
-.sidebar::before{content:'';position:absolute;top:-80px;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(124,92,252,.12),transparent 70%);pointer-events:none}
-.sb-brand{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-.sb-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#a855f7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(124,92,252,.4)}
-.sb-name{font-size:13px;font-weight:700}.sb-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.nav-group{padding:18px 0 4px}
-.nav-lbl{padding:0 18px 6px;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 18px;cursor:pointer;color:var(--muted2);font-size:12.5px;border-left:2px solid transparent;transition:all .15s;user-select:none}
-.nav-item:hover{background:rgba(255,255,255,.03);color:var(--text)}
-.nav-item.active{background:var(--glow2);color:var(--accent2);border-left-color:var(--accent);font-weight:500}
-.ni{width:15px;height:15px;opacity:.5;flex-shrink:0}
-.nav-item.active .ni{opacity:1;filter:drop-shadow(0 0 4px var(--accent))}
-.nbadge{margin-left:auto;background:var(--glow);color:var(--accent2);font-size:9.5px;font-weight:600;padding:1px 6px;border-radius:20px;font-family:var(--mono);border:1px solid var(--border3)}
-.nbadge.g{background:var(--gdim);color:var(--green);border-color:rgba(34,211,160,.25)}
-.sb-ints{padding:14px 18px;border-top:1px solid var(--border)}
-.int-lbl{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.int-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
-.int-row:last-child{border-bottom:none}
-.int-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.int-name{font-size:11px;color:var(--muted2);flex:1}
-.int-st{font-size:9px;font-weight:600;padding:1px 6px;border-radius:4px}
-.st-on{background:var(--gdim);color:var(--green)}.st-pend{background:var(--adim);color:var(--amber)}
-.sb-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border)}
-.user-row{display:flex;align-items:center;gap:9px}
-.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#a855f7);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
-.user-name{font-size:12px;font-weight:600}.user-role{font-size:10px;color:var(--muted)}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{display:flex;align-items:center;padding:14px 24px;background:var(--bg2);border-bottom:1px solid var(--border);gap:12px;flex-shrink:0}
-.topbar-title{font-size:15px;font-weight:700;letter-spacing:-.3px;flex:1}
-.topbar-title span{color:var(--muted2);font-weight:400;font-size:13px}
 .month-nav{display:flex;align-items:center;gap:8px}
 .mnav-btn{width:28px;height:28px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted2);transition:all .15s;font-size:12px}
 .mnav-btn:hover{border-color:var(--border3);color:var(--accent2)}
 .mnav-label{font-size:12px;font-weight:600;color:var(--accent2);min-width:80px;text-align:center}
-.tb-btn{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:6px 12px;font-size:11px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .15s;font-family:var(--font)}
-.tb-btn:hover{border-color:var(--accent);color:var(--accent2)}
-.tb-btn.primary{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent;color:white;box-shadow:0 2px 12px rgba(124,92,252,.35)}
 
 /* SCROLL AREA */
-.content{flex:1;overflow-y:auto;padding:22px 24px;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent}
-.content::-webkit-scrollbar{width:3px}
-.content::-webkit-scrollbar-thumb{background:var(--surface3)}
 
 /* HERO BANNER */
 .hero{background:var(--surface);border:1px solid var(--border3);border-radius:var(--r2);padding:20px 24px;margin-bottom:22px;position:relative;overflow:hidden;display:flex;gap:0}
@@ -1228,18 +1042,13 @@ ${tagStyles}
 .d-neu{background:var(--surface2);color:var(--muted)}
 
 /* SECTION */
-.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.sec-title{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.sec-line{flex:1;height:1px;background:var(--border)}
 .sec-note{font-size:10px;color:var(--muted);white-space:nowrap}
 
 /* GRIDS */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
 .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
 .four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 
 /* PANEL */
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
 .ph{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .pt{font-size:12px;font-weight:600}
 .ps{font-size:10px;color:var(--muted);margin-top:1px}
@@ -1302,7 +1111,6 @@ ${tagStyles}
 .comp-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--red),var(--pink))}
 .comp-n{font-size:10px;font-family:var(--mono);color:var(--muted2);min-width:22px;text-align:right}
 .comp-wr{font-size:10px;font-weight:600;min-width:50px;text-align:right}
-.comp-note{font-size:10px;color:var(--muted);flex:1;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* TAT / PATTERN ROWS */
 .pat-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
@@ -1337,7 +1145,6 @@ ${tagStyles}
 .ic-head{display:flex;align-items:center;gap:7px;margin-bottom:6px}
 .ic-icon{font-size:14px}
 .ic-title{font-size:11px;font-weight:600;color:var(--accent2)}
-.ic-body{font-size:11px;color:var(--muted2);line-height:1.7}
 
 /* KEY NUMBER CARDS */
 .kn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
@@ -1350,18 +1157,11 @@ ${tagStyles}
 .kn-badge{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:99px;margin-top:5px}
 
 /* ANIM */
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .fadein{animation:fadeUp .35s ease both}
 .kn-card:nth-child(1){animation:fadeUp .4s .04s ease both}
 .kn-card:nth-child(2){animation:fadeUp .4s .08s ease both}
 .kn-card:nth-child(3){animation:fadeUp .4s .12s ease both}
 .kn-card:nth-child(4){animation:fadeUp .4s .16s ease both}
-
-/* ── DEEPDIVE TAB ── */
-
-
-
-
 
 /* SHELL */
 .shell { display: flex; height: 100vh; overflow: hidden; }
@@ -1371,8 +1171,6 @@ ${tagStyles}
 .sidebar::before { content: ''; position: absolute; top: -80px; left: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(124,92,252,0.12) 0%, transparent 70%); pointer-events: none; }
 .sidebar-brand { padding: 20px 18px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
 .brand-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), #a855f7); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(124,92,252,0.4); }
-.brand-name { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; }
-.brand-sub  { font-size: 10px; color: var(--muted); margin-top: 1px; }
 .nav-group  { padding: 18px 0 4px; }
 .nav-label  { padding: 0 18px 6px; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .nav-item   { display: flex; align-items: center; gap: 9px; padding: 9px 18px; cursor: pointer; color: var(--muted2); font-size: 12.5px; border-left: 2px solid transparent; transition: all 0.15s; user-select: none; }
@@ -1385,12 +1183,8 @@ ${tagStyles}
 .sidebar-integrations { padding: 14px 18px; border-top: 1px solid var(--border); }
 .int-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .int-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); }
-.int-row:last-child { border-bottom: none; }
 .int-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.int-name { font-size: 11px; color: var(--muted2); flex: 1; }
 .int-status { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 4px; }
-.status-connected { background: var(--green-dim); color: var(--green); }
-.status-pending   { background: var(--amber-dim); color: var(--amber); }
 .sidebar-footer { margin-top: auto; padding: 14px 18px; border-top: 1px solid var(--border); }
 .user-row { display: flex; align-items: center; gap: 9px; }
 .user-av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #a855f7); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; box-shadow: 0 0 10px rgba(124,92,252,0.3); }
@@ -1403,9 +1197,7 @@ ${tagStyles}
 /* TOPBAR */
 .topbar { display: flex; align-items: center; padding: 14px 24px; background: var(--bg2); border-bottom: 1px solid var(--border); gap: 12px; flex-shrink: 0; }
 .topbar-title { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; flex: 1; }
-.topbar-title span { color: var(--muted2); font-weight: 400; font-size: 13px; }
 .tb-btn { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r); padding: 6px 12px; font-size: 11px; font-weight: 500; color: var(--muted2); cursor: pointer; transition: all 0.15s; font-family: var(--font); }
-.tb-btn:hover { border-color: var(--accent); color: var(--accent2); }
 .tb-btn.primary { background: linear-gradient(135deg, var(--accent), #a855f7); border-color: transparent; color: white; font-weight: 600; box-shadow: 0 2px 12px rgba(124,92,252,0.35); }
 
 /* DEEP-DIVE LAYOUT: 3 panels */
@@ -1473,7 +1265,6 @@ ${tagStyles}
 .section { margin-bottom: 20px; }
 .sec-hdr { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .sec-title { font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.sec-line { flex: 1; height: 1px; background: var(--border); }
 
 /* SUMMARY GRID */
 .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
@@ -1585,11 +1376,6 @@ ${tagStyles}
 *::-webkit-scrollbar { width: 3px; height: 3px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
-
-/* ── COACHING TAB ── */
-
-
-
 
 .shell { display:flex; height:100vh; }
 
@@ -1779,7 +1565,6 @@ ${tagStyles}
 .fadein { animation:fadeUp .3s ease both; }
 @keyframes slideIn { from{opacity:0;transform:translateX(10px)} to{opacity:1;transform:translateX(0)} }
 .slide-in { animation:slideIn .25s ease both; }
-
 
 /* ── UNIFIED SHELL ── */
 .tab-pane { display:none; flex:1; flex-direction:column; overflow:hidden; min-width:0; }
@@ -2186,7 +1971,6 @@ ${tagStyles}
 
       </div>
 
-
       <!-- UPCOMING CALLS FROM CALENDLY (live) -->
       <div class="sec-hdr" id="upcoming-section-hdr" style="display:none">
         <span class="sec-title">Upcoming calls</span>
@@ -2487,7 +2271,6 @@ ${tagStyles}
   </div>
   </div>
 
-
 </div><!-- /shell -->
 
 <script>
@@ -2548,7 +2331,6 @@ function navTo(tab) {
 // ALL TAB SCRIPTS
 // ══════════════════════════════════════
 
-
 // ══════════════════════════════════════
 // OVERVIEW TAB
 // ══════════════════════════════════════
@@ -2569,7 +2351,6 @@ function overviewSwitchTab(el, tab) {
   document.querySelector('.topbar-title').innerHTML =
     `${titles[tab]} <span>— May 2026</span>`;
 }
-
 
 // ══════════════════════════════════════
 // DAILY TAB
@@ -3218,13 +2999,12 @@ window.onload = () => {
   }
 };
 
-
 // ══════════════════════════════════════
 // WEEKLY TAB
 // ══════════════════════════════════════
 
 // ── REAL DATA from Granola + Calendly ──
-const WEEKS = {
+let WEEKS = null; function getWEEKS() { if (!getWEEKS()) { WEEKS = {
   0: { // current week (May 11–14)
     label: "This week",
     dateRange: "May 11–14, 2026",
@@ -3402,17 +3182,17 @@ const WEEKS = {
 
     insight: "Your strongest week of the month with 19 client calls and 2 closes (Sandeep ₹1L + Santhosh ₹75K). Talk ratio improved to 58% — closer to the 55% benchmark. Next-step set rate was low at 47% — many calls ended without a concrete commitment. The cash flow objection came up 4 times; the no-cost EMI offer was your most effective closer.",
   }
-};
+}; } return getWEEKS(); }
 
 let currentWeekOffset = 0;
 
 function getData() {
-  return WEEKS[currentWeekOffset] || WEEKS[0];
+  return getWEEKS()[currentWeekOffset] || getWEEKS()[0];
 }
 
 function shiftWeek(dir) {
   const newOffset = currentWeekOffset + dir;
-  if (!WEEKS[newOffset]) return;
+  if (!getWEEKS()[newOffset]) return;
   currentWeekOffset = newOffset;
   renderAll();
 }
@@ -3760,13 +3540,12 @@ document.head.insertAdjacentHTML('beforeend', `<style>${tagStyles}</style>`);
 // ── INIT ──
 window.onload = renderAll;
 
-
 // ══════════════════════════════════════
 // MONTHLY TAB
 // ══════════════════════════════════════
 
 // ── REAL DATA from Granola (Apr 20 – May 14) + sync notes ──
-const MONTHS = {
+let MONTHS = null; function getMONTHS() { if (!getMONTHS()) { MONTHS = {
   "2026-05": {
     label:"May 2026", partial:true, daysElapsed:14, totalDays:31,
     // Client calls per calendar day (1-indexed, 0 = no data / non-working)
@@ -3936,7 +3715,7 @@ const MONTHS = {
       coaching:"The rolling offer deadline (Apr → May 3 → May 10 → May 17) is working as an urgency trigger. Standardise the international payment link pitch earlier in pricing discussions — it closed 2 of 5 deals.",
     },
   }
-};
+}; } return getMONTHS(); }
 
 let currentMonth = "2026-05";
 
@@ -3944,13 +3723,13 @@ function shiftMonthMo(dir) {
   const [y, m] = currentMonth.split("-").map(Number);
   const d = new Date(y, m - 1 + dir, 1);
   const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
-  if (!MONTHS[key]) return;
+  if (!getMONTHS()[key]) return;
   currentMonth = key;
   render();
 }
 
 function render() {
-  const D = MONTHS[currentMonth];
+  const D = getMONTHS()[currentMonth];
   document.getElementById("mnav").textContent = D.label;
   document.getElementById("topbarSub").textContent =
     `— ${D.label}${D.partial ? " · in progress" : ""}`;
@@ -4361,7 +4140,6 @@ function buildPage(D) {
 window.onload = () => {
   render();
 };
-
 
 // ══════════════════════════════════════
 // DEEPDIVE TAB
@@ -5041,7 +4819,6 @@ function refreshCalls() {
   setTimeout(() => { overlay.classList.add('hidden'); }, 1400);
 }
 
-
 // ══════════════════════════════════════
 // COACHING TAB
 // ══════════════════════════════════════
@@ -5595,7 +5372,6 @@ window.onload = () => {
   }, 400);
 };
 
-
 // ══════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════
@@ -5765,96 +5541,6 @@ async function loadCalendlyFromSupabase() {
 }
 
 // ══════════════════════════════════════
-// GRANOLA → SUPABASE SYNC
-// ══════════════════════════════════════
-// Granola has no public REST API — data flows via MCP (this Claude chat).
-// We pre-load the meeting→email map extracted from live Granola data so the
-// dashboard can match meetings to leads by email automatically.
-
-const GRANOLA_MEETING_MAP = {
-  // id → { email, title, date, granola_id }
-  "c2148efb": { email:"thesocioxpert@gmail.com",  name:"Chandana Punna",       date:"2026-05-21" },
-  "fd4d0111": { email:"tilokani.neetu@gmail.com", name:"Neetu Tilokani",        date:"2026-05-20" },
-  "77903b20": { email:"eltonvk01@gmail.com",      name:"Elton",                date:"2026-05-20" },
-  "5b6d8438": { email:"tirthpatel5844@gmail.com", name:"Tirth Patel",          date:"2026-05-20" },
-  "e58587a2": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
-  "cb4ef254": { email:"sapannagpal007@gmail.com", name:"Sapan Nagpal",         date:"2026-05-19" },
-  "b1a365e4": { email:"eazyenglishathome@gmail.com",name:"Rashid C",           date:"2026-05-19" },
-  "7309a5fd": { email:"saik3488@gmail.com",       name:"Team D",               date:"2026-05-19" },
-  "c8f70e86": { email:"chiragchopra786@gmail.com",name:"Chirag Chopra",        date:"2026-05-19" },
-  "777d1466": { email:"faizee.whitelabelmedia@gmail.com",name:"Ajeesh Faizee", date:"2026-05-19" },
-  "c0ec21fa": { email:"akshitadayma20@gmail.com", name:"Akshita",              date:"2026-05-19" },
-  "2b57e819": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-19" },
-  "bd3d7f09": { email:"joispaulson@gmail.com",    name:"Paullson Joseph",      date:"2026-05-18" },
-  "2a2bd6cb": { email:"rizwan.ahmad31900@gmail.com",name:"Rizwan Ahmad",       date:"2026-05-19" },
-  "f81319ec": { email:"designkaramal@gmail.com",  name:"Vishnu Karamal",       date:"2026-05-18" },
-  "52303098": { email:"info.karcns@gmail.com",    name:"Karthik S",            date:"2026-05-15" },
-  "ca56ec07": { email:"uxuiguide@gmail.com",      name:"Niraj",                date:"2026-05-15" },
-  "5f22abda": { email:"niravgajera2018@gmail.com",name:"Niraj Gajera",         date:"2026-05-12" },
-  "b3a70abb": { email:"smritismart83@gmail.com",  name:"Smriti",               date:"2026-05-12" },
-  "646eb640": { email:"bhartigoel2015@gmail.com", name:"Bharti Goel",          date:"2026-05-12" },
-  "17d7376c": { email:"kapilkools@gmail.com",     name:"Kapil Kulshreshtha",   date:"2026-05-12" },
-  "7ae8f532": { email:"holisticwellnessapproach4u@gmail.com",name:"Nilesh T",  date:"2026-05-12" },
-  "96eb7640": { email:"skillstsb@gmail.com",      name:"TSB Skills",           date:"2026-05-11" },
-  "b0bec917": { email:"sushaaant0412@gmail.com",  name:"Sushant Deshpande",    date:"2026-05-08" },
-  "859f92eb": { email:"jananijaanu922@gmail.com", name:"Janani",               date:"2026-05-08" },
-  "88f4e13a": { email:"sarang.bezalwar@gmail.com",name:"Sarang Bezalwar",      date:"2026-05-08" },
-  "f6abfa40": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-07" },
-  "76dc9277": { email:"drsumali1506@gmail.com",   name:"Dr Sumali Bansal",     date:"2026-05-07" },
-  "326628d9": { email:"khushsmile@gmail.com",     name:"Khushi",               date:"2026-05-07" },
-  "654c3a6f": { email:"prabhav.mistry@kalorex.org",name:"Prabhav Mistry",     date:"2026-05-07" },
-  "f593fe27": { email:"subashinisrinivasan80@gmail.com",name:"Subashini",      date:"2026-05-07" },
-  "a0878ac7": { email:"skaul@consultwlc.com",     name:"Sandeep Kaul",         date:"2026-05-05" },
-  "774c241a": { email:"dewangunjan6012@gmail.com",name:"Gunjan Dewan",         date:"2026-05-05" },
-  "d7879c19": { email:"artzncolours@gmail.com",   name:"Renu",                 date:"2026-05-05" },
-  "3213b886": { email:"priyanka0057@gmail.com",   name:"Priyanka Singh",       date:"2026-05-05" },
-  "b77acea0": { email:"yogendracacs@gmail.com",   name:"Yogendra",             date:"2026-05-04" },
-  "3dab5168": { email:"prakash.inet@gmail.com",   name:"Prakash Kumar",        date:"2026-05-04" },
-  "a83a49ad": { email:"mevinita05@gmail.com",     name:"Vinita Pathak",        date:"2026-05-04" },
-  "35085c65": { email:"amisdanceacademy@gmail.com",name:"Amisha Jhawar",       date:"2026-05-04" },
-  "59759e10": { email:"wecanbs@gmail.com",        name:"Jithuu",               date:"2026-04-30" },
-  "56f93751": { email:"johnpradeepjl@gmail.com",  name:"John Pradeep",         date:"2026-04-29" },
-  "ec43935c": { email:"shaarahnaved@gmail.com",   name:"Shaarah",              date:"2026-04-28" },
-  "b63ab756": { email:"somamail.mondal2010@gmail.com",name:"Soma",             date:"2026-04-28" },
-  "b1db913b": { email:"ravindra.kulkarni@bkfbliss.org",name:"Ravindra Kulkarni",date:"2026-04-28" },
-  "f659829f": { email:"pawanjadhav9100@gmail.com",name:"Pawan Jadhav",         date:"2026-04-27" },
-  "55ad0b7b": { email:"sital.tripathy23@gmail.com",name:"Sital Tripathy",      date:"2026-04-24" },
-  "7c9ccdf0": { email:"llit.p121@gmail.com",      name:"Lalit Parihar",        date:"2026-04-22" },
-  "7abea950": { email:"rkbende@gmail.com",        name:"Ram",                  date:"2026-04-22" },
-  "4b738a88": { email:"hussainmsc123@gmail.com",  name:"Shaik Hussain",        date:"2026-04-22" },
-};
-
-async function syncGranolaLeads() {
-  // Upsert all unique client leads from Granola meeting map into Supabase
-  const uniqueLeads = {};
-  Object.values(GRANOLA_MEETING_MAP).forEach(m => {
-    if (!isInternal(m.email) && !uniqueLeads[m.email]) {
-      uniqueLeads[m.email] = {
-        name: m.name,
-        email: m.email,
-        source: 'Granola',
-        stage: 'New',
-        date_created: m.date,
-        last_contact: m.date,
-      };
-    }
-  });
-  try {
-    await sb.upsert('leads', Object.values(uniqueLeads), 'email');
-    console.log(`✓ Granola: ${Object.keys(uniqueLeads).length} leads synced`);
-  } catch(e) {
-    console.warn('Granola sync error:', e.message);
-  }
-}
-
-// Get all meetings for a specific lead email (matches by Granola map)
-function getMeetingsForEmail(email) {
-  return Object.entries(GRANOLA_MEETING_MAP)
-    .filter(([_, m]) => m.email === email)
-    .map(([id, m]) => ({ granola_id: id, ...m }));
-}
-
-// ══════════════════════════════════════
 // LIVE DATA ACCESSORS (used by tabs)
 // ══════════════════════════════════════
 // Cache so we don't re-fetch on every tab switch
@@ -5899,12 +5585,11 @@ function invalidateCache() {
   _eventsCache = null;
 }
 
-
 // ══════════════════════════════════════
 // CALENDLY EVENTS — SYNCED FROM MCP
 // Last synced: May 21 2026 · 50 events
 // ══════════════════════════════════════
-const CALENDLY_SYNC_DATA = [{"calendly_id":"3b1f5ac5","lead_name":"Siddharth Mokle","lead_email":"siddharthmokle1@gmail.com","call_date":"2026-06-11T11:30:00+05:30","call_end":"2026-06-11T12:00:00+05:30","join_url":"https://calendly.com/events/3b1f5ac5-6821-4481-9720-cbe0b8d6ef23/google_meet","call_type":"30 Minute Discovery Call","whatsapp":"+91 80070 09364","source":"Ads","sells_courses":"Yes","other_platforms":"Flexifunnels","community_size":"Less than 100","timeline":"Immediately","status":"scheduled"},{"calendly_id":"dc980dc5","lead_name":"Shrikant Ambekar","lead_email":"shri007_87@yahoo.com","call_date":"2026-06-11T12:30:00+05:30","call_end":"2026-06-11T13:00:00+05:30","join_url":"https://calendly.com/events/dc980dc5-1600-4e85-a1dd-a7642ba42805/google_meet","call_type":"30 Minute Discovery Call","whatsapp":"+91 94042 96005","source":"Youtube","sells_courses":"No","community_size":"Less than 100","timeline":"Immediately","status":"scheduled"},{"calendly_id":"d2f27695","lead_name":"Akshata Dharwadkar","lead_email":"akshatadharawadkar@gmail.com","call_date":"2026-06-11T15:00:00+05:30","call_end":"2026-06-11T15:30:00+05:30","join_url":"https://calendly.com/events/d2f27695-4c5d-4829-82e3-63f872e91f59/google_meet","call_type":"30 Minute Discovery Call","whatsapp":"+91 93805 83822","source":"Youtube","sells_courses":"Workshop","community_size":"Less than 100","timeline":"Immediately","status":"scheduled"},{"calendly_id":"7c09521f","lead_name":"Vrukshika Korde","lead_email":"vrukshikakorde@gmail.com","call_date":"2026-06-11T15:30:00+05:30","call_end":"2026-06-11T16:00:00+05:30","join_url":"https://calendly.com/events/7c09521f-76c1-42c1-b746-e0faa4c2542a/google_meet","call_type":"30 Minute Discovery Call","whatsapp":"+91 77209 47259","source":"Internet Lifestyle Hub","sells_courses":"Yes - launching courses","other_platforms":"No","community_size":"Less than 100","timeline":"Within 15 Days","status":"scheduled"},{"calendly_id":"293e6466","lead_name":"Vaijayanthi Hariharan","lead_email":"vaijayanthi@ggsh.in","call_date":"2026-06-11T16:30:00+05:30","call_end":"2026-06-11T17:00:00+05:30","join_url":"https://calendly.com/events/293e6466-9fda-4758-9f17-80a79b0353b9/google_meet","call_type":"30 Minute Discovery Call","whatsapp":"+91 75987 04201","source":"Referred by a Friend","sells_courses":"Planning to launch","other_platforms":"No","community_size":"Less than 100","timeline":"Within 15 Days","status":"scheduled"},{"calendly_id":"9bdf0027","lead_name":"H K","call_date":"2026-06-12T10:00:00+05:30","call_end":"2026-06-12T10:30:00+05:30","join_url":"https://calendly.com/events/9bdf0027-3b0d-418d-8c81-a39998bcdccf/google_meet","call_type":"Discovery Call - Tagmango","status":"scheduled","lead_email":"meetharmeet02@gmail.com","whatsapp":"+91 98555 89060","sells_courses":"Group Coaching","timeline":"Immediately"},{"calendly_id":"9ef0c9d4","lead_name":"Meena","call_date":"2026-06-12T11:00:00+05:30","call_end":"2026-06-12T11:30:00+05:30","join_url":"https://calendly.com/events/9ef0c9d4-3984-49c7-a2f5-971aa775d380/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"meenasmiles@gmail.com","whatsapp":"+91 97420 33833","source":"Youtube","sells_courses":"Yes","timeline":"Later"},{"calendly_id":"f52c29d1","lead_name":"Vivek","call_date":"2026-06-12T11:30:00+05:30","call_end":"2026-06-12T12:00:00+05:30","join_url":"https://calendly.com/events/f52c29d1-27db-4704-9a2b-263312d61343/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"mieshameem@gmail.com","whatsapp":"+91 78767 52794","source":"Instagram","sells_courses":"Yes","timeline":"Within 15 Days"},{"calendly_id":"6b00f386","lead_name":"Ashish Kumar","call_date":"2026-06-12T13:00:00+05:30","call_end":"2026-06-12T13:30:00+05:30","join_url":"https://calendly.com/events/6b00f386-21ec-4f7e-b4f5-4bc88cecc210/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"ashishgyt8@gmail.com","whatsapp":"+91 96530 25567","source":"Instagram","sells_courses":"Yes","timeline":"Within 15 Days"},{"calendly_id":"7caff792","lead_name":"Neetu Singh","call_date":"2026-06-12T14:30:00+05:30","call_end":"2026-06-12T15:00:00+05:30","join_url":"https://calendly.com/events/7caff792-e73b-4cc3-94a0-76768d5edba1/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"neeti95555@gmail.com","whatsapp":"+91 62621 01037","source":"Ads","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"5c46000b","lead_name":"Yathin Nayaka","lead_email":"yathinnayaka5117@gmail.com","call_date":"2026-06-12T15:00:00+05:30","call_end":"2026-06-12T15:30:00+05:30","join_url":"https://calendly.com/events/5c46000b-14cc-42e3-b3c4-c49fcf905696/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled"},{"calendly_id":"cbe73494","lead_name":"Mohammad Iyalul","call_date":"2026-06-12T15:30:00+05:30","call_end":"2026-06-12T16:00:00+05:30","join_url":"https://calendly.com/events/cbe73494-2fb0-4f16-9e7c-76aac196908e/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"iyalulhaq826@gmail.com","whatsapp":"+91 94968 84826","source":"Instagram","sells_courses":"No","timeline":"Later"},{"calendly_id":"2dd3cf52","lead_name":"Sudhanshu Goel","call_date":"2026-06-12T16:30:00+05:30","call_end":"2026-06-12T17:00:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled","lead_email":"sudhanshugoel@yahoo.com","whatsapp":"+91 97196 90529","sells_courses":"1:1 Coaching","timeline":"Immediately"},{"calendly_id":"9c07b3d3","lead_name":"Suman","call_date":"2026-06-15T13:00:00+05:30","call_end":"2026-06-15T13:30:00+05:30","join_url":"https://calendly.com/events/9c07b3d3-b6a7-42d2-9872-d68552ad16eb/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled","lead_email":"kasadbox@gmail.com","whatsapp":"+91 98869 35628","source":"Instagram","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"2c41d992","lead_name":"Aditya Thakur","call_date":"2026-06-15T15:00:00+05:30","call_end":"2026-06-15T15:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled","lead_email":"jimxdd07@gmail.com","whatsapp":"+91 81095 93637","sells_courses":"1:1 Coaching, Courses","timeline":"Immediately"},{"calendly_id":"ff89692a","lead_name":"Sachin Sharma","call_date":"2026-06-16T18:00:00+05:30","call_end":"2026-06-16T18:30:00+05:30","join_url":"https://calendly.com/events/ff89692a-ffa4-475a-b28c-d43d4c035386/google_meet","call_type":"Discovery Call - Tagmango","status":"scheduled","lead_email":"sachiinsh@gmail.com","whatsapp":"+91 97695 63083","sells_courses":"1:1 Coaching, Group Coaching","timeline":"Within A Month"},{"calendly_id":"5c28d256","lead_name":"Ritika Jain","call_date":"2026-06-16T18:30:00+05:30","call_end":"2026-06-16T19:00:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled","lead_email":"ritikajain2702@gmail.com","whatsapp":"+91 94250 59067","sells_courses":"1:1 Coaching","timeline":"Immediately"},{"calendly_id":"34ef73d6","lead_name":"Discovery Call","call_date":"2026-06-19T10:00:00+05:30","call_end":"2026-06-19T10:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled"},{"calendly_id":"bf1a0061","lead_name":"Discovery Call","call_date":"2026-06-19T11:00:00+05:30","call_end":"2026-06-19T11:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled"},{"calendly_id":"ce5bcb4d","lead_email":"charlieparashar29@gmail.com","call_date":"2026-05-01T13:00:00+05:30","call_end":"2026-05-01T13:30:00+05:30","join_url":"https://calendly.com/events/ce5bcb4d-2120-4607-881b-892dff0d9326/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Nandish Parashar"},{"calendly_id":"74d1687d","call_date":"2026-05-04T12:00:00+05:30","call_end":"2026-05-04T12:30:00+05:30","join_url":"https://calendly.com/events/74d1687d-cb1d-49d3-b94e-6695842d4e8c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"944a04db","call_date":"2026-05-04T12:30:00+05:30","call_end":"2026-05-04T13:00:00+05:30","join_url":"https://calendly.com/events/944a04db-0a3e-4ef8-89e5-31d183e92790/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"b5fa0e31","call_date":"2026-05-04T14:30:00+05:30","call_end":"2026-05-04T15:00:00+05:30","join_url":"https://calendly.com/events/b5fa0e31-c946-43ec-bbb8-d5af900cc68e/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"2ee119c2","call_date":"2026-05-04T15:00:00+05:30","call_end":"2026-05-04T15:30:00+05:30","join_url":"https://calendly.com/events/2ee119c2-14ba-4008-ae62-2d0a6080db9c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"805545f1","call_date":"2026-05-04T15:30:00+05:30","call_end":"2026-05-04T16:00:00+05:30","join_url":"https://calendly.com/events/805545f1-3813-485f-a649-1e9fdd7913cf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"60e23604","lead_email":"sujiththiroor01@gmail.com","call_date":"2026-05-04T16:00:00+05:30","call_end":"2026-05-04T16:30:00+05:30","join_url":"https://calendly.com/events/60e23604-cb5f-401a-b348-db49ee2943ee/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Sujith"},{"calendly_id":"22f0bce7","call_date":"2026-05-04T16:30:00+05:30","call_end":"2026-05-04T17:00:00+05:30","join_url":"https://calendly.com/events/22f0bce7-27a7-4398-a081-87b4e1273004/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"6b91f61c","call_date":"2026-05-05T11:00:00+05:30","call_end":"2026-05-05T11:30:00+05:30","join_url":"https://calendly.com/events/6b91f61c-9234-49d8-a194-ce8f4d23f48f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"17a4a4cb","lead_email":"akshaydm778@gmail.com","call_date":"2026-05-05T13:00:00+05:30","call_end":"2026-05-05T13:30:00+05:30","join_url":"https://calendly.com/events/17a4a4cb-542a-47da-9757-58533222dfa5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Akshay DM"},{"calendly_id":"980f7088","call_date":"2026-05-05T15:00:00+05:30","call_end":"2026-05-05T15:30:00+05:30","join_url":"https://calendly.com/events/980f7088-0102-48e7-8770-b650beb5958f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"bbc7e42d","call_date":"2026-05-06T11:00:00+05:30","call_end":"2026-05-06T11:30:00+05:30","join_url":"https://calendly.com/events/bbc7e42d-bb18-4a15-b0b4-de377046a1c3/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"90ddba7e","call_date":"2026-05-06T13:00:00+05:30","call_end":"2026-05-06T13:30:00+05:30","join_url":"https://calendly.com/events/90ddba7e-bf78-4292-baa5-d74c2c51a082/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"83a45e5a","lead_email":"content.lead@kalorex.org","call_date":"2026-05-07T11:30:00+05:30","call_end":"2026-05-07T12:00:00+05:30","join_url":"https://calendly.com/events/83a45e5a-e236-4302-a49a-c205ef126d69/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Prabhav Mistry"},{"calendly_id":"23f3137f","call_date":"2026-05-07T16:30:00+05:30","call_end":"2026-05-07T17:00:00+05:30","join_url":"https://calendly.com/events/23f3137f-4f30-43aa-939c-8c4ba278364f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"a9b2f499","call_date":"2026-05-08T11:00:00+05:30","call_end":"2026-05-08T11:30:00+05:30","join_url":"https://calendly.com/events/a9b2f499-7aa2-431d-a203-d32253427d26/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"da16791b","call_date":"2026-05-08T12:00:00+05:30","call_end":"2026-05-08T12:30:00+05:30","join_url":"https://calendly.com/events/da16791b-68be-4ca1-afdb-52c711e4b0d7/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"ecb52e4f","call_date":"2026-05-08T15:30:00+05:30","call_end":"2026-05-08T16:00:00+05:30","join_url":"https://calendly.com/events/ecb52e4f-6c34-41ba-8363-a7477fb8474d/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"47748f49","lead_email":"shivafrombombay@gmail.com","call_date":"2026-05-08T16:00:00+05:30","call_end":"2026-05-08T16:30:00+05:30","join_url":"https://calendly.com/events/47748f49-3789-4b98-af70-0b69a3025a4c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Shiva"},{"calendly_id":"36807ac9","call_date":"2026-05-08T16:30:00+05:30","call_end":"2026-05-08T17:00:00+05:30","join_url":"https://calendly.com/events/36807ac9-d24e-4be9-8187-d1728970f076/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"07baaf3a","call_date":"2026-05-11T13:00:00+05:30","call_end":"2026-05-11T13:30:00+05:30","join_url":"https://calendly.com/events/07baaf3a-e390-4577-9236-eb50f948b929/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"35fe4b8e","call_date":"2026-05-11T15:00:00+05:30","call_end":"2026-05-11T15:30:00+05:30","join_url":"https://calendly.com/events/35fe4b8e-ac88-46ca-b651-e472278dc872/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"3ef75e98","call_date":"2026-05-11T16:00:00+05:30","call_end":"2026-05-11T16:30:00+05:30","join_url":"https://calendly.com/events/3ef75e98-eef8-4dc4-b6af-cccecca9768c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"e2aa82bd","call_date":"2026-05-12T11:00:00+05:30","call_end":"2026-05-12T11:30:00+05:30","join_url":"https://calendly.com/events/e2aa82bd-744e-44c3-832d-7d7073854f91/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"8b6bf161","call_date":"2026-05-12T11:30:00+05:30","call_end":"2026-05-12T12:00:00+05:30","join_url":"https://calendly.com/events/8b6bf161-b756-45b4-9b1a-84b0b46bf319/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"2b89d586","call_date":"2026-05-12T12:30:00+05:30","call_end":"2026-05-12T13:00:00+05:30","join_url":"https://calendly.com/events/2b89d586-332d-4909-a578-55ff21db44f9/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"66578326","call_date":"2026-05-12T13:00:00+05:30","call_end":"2026-05-12T13:30:00+05:30","join_url":"https://calendly.com/events/66578326-73c5-4585-8b7c-7e09ef3bad74/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"adc3a789","call_date":"2026-05-12T15:00:00+05:30","call_end":"2026-05-12T15:30:00+05:30","join_url":"https://calendly.com/events/adc3a789-c539-4ff3-a35d-5a3defcc9dd1/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"2c4f529f","call_date":"2026-05-12T16:00:00+05:30","call_end":"2026-05-12T16:30:00+05:30","join_url":"https://calendly.com/events/2c4f529f-c75a-4d48-9634-8b719f2ac113/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"61b49402","call_date":"2026-05-13T11:00:00+05:30","call_end":"2026-05-13T11:30:00+05:30","join_url":"https://calendly.com/events/61b49402-df24-42ca-8e51-8aba0503d2aa/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"ded00f32","call_date":"2026-05-13T12:00:00+05:30","call_end":"2026-05-13T12:30:00+05:30","join_url":"https://calendly.com/events/ded00f32-db59-4b5f-9306-1e8f8f50b37b/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"5dc9e6df","call_date":"2026-05-13T13:00:00+05:30","call_end":"2026-05-13T13:30:00+05:30","join_url":"https://calendly.com/events/5dc9e6df-75d7-4b7d-a901-5d496145e0fa/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"2bd16889","call_date":"2026-05-14T11:00:00+05:30","call_end":"2026-05-14T11:30:00+05:30","join_url":"https://calendly.com/events/2bd16889-8f2b-42e7-8b59-35360d09f2a7/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"27011be2","call_date":"2026-05-15T11:00:00+05:30","call_end":"2026-05-15T11:30:00+05:30","join_url":"https://calendly.com/events/27011be2-f8b6-4d5d-9eee-b87037d367b0/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"d6a62de3","call_date":"2026-05-15T13:00:00+05:30","call_end":"2026-05-15T13:30:00+05:30","join_url":"https://calendly.com/events/d6a62de3-5eea-4b46-a28d-60258269fe40/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"13f35742","call_date":"2026-05-18T12:00:00+05:30","call_end":"2026-05-18T12:30:00+05:30","join_url":"https://calendly.com/events/13f35742-648f-4d8e-9b46-758b380c173f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"89cf21ca","call_date":"2026-05-18T12:30:00+05:30","call_end":"2026-05-18T13:00:00+05:30","join_url":"https://calendly.com/events/89cf21ca-e698-4507-8d33-4e9224b389d4/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"9592c409","lead_email":"deepakgoswami9050@gmail.com","call_date":"2026-05-18T13:00:00+05:30","call_end":"2026-05-18T13:30:00+05:30","join_url":"https://calendly.com/events/9592c409-9510-48a3-9371-55add363b9af/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Deepak Goswami"},{"calendly_id":"0f5cbe05","call_date":"2026-05-18T14:30:00+05:30","call_end":"2026-05-18T15:00:00+05:30","join_url":"https://calendly.com/events/0f5cbe05-a980-436c-abe5-65ff01abbd28/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"78279950","call_date":"2026-05-18T15:00:00+05:30","call_end":"2026-05-18T15:30:00+05:30","join_url":"https://calendly.com/events/78279950-e964-401a-b1d6-c9e3466b865a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"a5d049aa","call_date":"2026-05-18T15:30:00+05:30","call_end":"2026-05-18T16:00:00+05:30","join_url":"https://calendly.com/events/a5d049aa-51dc-4278-984e-7f27cbcd0ba5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"38538c81","call_date":"2026-05-18T16:00:00+05:30","call_end":"2026-05-18T16:30:00+05:30","join_url":"https://calendly.com/events/38538c81-6b6a-4a80-9796-400a8d63c420/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"936d3d33","call_date":"2026-05-19T12:30:00+05:30","call_end":"2026-05-19T13:00:00+05:30","join_url":"https://calendly.com/events/936d3d33-471c-46bb-ad23-45b7a190d3be/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"8ae5195d","call_date":"2026-05-19T13:00:00+05:30","call_end":"2026-05-19T13:30:00+05:30","join_url":"https://calendly.com/events/8ae5195d-3bde-4765-b83f-218cb39b9b4f/google_meet","call_type":"30 Minute w/tagmango  ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"6ed88b51","call_date":"2026-05-19T14:30:00+05:30","call_end":"2026-05-19T15:00:00+05:30","join_url":"https://calendly.com/events/6ed88b51-a6ec-4c57-bdb9-0c54f682a55f/google_meet","call_type":"30 Minute w/tagmango  ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"689082b5","call_date":"2026-05-19T15:00:00+05:30","call_end":"2026-05-19T15:30:00+05:30","join_url":"https://calendly.com/events/689082b5-e952-493d-90ed-d49150f52ddf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"27603c4a","call_date":"2026-05-19T16:00:00+05:30","call_end":"2026-05-19T16:30:00+05:30","join_url":"https://calendly.com/events/27603c4a-f54a-4e4f-93b3-c72007c9db95/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"f4ebf23d","call_date":"2026-05-19T16:30:00+05:30","call_end":"2026-05-19T17:00:00+05:30","join_url":"https://calendly.com/events/f4ebf23d-6132-4b08-9c18-0aaba3f5c793/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"347165ef","call_date":"2026-05-20T12:30:00+05:30","call_end":"2026-05-20T13:00:00+05:30","join_url":"https://calendly.com/events/347165ef-4aca-4475-8ff0-e003dc49a110/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"e8f48e94","call_date":"2026-05-20T15:00:00+05:30","call_end":"2026-05-20T15:30:00+05:30","join_url":"https://calendly.com/events/e8f48e94-bb7d-4ffc-908b-6632119cbb6a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"487d54d1","call_date":"2026-05-20T15:30:00+05:30","call_end":"2026-05-20T16:00:00+05:30","join_url":"https://calendly.com/events/487d54d1-6fbf-434b-9397-cbff4f28eca6/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"371a53b2","call_date":"2026-05-21T11:00:00+05:30","call_end":"2026-05-21T11:30:00+05:30","join_url":"https://calendly.com/events/371a53b2-3252-41e2-b30a-33e2e4bbb418/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"780ee8b2","call_date":"2026-05-21T16:30:00+05:30","call_end":"2026-05-21T17:00:00+05:30","join_url":"https://calendly.com/events/780ee8b2-a144-4fdf-a333-eca6425be49c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"65f1a9eb","call_date":"2026-05-22T12:00:00+05:30","call_end":"2026-05-22T12:30:00+05:30","join_url":"https://calendly.com/events/65f1a9eb-5222-46da-9169-a66bb85e9875/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"60261db4","call_date":"2026-05-22T14:30:00+05:30","call_end":"2026-05-22T15:00:00+05:30","join_url":"https://calendly.com/events/60261db4-c244-4655-b362-73eb7c881ff0/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"af708af3","call_date":"2026-05-22T15:00:00+05:30","call_end":"2026-05-22T15:30:00+05:30","join_url":"https://calendly.com/events/af708af3-c398-4e11-a224-41439171d689/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"d0cbb824","call_date":"2026-05-22T15:30:00+05:30","call_end":"2026-05-22T16:00:00+05:30","join_url":"https://calendly.com/events/d0cbb824-73d8-493e-a849-335d5a5a3134/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"bae1a2fc","call_date":"2026-05-25T12:00:00+05:30","call_end":"2026-05-25T12:30:00+05:30","join_url":"https://calendly.com/events/bae1a2fc-5156-4bea-a718-62280832a1ce/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"310f9b5d","call_date":"2026-05-25T12:30:00+05:30","call_end":"2026-05-25T13:00:00+05:30","join_url":"https://calendly.com/events/310f9b5d-c318-465f-a67c-262cc4a6610a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"b2df1db4","call_date":"2026-05-25T13:00:00+05:30","call_end":"2026-05-25T13:30:00+05:30","join_url":"https://calendly.com/events/b2df1db4-5bbd-4e36-a509-a614f9c2f637/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"bff0328f","call_date":"2026-05-25T14:30:00+05:30","call_end":"2026-05-25T15:00:00+05:30","join_url":"https://calendly.com/events/bff0328f-73eb-4a2a-80c0-a222f2dc3b0f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"c8588ed6","call_date":"2026-05-25T15:00:00+05:30","call_end":"2026-05-25T15:30:00+05:30","join_url":"https://calendly.com/events/c8588ed6-a1e3-4d23-a8b5-8e9bf1c1c4b3/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"a1803f8c","call_date":"2026-05-25T15:30:00+05:30","call_end":"2026-05-25T16:00:00+05:30","join_url":"https://calendly.com/events/a1803f8c-943a-4e4a-bfb2-f45b893e1f88/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"39c7652f","call_date":"2026-05-25T16:00:00+05:30","call_end":"2026-05-25T16:30:00+05:30","join_url":"https://calendly.com/events/39c7652f-51ba-402c-84f7-e6037453f6ac/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"f3cf3012","call_date":"2026-05-26T11:00:00+05:30","call_end":"2026-05-26T11:30:00+05:30","join_url":"https://calendly.com/events/f3cf3012-7ce8-4b34-b0af-371b3a51781c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"e8042345","call_date":"2026-05-26T16:00:00+05:30","call_end":"2026-05-26T16:30:00+05:30","join_url":"https://calendly.com/events/e8042345-a246-4e30-867e-d37f91197770/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"7000ca8d","call_date":"2026-05-26T16:30:00+05:30","call_end":"2026-05-26T17:00:00+05:30","join_url":"https://calendly.com/events/7000ca8d-c8fb-40d2-9890-e7df104cadb5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"6f53581b","call_date":"2026-05-27T11:00:00+05:30","call_end":"2026-05-27T11:30:00+05:30","join_url":"https://calendly.com/events/6f53581b-1268-4997-8d1e-f47705cdddcd/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"6914df86","call_date":"2026-05-27T11:30:00+05:30","call_end":"2026-05-27T12:00:00+05:30","join_url":"https://calendly.com/events/6914df86-13f6-4ac4-b0e2-664ba84654b2/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"db349328","call_date":"2026-05-27T12:00:00+05:30","call_end":"2026-05-27T12:30:00+05:30","join_url":"https://calendly.com/events/db349328-103a-4c78-88c1-218e8aa2a2d1/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"38ab2904","call_date":"2026-05-27T12:30:00+05:30","call_end":"2026-05-27T13:00:00+05:30","join_url":"https://calendly.com/events/38ab2904-7640-4220-86a7-36b4f894da39/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"fcbe51dc","call_date":"2026-05-28T12:30:00+05:30","call_end":"2026-05-28T13:00:00+05:30","join_url":"https://calendly.com/events/fcbe51dc-46be-4c07-a7a0-9f899e64375e/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"91f0d731","call_date":"2026-05-28T13:00:00+05:30","call_end":"2026-05-28T13:30:00+05:30","join_url":"https://calendly.com/events/91f0d731-5b8b-4be8-acda-f03d3a355671/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"ca36b60a","call_date":"2026-05-29T11:30:00+05:30","call_end":"2026-05-29T12:00:00+05:30","join_url":"https://calendly.com/events/ca36b60a-aaa5-4658-a8ef-5759961f52da/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"fab511e1","call_date":"2026-05-29T12:30:00+05:30","call_end":"2026-05-29T13:00:00+05:30","join_url":"https://calendly.com/events/fab511e1-5317-402b-8e00-cd81422e558d/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"d4a73406","call_date":"2026-05-29T13:00:00+05:30","call_end":"2026-05-29T13:30:00+05:30","join_url":"https://calendly.com/events/d4a73406-bf2a-4ee4-9458-e750f6ac3661/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"5d9acf9c","call_date":"2026-05-29T16:30:00+05:30","call_end":"2026-05-29T17:00:00+05:30","join_url":"https://calendly.com/events/5d9acf9c-b390-4d93-8fca-b736355f34bf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Discovery Call"},{"calendly_id":"e0c6a7b6","call_date":"2026-06-01T12:00:00+05:30","call_end":"2026-06-01T12:30:00+05:30","join_url":"https://calendly.com/events/e0c6a7b6-67b6-40a7-8d12-00446ac1c57d/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Jaya Gophane","lead_email":"jayagt@jayagophanetrainings.com","whatsapp":"+91 84594 68405","source":"Referred by a Friend","sells_courses":"Yes","timeline":"Within a month"},{"calendly_id":"471a8f3e","call_date":"2026-06-01T12:30:00+05:30","call_end":"2026-06-01T13:00:00+05:30","join_url":"https://calendly.com/events/471a8f3e-b3fc-4034-82c5-8f7493c70701/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Pratiksha","lead_email":"pratikshapatil6933@gmail.com","whatsapp":"+91 74992 31832","source":"Instagram","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"8e80da90","call_date":"2026-06-01T13:00:00+05:30","call_end":"2026-06-01T13:30:00+05:30","join_url":"https://calendly.com/events/8e80da90-c051-443f-a560-b902b2836460/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Paramjoshi Manthi","lead_email":"paramjosh786@gmail.com","whatsapp":"+91 83175 26617","source":"Youtube","sells_courses":"Course","timeline":"Within a month"},{"calendly_id":"8e351bb7","call_date":"2026-06-01T14:30:00+05:30","call_end":"2026-06-01T15:00:00+05:30","join_url":"https://calendly.com/events/8e351bb7-3377-4abc-a033-f69a3e396f78/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Deval Patel","lead_email":"pateldeval38@gmail.com","whatsapp":"+91 88661 41031","source":"Google","sells_courses":"Planning to sell","timeline":"Within a month"},{"calendly_id":"99460e5f","lead_email":"dphoolkumari11@gmail.com","call_date":"2026-06-02T12:00:00+05:30","call_end":"2026-06-02T12:30:00+05:30","join_url":"https://calendly.com/events/99460e5f-3b33-4c28-8ac9-8472239590e9/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Dphoolkumari11"},{"calendly_id":"b527f14e","lead_email":"pardeepk35084@gmail.com","call_date":"2026-06-02T12:30:00+05:30","call_end":"2026-06-02T13:00:00+05:30","join_url":"https://calendly.com/events/b527f14e-c967-4de4-ac28-d9ca118fecec/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Pardeepk35084"},{"calendly_id":"26c963f6","call_date":"2026-06-02T13:00:00+05:30","call_end":"2026-06-02T13:30:00+05:30","join_url":"https://calendly.com/events/26c963f6-8076-49a0-b54b-f38a933aff96/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Vijay Tiwari","lead_email":"bemihubofficial@gmail.com","whatsapp":"+91 91791 74440","source":"Google","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"b59729a4","call_date":"2026-06-03T11:00:00+05:30","call_end":"2026-06-03T11:30:00+05:30","join_url":"https://calendly.com/events/b59729a4-a582-4608-a118-9cc88af798ca/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Umesh","lead_email":"umesh@devgadhvi.com","whatsapp":"+91 91825 44291","source":"Referred by a Friend","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"d7addb2c","call_date":"2026-06-03T12:00:00+05:30","call_end":"2026-06-03T12:30:00+05:30","join_url":"https://calendly.com/events/d7addb2c-1b78-4c67-8182-e4304a69bcfa/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Nitin A","lead_email":"jackandey@gmail.com","whatsapp":"+91 94221 58746","source":"Ads","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"2ed66634","call_date":"2026-06-03T12:30:00+05:30","call_end":"2026-06-03T13:00:00+05:30","join_url":"https://calendly.com/events/2ed66634-6280-470e-bf3d-01648c1c9cbc/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"CA Sahil Kukreja","lead_email":"casahilkukreja177@gmail.com","whatsapp":"+91 84464 89699","source":"Instagram","sells_courses":"No","timeline":"Within a month"},{"calendly_id":"26f49cda","call_date":"2026-06-03T14:30:00+05:30","call_end":"2026-06-03T15:00:00+05:30","join_url":"https://calendly.com/events/26f49cda-a5cc-4ca6-82b1-c3210d643196/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Siddheshwar Lokhande","lead_email":"siddheshlokhande1@gmail.com","whatsapp":"+91 89830 69995","source":"Internet Lifestyle Hub","sells_courses":"Yes","timeline":"Within a month"},{"calendly_id":"b3bedc16","call_date":"2026-06-03T15:00:00+05:30","call_end":"2026-06-03T15:30:00+05:30","join_url":"https://calendly.com/events/b3bedc16-4e51-4151-96bc-375e0f39ba1f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Darshit Pandey","lead_email":"darshitpandey955@gmail.com","whatsapp":"+91 97937 33566","source":"Internet Lifestyle Hub","sells_courses":"Yes","timeline":"Within a month"},{"calendly_id":"eb524f42","call_date":"2026-06-04T11:30:00+05:30","call_end":"2026-06-04T12:00:00+05:30","join_url":"https://calendly.com/events/eb524f42-bdf6-4114-9a83-642a946c9b3a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Shivanshh Maurya","lead_email":"mauryashivanshh@gmail.com","whatsapp":"+91 98390 71634","source":"Instagram","sells_courses":"Yes","timeline":"Later"},{"calendly_id":"19b68b2a","lead_email":"satyadeepaj@gmail.com","call_date":"2026-06-04T15:30:00+05:30","call_end":"2026-06-04T16:00:00+05:30","join_url":"https://calendly.com/events/19b68b2a-8734-4efc-945c-5da77ef98d32/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Satyadeepaj"},{"calendly_id":"624c0a97","call_date":"2026-06-04T16:00:00+05:30","call_end":"2026-06-04T16:30:00+05:30","join_url":"https://calendly.com/events/624c0a97-727d-4fd6-a286-bd5dd514143a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Tony Maral","lead_email":"tonymeera4@gmail.com","whatsapp":"+91 95411 19612","source":"Instagram","sells_courses":"No","timeline":"Immediately"},{"calendly_id":"5a5c0523","call_date":"2026-06-05T15:00:00+05:30","call_end":"2026-06-05T15:30:00+05:30","join_url":"https://calendly.com/events/5a5c0523-9041-4325-99b9-6839c0b0caea/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Veena","lead_email":"veenaaven@gmail.com","whatsapp":"+91 98458 82560","source":"Google","sells_courses":"Yes","timeline":"Within 15 Days"},{"calendly_id":"4e6bf22d","call_date":"2026-06-05T16:00:00+05:30","call_end":"2026-06-05T16:30:00+05:30","join_url":"https://calendly.com/events/4e6bf22d-bd01-4729-b714-f3dd29192b78/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Baibhav Mahanta","lead_email":"baibhav.mahanta@gmail.com","whatsapp":"+91 80959 65077","source":"Instagram","sells_courses":"Yes","timeline":"Within 15 Days"},{"calendly_id":"bdc93a10","call_date":"2026-06-05T16:30:00+05:30","call_end":"2026-06-05T17:00:00+05:30","join_url":"https://calendly.com/events/bdc93a10-0afc-4784-81ae-1746905497ea/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Shraddha Rath","lead_email":"shraddha.rath4@gmail.com","whatsapp":"+91 82493 23728","source":"Instagram","sells_courses":"Yes","timeline":"Within a month"},{"calendly_id":"5602d4cb","call_date":"2026-06-10T10:30:00+05:30","call_end":"2026-06-10T11:00:00+05:30","call_type":"Discovery Call - Tagmango","status":"completed","lead_name":"Neetu Verma","lead_email":"vermanits23@gmail.com","whatsapp":"+91 99100 32132","sells_courses":"Learning","timeline":"Not sure"},{"calendly_id":"18d52e73","call_date":"2026-06-10T11:00:00+05:30","call_end":"2026-06-10T11:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"completed","lead_name":"Internal Test"},{"calendly_id":"7cb4ce84","call_date":"2026-06-10T11:30:00+05:30","call_end":"2026-06-10T12:00:00+05:30","join_url":"https://calendly.com/events/7cb4ce84-e503-4b9f-8c67-fee98e00c05b/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Aneesh Kumar PK","lead_email":"aneeshkumarpk@gmail.com","whatsapp":"+91 99615 65442","source":"Internet Lifestyle Hub","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"64f5ea31","call_date":"2026-06-10T12:00:00+05:30","call_end":"2026-06-10T12:30:00+05:30","join_url":"https://calendly.com/events/64f5ea31-4cbf-4b0e-880b-ef952c729621/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"KR John","lead_email":"krjohn.john@gmail.com","whatsapp":"+91 94432 42603","source":"Google","sells_courses":"Yes","timeline":"Immediately"},{"calendly_id":"f9ccf7b4","call_date":"2026-06-10T12:30:00+05:30","call_end":"2026-06-10T13:00:00+05:30","join_url":"https://calendly.com/events/f9ccf7b4-b3a6-49c0-8b3a-8a9b2b595f09/google_meet","call_type":"30 Minute Discovery Call ","status":"completed","lead_name":"Vijay Nilatkar","lead_email":"accountngp@gmail.com","whatsapp":"+91 93731 04022","source":"Instagram","sells_courses":"Course","timeline":"Within 15 Days"}];
+const CALENDLY_SYNC_DATA = [{"calendly_id":"3b1f5ac5","lead_name":"Siddharth Mokle","lead_email":"siddharthmokle1@gmail.com","call_date":"2026-06-11T11:30:00+05:30","call_end":"2026-06-11T12:00:00+05:30","join_url":"https://calendly.com/events/3b1f5ac5-6821-4481-9720-cbe0b8d6ef23/google_meet","call_type":"30 Minute Discovery Call","source":"Ads","whatsapp":"+91 80070 09364","timeline":"Immediately","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"dc980dc5","lead_name":"Shrikant Ambekar","lead_email":"shri007_87@yahoo.com","call_date":"2026-06-11T12:30:00+05:30","call_end":"2026-06-11T13:00:00+05:30","join_url":"https://calendly.com/events/dc980dc5-1600-4e85-a1dd-a7642ba42805/google_meet","call_type":"30 Minute Discovery Call","source":"Youtube","whatsapp":"+91 94042 96005","timeline":"Immediately","sells_courses":"No","status":"scheduled"},{"calendly_id":"d2f27695","lead_name":"Akshata Dharwadkar","lead_email":"akshatadharawadkar@gmail.com","call_date":"2026-06-11T15:00:00+05:30","call_end":"2026-06-11T15:30:00+05:30","join_url":"https://calendly.com/events/d2f27695-4c5d-4829-82e3-63f872e91f59/google_meet","call_type":"30 Minute Discovery Call","source":"Youtube","whatsapp":"+91 93805 83822","timeline":"Immediately","sells_courses":"Workshop","status":"scheduled"},{"calendly_id":"7c09521f","lead_name":"Vrukshika Korde","lead_email":"vrukshikakorde@gmail.com","call_date":"2026-06-11T15:30:00+05:30","call_end":"2026-06-11T16:00:00+05:30","join_url":"https://calendly.com/events/7c09521f-76c1-42c1-b746-e0faa4c2542a/google_meet","call_type":"30 Minute Discovery Call","source":"Internet Lifestyle Hub","whatsapp":"+91 77209 47259","timeline":"Within 15 Days","sells_courses":"Yes - launching courses","status":"scheduled"},{"calendly_id":"293e6466","lead_name":"Vaijayanthi Hariharan","lead_email":"vaijayanthi@ggsh.in","call_date":"2026-06-11T16:30:00+05:30","call_end":"2026-06-11T17:00:00+05:30","join_url":"https://calendly.com/events/293e6466-9fda-4758-9f17-80a79b0353b9/google_meet","call_type":"30 Minute Discovery Call","source":"Referred by a Friend","whatsapp":"+91 75987 04201","timeline":"Within 15 Days","sells_courses":"Planning to launch","status":"scheduled"},{"calendly_id":"9bdf0027","lead_name":"H K","lead_email":"meetharmeet02@gmail.com","call_date":"2026-06-12T10:00:00+05:30","call_end":"2026-06-12T10:30:00+05:30","join_url":"https://calendly.com/events/9bdf0027-3b0d-418d-8c81-a39998bcdccf/google_meet","call_type":"Discovery Call - Tagmango","whatsapp":"+91 98555 89060","timeline":"Immediately","sells_courses":"Group Coaching","status":"scheduled"},{"calendly_id":"9ef0c9d4","lead_name":"Meena","lead_email":"meenasmiles@gmail.com","call_date":"2026-06-12T11:00:00+05:30","call_end":"2026-06-12T11:30:00+05:30","join_url":"https://calendly.com/events/9ef0c9d4-3984-49c7-a2f5-971aa775d380/google_meet","call_type":"30 Minute Discovery Call","source":"Youtube","whatsapp":"+91 97420 33833","timeline":"Later","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"f52c29d1","lead_name":"Vivek","lead_email":"mieshameem@gmail.com","call_date":"2026-06-12T11:30:00+05:30","call_end":"2026-06-12T12:00:00+05:30","join_url":"https://calendly.com/events/f52c29d1-27db-4704-9a2b-263312d61343/google_meet","call_type":"30 Minute Discovery Call","source":"Instagram","whatsapp":"+91 78767 52794","timeline":"Within 15 Days","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"6b00f386","lead_name":"Ashish Kumar","lead_email":"ashishgyt8@gmail.com","call_date":"2026-06-12T13:00:00+05:30","call_end":"2026-06-12T13:30:00+05:30","join_url":"https://calendly.com/events/6b00f386-21ec-4f7e-b4f5-4bc88cecc210/google_meet","call_type":"30 Minute Discovery Call","source":"Instagram","whatsapp":"+91 96530 25567","timeline":"Within 15 Days","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"7caff792","lead_name":"Neetu Singh","lead_email":"neeti95555@gmail.com","call_date":"2026-06-12T14:30:00+05:30","call_end":"2026-06-12T15:00:00+05:30","join_url":"https://calendly.com/events/7caff792-e73b-4cc3-94a0-76768d5edba1/google_meet","call_type":"30 Minute Discovery Call","source":"Ads","whatsapp":"+91 62621 01037","timeline":"Immediately","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"5c46000b","lead_name":"Yathin Nayaka","lead_email":"yathinnayaka5117@gmail.com","call_date":"2026-06-12T15:00:00+05:30","call_end":"2026-06-12T15:30:00+05:30","join_url":"https://calendly.com/events/5c46000b-14cc-42e3-b3c4-c49fcf905696/google_meet","call_type":"30 Minute Discovery Call","status":"scheduled"},{"calendly_id":"cbe73494","lead_name":"Mohammad Iyalul","lead_email":"iyalulhaq826@gmail.com","call_date":"2026-06-12T15:30:00+05:30","call_end":"2026-06-12T16:00:00+05:30","join_url":"https://calendly.com/events/cbe73494-2fb0-4f16-9e7c-76aac196908e/google_meet","call_type":"30 Minute Discovery Call","source":"Instagram","whatsapp":"+91 94968 84826","timeline":"Later","sells_courses":"No","status":"scheduled"},{"calendly_id":"2dd3cf52","lead_name":"Sudhanshu Goel","lead_email":"sudhanshugoel@yahoo.com","call_date":"2026-06-12T16:30:00+05:30","call_end":"2026-06-12T17:00:00+05:30","call_type":"Discovery Call - Tagmango","whatsapp":"+91 97196 90529","timeline":"Immediately","sells_courses":"1:1 Coaching","status":"scheduled"},{"calendly_id":"9c07b3d3","lead_name":"Suman","lead_email":"kasadbox@gmail.com","call_date":"2026-06-15T13:00:00+05:30","call_end":"2026-06-15T13:30:00+05:30","join_url":"https://calendly.com/events/9c07b3d3-b6a7-42d2-9872-d68552ad16eb/google_meet","call_type":"30 Minute Discovery Call","source":"Instagram","whatsapp":"+91 98869 35628","timeline":"Immediately","sells_courses":"Yes","status":"scheduled"},{"calendly_id":"2c41d992","lead_name":"Aditya Thakur","lead_email":"jimxdd07@gmail.com","call_date":"2026-06-15T15:00:00+05:30","call_end":"2026-06-15T15:30:00+05:30","call_type":"Discovery Call - Tagmango","whatsapp":"+91 81095 93637","timeline":"Immediately","sells_courses":"1:1 Coaching, Courses","status":"scheduled"},{"calendly_id":"ff89692a","lead_name":"Sachin Sharma","lead_email":"sachiinsh@gmail.com","call_date":"2026-06-16T18:00:00+05:30","call_end":"2026-06-16T18:30:00+05:30","join_url":"https://calendly.com/events/ff89692a-ffa4-475a-b28c-d43d4c035386/google_meet","call_type":"Discovery Call - Tagmango","whatsapp":"+91 97695 63083","timeline":"Within A Month","sells_courses":"1:1 Coaching, Group Coaching","status":"scheduled"},{"calendly_id":"5c28d256","lead_name":"Ritika Jain","lead_email":"ritikajain2702@gmail.com","call_date":"2026-06-16T18:30:00+05:30","call_end":"2026-06-16T19:00:00+05:30","call_type":"Discovery Call - Tagmango","whatsapp":"+91 94250 59067","timeline":"Immediately","sells_courses":"1:1 Coaching","status":"scheduled"},{"calendly_id":"34ef73d6","lead_name":"Discovery Call","call_date":"2026-06-19T10:00:00+05:30","call_end":"2026-06-19T10:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled"},{"calendly_id":"bf1a0061","lead_name":"Discovery Call","call_date":"2026-06-19T11:00:00+05:30","call_end":"2026-06-19T11:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"scheduled"},{"calendly_id":"ce5bcb4d","lead_name":"Nandish Parashar","lead_email":"charlieparashar29@gmail.com","call_date":"2026-05-01T13:00:00+05:30","call_end":"2026-05-01T13:30:00+05:30","join_url":"https://calendly.com/events/ce5bcb4d-2120-4607-881b-892dff0d9326/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"74d1687d","lead_name":"Discovery Call","call_date":"2026-05-04T12:00:00+05:30","call_end":"2026-05-04T12:30:00+05:30","join_url":"https://calendly.com/events/74d1687d-cb1d-49d3-b94e-6695842d4e8c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"944a04db","lead_name":"Discovery Call","call_date":"2026-05-04T12:30:00+05:30","call_end":"2026-05-04T13:00:00+05:30","join_url":"https://calendly.com/events/944a04db-0a3e-4ef8-89e5-31d183e92790/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"b5fa0e31","lead_name":"Discovery Call","call_date":"2026-05-04T14:30:00+05:30","call_end":"2026-05-04T15:00:00+05:30","join_url":"https://calendly.com/events/b5fa0e31-c946-43ec-bbb8-d5af900cc68e/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"2ee119c2","lead_name":"Discovery Call","call_date":"2026-05-04T15:00:00+05:30","call_end":"2026-05-04T15:30:00+05:30","join_url":"https://calendly.com/events/2ee119c2-14ba-4008-ae62-2d0a6080db9c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"805545f1","lead_name":"Discovery Call","call_date":"2026-05-04T15:30:00+05:30","call_end":"2026-05-04T16:00:00+05:30","join_url":"https://calendly.com/events/805545f1-3813-485f-a649-1e9fdd7913cf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"60e23604","lead_name":"Sujith","lead_email":"sujiththiroor01@gmail.com","call_date":"2026-05-04T16:00:00+05:30","call_end":"2026-05-04T16:30:00+05:30","join_url":"https://calendly.com/events/60e23604-cb5f-401a-b348-db49ee2943ee/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"22f0bce7","lead_name":"Discovery Call","call_date":"2026-05-04T16:30:00+05:30","call_end":"2026-05-04T17:00:00+05:30","join_url":"https://calendly.com/events/22f0bce7-27a7-4398-a081-87b4e1273004/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"6b91f61c","lead_name":"Discovery Call","call_date":"2026-05-05T11:00:00+05:30","call_end":"2026-05-05T11:30:00+05:30","join_url":"https://calendly.com/events/6b91f61c-9234-49d8-a194-ce8f4d23f48f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"17a4a4cb","lead_name":"Akshay DM","lead_email":"akshaydm778@gmail.com","call_date":"2026-05-05T13:00:00+05:30","call_end":"2026-05-05T13:30:00+05:30","join_url":"https://calendly.com/events/17a4a4cb-542a-47da-9757-58533222dfa5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"980f7088","lead_name":"Discovery Call","call_date":"2026-05-05T15:00:00+05:30","call_end":"2026-05-05T15:30:00+05:30","join_url":"https://calendly.com/events/980f7088-0102-48e7-8770-b650beb5958f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"bbc7e42d","lead_name":"Discovery Call","call_date":"2026-05-06T11:00:00+05:30","call_end":"2026-05-06T11:30:00+05:30","join_url":"https://calendly.com/events/bbc7e42d-bb18-4a15-b0b4-de377046a1c3/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"90ddba7e","lead_name":"Discovery Call","call_date":"2026-05-06T13:00:00+05:30","call_end":"2026-05-06T13:30:00+05:30","join_url":"https://calendly.com/events/90ddba7e-bf78-4292-baa5-d74c2c51a082/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"83a45e5a","lead_name":"Prabhav Mistry","lead_email":"content.lead@kalorex.org","call_date":"2026-05-07T11:30:00+05:30","call_end":"2026-05-07T12:00:00+05:30","join_url":"https://calendly.com/events/83a45e5a-e236-4302-a49a-c205ef126d69/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"23f3137f","lead_name":"Discovery Call","call_date":"2026-05-07T16:30:00+05:30","call_end":"2026-05-07T17:00:00+05:30","join_url":"https://calendly.com/events/23f3137f-4f30-43aa-939c-8c4ba278364f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"a9b2f499","lead_name":"Discovery Call","call_date":"2026-05-08T11:00:00+05:30","call_end":"2026-05-08T11:30:00+05:30","join_url":"https://calendly.com/events/a9b2f499-7aa2-431d-a203-d32253427d26/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"da16791b","lead_name":"Discovery Call","call_date":"2026-05-08T12:00:00+05:30","call_end":"2026-05-08T12:30:00+05:30","join_url":"https://calendly.com/events/da16791b-68be-4ca1-afdb-52c711e4b0d7/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"ecb52e4f","lead_name":"Discovery Call","call_date":"2026-05-08T15:30:00+05:30","call_end":"2026-05-08T16:00:00+05:30","join_url":"https://calendly.com/events/ecb52e4f-6c34-41ba-8363-a7477fb8474d/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"47748f49","lead_name":"Shiva","lead_email":"shivafrombombay@gmail.com","call_date":"2026-05-08T16:00:00+05:30","call_end":"2026-05-08T16:30:00+05:30","join_url":"https://calendly.com/events/47748f49-3789-4b98-af70-0b69a3025a4c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"36807ac9","lead_name":"Discovery Call","call_date":"2026-05-08T16:30:00+05:30","call_end":"2026-05-08T17:00:00+05:30","join_url":"https://calendly.com/events/36807ac9-d24e-4be9-8187-d1728970f076/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"07baaf3a","lead_name":"Discovery Call","call_date":"2026-05-11T13:00:00+05:30","call_end":"2026-05-11T13:30:00+05:30","join_url":"https://calendly.com/events/07baaf3a-e390-4577-9236-eb50f948b929/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"35fe4b8e","lead_name":"Discovery Call","call_date":"2026-05-11T15:00:00+05:30","call_end":"2026-05-11T15:30:00+05:30","join_url":"https://calendly.com/events/35fe4b8e-ac88-46ca-b651-e472278dc872/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"3ef75e98","lead_name":"Discovery Call","call_date":"2026-05-11T16:00:00+05:30","call_end":"2026-05-11T16:30:00+05:30","join_url":"https://calendly.com/events/3ef75e98-eef8-4dc4-b6af-cccecca9768c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"e2aa82bd","lead_name":"Discovery Call","call_date":"2026-05-12T11:00:00+05:30","call_end":"2026-05-12T11:30:00+05:30","join_url":"https://calendly.com/events/e2aa82bd-744e-44c3-832d-7d7073854f91/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"8b6bf161","lead_name":"Discovery Call","call_date":"2026-05-12T11:30:00+05:30","call_end":"2026-05-12T12:00:00+05:30","join_url":"https://calendly.com/events/8b6bf161-b756-45b4-9b1a-84b0b46bf319/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"2b89d586","lead_name":"Discovery Call","call_date":"2026-05-12T12:30:00+05:30","call_end":"2026-05-12T13:00:00+05:30","join_url":"https://calendly.com/events/2b89d586-332d-4909-a578-55ff21db44f9/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"66578326","lead_name":"Discovery Call","call_date":"2026-05-12T13:00:00+05:30","call_end":"2026-05-12T13:30:00+05:30","join_url":"https://calendly.com/events/66578326-73c5-4585-8b7c-7e09ef3bad74/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"adc3a789","lead_name":"Discovery Call","call_date":"2026-05-12T15:00:00+05:30","call_end":"2026-05-12T15:30:00+05:30","join_url":"https://calendly.com/events/adc3a789-c539-4ff3-a35d-5a3defcc9dd1/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"2c4f529f","lead_name":"Discovery Call","call_date":"2026-05-12T16:00:00+05:30","call_end":"2026-05-12T16:30:00+05:30","join_url":"https://calendly.com/events/2c4f529f-c75a-4d48-9634-8b719f2ac113/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"61b49402","lead_name":"Discovery Call","call_date":"2026-05-13T11:00:00+05:30","call_end":"2026-05-13T11:30:00+05:30","join_url":"https://calendly.com/events/61b49402-df24-42ca-8e51-8aba0503d2aa/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"ded00f32","lead_name":"Discovery Call","call_date":"2026-05-13T12:00:00+05:30","call_end":"2026-05-13T12:30:00+05:30","join_url":"https://calendly.com/events/ded00f32-db59-4b5f-9306-1e8f8f50b37b/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"5dc9e6df","lead_name":"Discovery Call","call_date":"2026-05-13T13:00:00+05:30","call_end":"2026-05-13T13:30:00+05:30","join_url":"https://calendly.com/events/5dc9e6df-75d7-4b7d-a901-5d496145e0fa/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"2bd16889","lead_name":"Discovery Call","call_date":"2026-05-14T11:00:00+05:30","call_end":"2026-05-14T11:30:00+05:30","join_url":"https://calendly.com/events/2bd16889-8f2b-42e7-8b59-35360d09f2a7/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"27011be2","lead_name":"Discovery Call","call_date":"2026-05-15T11:00:00+05:30","call_end":"2026-05-15T11:30:00+05:30","join_url":"https://calendly.com/events/27011be2-f8b6-4d5d-9eee-b87037d367b0/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"d6a62de3","lead_name":"Discovery Call","call_date":"2026-05-15T13:00:00+05:30","call_end":"2026-05-15T13:30:00+05:30","join_url":"https://calendly.com/events/d6a62de3-5eea-4b46-a28d-60258269fe40/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"13f35742","lead_name":"Discovery Call","call_date":"2026-05-18T12:00:00+05:30","call_end":"2026-05-18T12:30:00+05:30","join_url":"https://calendly.com/events/13f35742-648f-4d8e-9b46-758b380c173f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"89cf21ca","lead_name":"Discovery Call","call_date":"2026-05-18T12:30:00+05:30","call_end":"2026-05-18T13:00:00+05:30","join_url":"https://calendly.com/events/89cf21ca-e698-4507-8d33-4e9224b389d4/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"9592c409","lead_name":"Deepak Goswami","lead_email":"deepakgoswami9050@gmail.com","call_date":"2026-05-18T13:00:00+05:30","call_end":"2026-05-18T13:30:00+05:30","join_url":"https://calendly.com/events/9592c409-9510-48a3-9371-55add363b9af/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"0f5cbe05","lead_name":"Discovery Call","call_date":"2026-05-18T14:30:00+05:30","call_end":"2026-05-18T15:00:00+05:30","join_url":"https://calendly.com/events/0f5cbe05-a980-436c-abe5-65ff01abbd28/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"78279950","lead_name":"Discovery Call","call_date":"2026-05-18T15:00:00+05:30","call_end":"2026-05-18T15:30:00+05:30","join_url":"https://calendly.com/events/78279950-e964-401a-b1d6-c9e3466b865a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"a5d049aa","lead_name":"Discovery Call","call_date":"2026-05-18T15:30:00+05:30","call_end":"2026-05-18T16:00:00+05:30","join_url":"https://calendly.com/events/a5d049aa-51dc-4278-984e-7f27cbcd0ba5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"38538c81","lead_name":"Discovery Call","call_date":"2026-05-18T16:00:00+05:30","call_end":"2026-05-18T16:30:00+05:30","join_url":"https://calendly.com/events/38538c81-6b6a-4a80-9796-400a8d63c420/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"936d3d33","lead_name":"Discovery Call","call_date":"2026-05-19T12:30:00+05:30","call_end":"2026-05-19T13:00:00+05:30","join_url":"https://calendly.com/events/936d3d33-471c-46bb-ad23-45b7a190d3be/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"8ae5195d","lead_name":"Discovery Call","call_date":"2026-05-19T13:00:00+05:30","call_end":"2026-05-19T13:30:00+05:30","join_url":"https://calendly.com/events/8ae5195d-3bde-4765-b83f-218cb39b9b4f/google_meet","call_type":"30 Minute w/tagmango  ","status":"completed"},{"calendly_id":"6ed88b51","lead_name":"Discovery Call","call_date":"2026-05-19T14:30:00+05:30","call_end":"2026-05-19T15:00:00+05:30","join_url":"https://calendly.com/events/6ed88b51-a6ec-4c57-bdb9-0c54f682a55f/google_meet","call_type":"30 Minute w/tagmango  ","status":"completed"},{"calendly_id":"689082b5","lead_name":"Discovery Call","call_date":"2026-05-19T15:00:00+05:30","call_end":"2026-05-19T15:30:00+05:30","join_url":"https://calendly.com/events/689082b5-e952-493d-90ed-d49150f52ddf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"27603c4a","lead_name":"Discovery Call","call_date":"2026-05-19T16:00:00+05:30","call_end":"2026-05-19T16:30:00+05:30","join_url":"https://calendly.com/events/27603c4a-f54a-4e4f-93b3-c72007c9db95/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"f4ebf23d","lead_name":"Discovery Call","call_date":"2026-05-19T16:30:00+05:30","call_end":"2026-05-19T17:00:00+05:30","join_url":"https://calendly.com/events/f4ebf23d-6132-4b08-9c18-0aaba3f5c793/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"347165ef","lead_name":"Discovery Call","call_date":"2026-05-20T12:30:00+05:30","call_end":"2026-05-20T13:00:00+05:30","join_url":"https://calendly.com/events/347165ef-4aca-4475-8ff0-e003dc49a110/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"e8f48e94","lead_name":"Discovery Call","call_date":"2026-05-20T15:00:00+05:30","call_end":"2026-05-20T15:30:00+05:30","join_url":"https://calendly.com/events/e8f48e94-bb7d-4ffc-908b-6632119cbb6a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"487d54d1","lead_name":"Discovery Call","call_date":"2026-05-20T15:30:00+05:30","call_end":"2026-05-20T16:00:00+05:30","join_url":"https://calendly.com/events/487d54d1-6fbf-434b-9397-cbff4f28eca6/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"371a53b2","lead_name":"Discovery Call","call_date":"2026-05-21T11:00:00+05:30","call_end":"2026-05-21T11:30:00+05:30","join_url":"https://calendly.com/events/371a53b2-3252-41e2-b30a-33e2e4bbb418/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"780ee8b2","lead_name":"Discovery Call","call_date":"2026-05-21T16:30:00+05:30","call_end":"2026-05-21T17:00:00+05:30","join_url":"https://calendly.com/events/780ee8b2-a144-4fdf-a333-eca6425be49c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"65f1a9eb","lead_name":"Discovery Call","call_date":"2026-05-22T12:00:00+05:30","call_end":"2026-05-22T12:30:00+05:30","join_url":"https://calendly.com/events/65f1a9eb-5222-46da-9169-a66bb85e9875/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"60261db4","lead_name":"Discovery Call","call_date":"2026-05-22T14:30:00+05:30","call_end":"2026-05-22T15:00:00+05:30","join_url":"https://calendly.com/events/60261db4-c244-4655-b362-73eb7c881ff0/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"af708af3","lead_name":"Discovery Call","call_date":"2026-05-22T15:00:00+05:30","call_end":"2026-05-22T15:30:00+05:30","join_url":"https://calendly.com/events/af708af3-c398-4e11-a224-41439171d689/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"d0cbb824","lead_name":"Discovery Call","call_date":"2026-05-22T15:30:00+05:30","call_end":"2026-05-22T16:00:00+05:30","join_url":"https://calendly.com/events/d0cbb824-73d8-493e-a849-335d5a5a3134/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"bae1a2fc","lead_name":"Discovery Call","call_date":"2026-05-25T12:00:00+05:30","call_end":"2026-05-25T12:30:00+05:30","join_url":"https://calendly.com/events/bae1a2fc-5156-4bea-a718-62280832a1ce/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"310f9b5d","lead_name":"Discovery Call","call_date":"2026-05-25T12:30:00+05:30","call_end":"2026-05-25T13:00:00+05:30","join_url":"https://calendly.com/events/310f9b5d-c318-465f-a67c-262cc4a6610a/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"b2df1db4","lead_name":"Discovery Call","call_date":"2026-05-25T13:00:00+05:30","call_end":"2026-05-25T13:30:00+05:30","join_url":"https://calendly.com/events/b2df1db4-5bbd-4e36-a509-a614f9c2f637/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"bff0328f","lead_name":"Discovery Call","call_date":"2026-05-25T14:30:00+05:30","call_end":"2026-05-25T15:00:00+05:30","join_url":"https://calendly.com/events/bff0328f-73eb-4a2a-80c0-a222f2dc3b0f/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"c8588ed6","lead_name":"Discovery Call","call_date":"2026-05-25T15:00:00+05:30","call_end":"2026-05-25T15:30:00+05:30","join_url":"https://calendly.com/events/c8588ed6-a1e3-4d23-a8b5-8e9bf1c1c4b3/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"a1803f8c","lead_name":"Discovery Call","call_date":"2026-05-25T15:30:00+05:30","call_end":"2026-05-25T16:00:00+05:30","join_url":"https://calendly.com/events/a1803f8c-943a-4e4a-bfb2-f45b893e1f88/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"39c7652f","lead_name":"Discovery Call","call_date":"2026-05-25T16:00:00+05:30","call_end":"2026-05-25T16:30:00+05:30","join_url":"https://calendly.com/events/39c7652f-51ba-402c-84f7-e6037453f6ac/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"f3cf3012","lead_name":"Discovery Call","call_date":"2026-05-26T11:00:00+05:30","call_end":"2026-05-26T11:30:00+05:30","join_url":"https://calendly.com/events/f3cf3012-7ce8-4b34-b0af-371b3a51781c/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"e8042345","lead_name":"Discovery Call","call_date":"2026-05-26T16:00:00+05:30","call_end":"2026-05-26T16:30:00+05:30","join_url":"https://calendly.com/events/e8042345-a246-4e30-867e-d37f91197770/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"7000ca8d","lead_name":"Discovery Call","call_date":"2026-05-26T16:30:00+05:30","call_end":"2026-05-26T17:00:00+05:30","join_url":"https://calendly.com/events/7000ca8d-c8fb-40d2-9890-e7df104cadb5/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"6f53581b","lead_name":"Discovery Call","call_date":"2026-05-27T11:00:00+05:30","call_end":"2026-05-27T11:30:00+05:30","join_url":"https://calendly.com/events/6f53581b-1268-4997-8d1e-f47705cdddcd/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"6914df86","lead_name":"Discovery Call","call_date":"2026-05-27T11:30:00+05:30","call_end":"2026-05-27T12:00:00+05:30","join_url":"https://calendly.com/events/6914df86-13f6-4ac4-b0e2-664ba84654b2/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"db349328","lead_name":"Discovery Call","call_date":"2026-05-27T12:00:00+05:30","call_end":"2026-05-27T12:30:00+05:30","join_url":"https://calendly.com/events/db349328-103a-4c78-88c1-218e8aa2a2d1/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"38ab2904","lead_name":"Discovery Call","call_date":"2026-05-27T12:30:00+05:30","call_end":"2026-05-27T13:00:00+05:30","join_url":"https://calendly.com/events/38ab2904-7640-4220-86a7-36b4f894da39/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"fcbe51dc","lead_name":"Discovery Call","call_date":"2026-05-28T12:30:00+05:30","call_end":"2026-05-28T13:00:00+05:30","join_url":"https://calendly.com/events/fcbe51dc-46be-4c07-a7a0-9f899e64375e/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"91f0d731","lead_name":"Discovery Call","call_date":"2026-05-28T13:00:00+05:30","call_end":"2026-05-28T13:30:00+05:30","join_url":"https://calendly.com/events/91f0d731-5b8b-4be8-acda-f03d3a355671/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"ca36b60a","lead_name":"Discovery Call","call_date":"2026-05-29T11:30:00+05:30","call_end":"2026-05-29T12:00:00+05:30","join_url":"https://calendly.com/events/ca36b60a-aaa5-4658-a8ef-5759961f52da/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"fab511e1","lead_name":"Discovery Call","call_date":"2026-05-29T12:30:00+05:30","call_end":"2026-05-29T13:00:00+05:30","join_url":"https://calendly.com/events/fab511e1-5317-402b-8e00-cd81422e558d/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"d4a73406","lead_name":"Discovery Call","call_date":"2026-05-29T13:00:00+05:30","call_end":"2026-05-29T13:30:00+05:30","join_url":"https://calendly.com/events/d4a73406-bf2a-4ee4-9458-e750f6ac3661/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"5d9acf9c","lead_name":"Discovery Call","call_date":"2026-05-29T16:30:00+05:30","call_end":"2026-05-29T17:00:00+05:30","join_url":"https://calendly.com/events/5d9acf9c-b390-4d93-8fca-b736355f34bf/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"e0c6a7b6","lead_name":"Jaya Gophane","lead_email":"jayagt@jayagophanetrainings.com","call_date":"2026-06-01T12:00:00+05:30","call_end":"2026-06-01T12:30:00+05:30","join_url":"https://calendly.com/events/e0c6a7b6-67b6-40a7-8d12-00446ac1c57d/google_meet","call_type":"30 Minute Discovery Call ","source":"Referred by a Friend","whatsapp":"+91 84594 68405","timeline":"Within a month","sells_courses":"Yes","status":"completed"},{"calendly_id":"471a8f3e","lead_name":"Pratiksha","lead_email":"pratikshapatil6933@gmail.com","call_date":"2026-06-01T12:30:00+05:30","call_end":"2026-06-01T13:00:00+05:30","join_url":"https://calendly.com/events/471a8f3e-b3fc-4034-82c5-8f7493c70701/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 74992 31832","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"8e80da90","lead_name":"Paramjoshi Manthi","lead_email":"paramjosh786@gmail.com","call_date":"2026-06-01T13:00:00+05:30","call_end":"2026-06-01T13:30:00+05:30","join_url":"https://calendly.com/events/8e80da90-c051-443f-a560-b902b2836460/google_meet","call_type":"30 Minute Discovery Call ","source":"Youtube","whatsapp":"+91 83175 26617","timeline":"Within a month","sells_courses":"Course","status":"completed"},{"calendly_id":"8e351bb7","lead_name":"Deval Patel","lead_email":"pateldeval38@gmail.com","call_date":"2026-06-01T14:30:00+05:30","call_end":"2026-06-01T15:00:00+05:30","join_url":"https://calendly.com/events/8e351bb7-3377-4abc-a033-f69a3e396f78/google_meet","call_type":"30 Minute Discovery Call ","source":"Google","whatsapp":"+91 88661 41031","timeline":"Within a month","sells_courses":"Planning to sell","status":"completed"},{"calendly_id":"99460e5f","lead_name":"Dphoolkumari11","lead_email":"dphoolkumari11@gmail.com","call_date":"2026-06-02T12:00:00+05:30","call_end":"2026-06-02T12:30:00+05:30","join_url":"https://calendly.com/events/99460e5f-3b33-4c28-8ac9-8472239590e9/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"b527f14e","lead_name":"Pardeepk35084","lead_email":"pardeepk35084@gmail.com","call_date":"2026-06-02T12:30:00+05:30","call_end":"2026-06-02T13:00:00+05:30","join_url":"https://calendly.com/events/b527f14e-c967-4de4-ac28-d9ca118fecec/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"26c963f6","lead_name":"Vijay Tiwari","lead_email":"bemihubofficial@gmail.com","call_date":"2026-06-02T13:00:00+05:30","call_end":"2026-06-02T13:30:00+05:30","join_url":"https://calendly.com/events/26c963f6-8076-49a0-b54b-f38a933aff96/google_meet","call_type":"30 Minute Discovery Call ","source":"Google","whatsapp":"+91 91791 74440","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"b59729a4","lead_name":"Umesh","lead_email":"umesh@devgadhvi.com","call_date":"2026-06-03T11:00:00+05:30","call_end":"2026-06-03T11:30:00+05:30","join_url":"https://calendly.com/events/b59729a4-a582-4608-a118-9cc88af798ca/google_meet","call_type":"30 Minute Discovery Call ","source":"Referred by a Friend","whatsapp":"+91 91825 44291","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"d7addb2c","lead_name":"Nitin A","lead_email":"jackandey@gmail.com","call_date":"2026-06-03T12:00:00+05:30","call_end":"2026-06-03T12:30:00+05:30","join_url":"https://calendly.com/events/d7addb2c-1b78-4c67-8182-e4304a69bcfa/google_meet","call_type":"30 Minute Discovery Call ","source":"Ads","whatsapp":"+91 94221 58746","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"2ed66634","lead_name":"CA Sahil Kukreja","lead_email":"casahilkukreja177@gmail.com","call_date":"2026-06-03T12:30:00+05:30","call_end":"2026-06-03T13:00:00+05:30","join_url":"https://calendly.com/events/2ed66634-6280-470e-bf3d-01648c1c9cbc/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 84464 89699","timeline":"Within a month","sells_courses":"No","status":"completed"},{"calendly_id":"26f49cda","lead_name":"Siddheshwar Lokhande","lead_email":"siddheshlokhande1@gmail.com","call_date":"2026-06-03T14:30:00+05:30","call_end":"2026-06-03T15:00:00+05:30","join_url":"https://calendly.com/events/26f49cda-a5cc-4ca6-82b1-c3210d643196/google_meet","call_type":"30 Minute Discovery Call ","source":"Internet Lifestyle Hub","whatsapp":"+91 89830 69995","timeline":"Within a month","sells_courses":"Yes","status":"completed"},{"calendly_id":"b3bedc16","lead_name":"Darshit Pandey","lead_email":"darshitpandey955@gmail.com","call_date":"2026-06-03T15:00:00+05:30","call_end":"2026-06-03T15:30:00+05:30","join_url":"https://calendly.com/events/b3bedc16-4e51-4151-96bc-375e0f39ba1f/google_meet","call_type":"30 Minute Discovery Call ","source":"Internet Lifestyle Hub","whatsapp":"+91 97937 33566","timeline":"Within a month","sells_courses":"Yes","status":"completed"},{"calendly_id":"eb524f42","lead_name":"Shivanshh Maurya","lead_email":"mauryashivanshh@gmail.com","call_date":"2026-06-04T11:30:00+05:30","call_end":"2026-06-04T12:00:00+05:30","join_url":"https://calendly.com/events/eb524f42-bdf6-4114-9a83-642a946c9b3a/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 98390 71634","timeline":"Later","sells_courses":"Yes","status":"completed"},{"calendly_id":"19b68b2a","lead_name":"Satyadeepaj","lead_email":"satyadeepaj@gmail.com","call_date":"2026-06-04T15:30:00+05:30","call_end":"2026-06-04T16:00:00+05:30","join_url":"https://calendly.com/events/19b68b2a-8734-4efc-945c-5da77ef98d32/google_meet","call_type":"30 Minute Discovery Call ","status":"completed"},{"calendly_id":"624c0a97","lead_name":"Tony Maral","lead_email":"tonymeera4@gmail.com","call_date":"2026-06-04T16:00:00+05:30","call_end":"2026-06-04T16:30:00+05:30","join_url":"https://calendly.com/events/624c0a97-727d-4fd6-a286-bd5dd514143a/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 95411 19612","timeline":"Immediately","sells_courses":"No","status":"completed"},{"calendly_id":"5a5c0523","lead_name":"Veena","lead_email":"veenaaven@gmail.com","call_date":"2026-06-05T15:00:00+05:30","call_end":"2026-06-05T15:30:00+05:30","join_url":"https://calendly.com/events/5a5c0523-9041-4325-99b9-6839c0b0caea/google_meet","call_type":"30 Minute Discovery Call ","source":"Google","whatsapp":"+91 98458 82560","timeline":"Within 15 Days","sells_courses":"Yes","status":"completed"},{"calendly_id":"4e6bf22d","lead_name":"Baibhav Mahanta","lead_email":"baibhav.mahanta@gmail.com","call_date":"2026-06-05T16:00:00+05:30","call_end":"2026-06-05T16:30:00+05:30","join_url":"https://calendly.com/events/4e6bf22d-bd01-4729-b714-f3dd29192b78/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 80959 65077","timeline":"Within 15 Days","sells_courses":"Yes","status":"completed"},{"calendly_id":"bdc93a10","lead_name":"Shraddha Rath","lead_email":"shraddha.rath4@gmail.com","call_date":"2026-06-05T16:30:00+05:30","call_end":"2026-06-05T17:00:00+05:30","join_url":"https://calendly.com/events/bdc93a10-0afc-4784-81ae-1746905497ea/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 82493 23728","timeline":"Within a month","sells_courses":"Yes","status":"completed"},{"calendly_id":"5602d4cb","lead_name":"Neetu Verma","lead_email":"vermanits23@gmail.com","call_date":"2026-06-10T10:30:00+05:30","call_end":"2026-06-10T11:00:00+05:30","call_type":"Discovery Call - Tagmango","whatsapp":"+91 99100 32132","timeline":"Not sure","sells_courses":"Learning","status":"completed"},{"calendly_id":"18d52e73","lead_name":"Internal Test","call_date":"2026-06-10T11:00:00+05:30","call_end":"2026-06-10T11:30:00+05:30","call_type":"Discovery Call - Tagmango","status":"completed"},{"calendly_id":"7cb4ce84","lead_name":"Aneesh Kumar PK","lead_email":"aneeshkumarpk@gmail.com","call_date":"2026-06-10T11:30:00+05:30","call_end":"2026-06-10T12:00:00+05:30","join_url":"https://calendly.com/events/7cb4ce84-e503-4b9f-8c67-fee98e00c05b/google_meet","call_type":"30 Minute Discovery Call ","source":"Internet Lifestyle Hub","whatsapp":"+91 99615 65442","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"64f5ea31","lead_name":"KR John","lead_email":"krjohn.john@gmail.com","call_date":"2026-06-10T12:00:00+05:30","call_end":"2026-06-10T12:30:00+05:30","join_url":"https://calendly.com/events/64f5ea31-4cbf-4b0e-880b-ef952c729621/google_meet","call_type":"30 Minute Discovery Call ","source":"Google","whatsapp":"+91 94432 42603","timeline":"Immediately","sells_courses":"Yes","status":"completed"},{"calendly_id":"f9ccf7b4","lead_name":"Vijay Nilatkar","lead_email":"accountngp@gmail.com","call_date":"2026-06-10T12:30:00+05:30","call_end":"2026-06-10T13:00:00+05:30","join_url":"https://calendly.com/events/f9ccf7b4-b3a6-49c0-8b3a-8a9b2b595f09/google_meet","call_type":"30 Minute Discovery Call ","source":"Instagram","whatsapp":"+91 93731 04022","timeline":"Within 15 Days","sells_courses":"Course","status":"completed"}];
 
 async function runCalendlySyncToDB() {
   try {
@@ -5940,65 +5625,6 @@ function openNextCall() {
   const next = getUpcomingCalendlyEvents(1)[0];
   if (next && next.join_url) window.open(next.join_url, '_blank');
 }
-
-// ══════════════════════════════════════
-// SEED DATA (real leads + calls from Granola)
-// ══════════════════════════════════════
-const SEED_LEADS = [
-  { name:'Niraj Gajera',       email:'niravgajera2018@gmail.com',     stage:'Negotiation', source:'Calendly', phone:'+91 82848 38475' },
-  { name:'Sarang Bezalwar',    email:'sarang.bezalwar@gmail.com',     stage:'Demo',        source:'Calendly' },
-  { name:'Prakash Kumar',      email:'prakash.inet@gmail.com',        stage:'Technical',   source:'Calendly' },
-  { name:'Smriti',             email:'smritismart83@gmail.com',       stage:'Pricing',     source:'Calendly' },
-  { name:'Kapil Kulshreshtha', email:'kapilkools@gmail.com',          stage:'Hot',         source:'Calendly' },
-  { name:'Bharti Goel',        email:'bhartigoel2015@gmail.com',      stage:'Hot',         source:'Granola' },
-  { name:'Ravi Kumar',         email:'ravi8284838475@gmail.com',      stage:'New',         source:'Calendly' },
-  { name:'Ruchal Humbare',     email:'partner@growthssavy.com',       stage:'New',         source:'Calendly' },
-  { name:'TSB Skills',         email:'skillstsb@gmail.com',           stage:'Warm',        source:'Calendly' },
-  { name:'Nilesh T',           email:'holisticwellnessapproach4u@gmail.com', stage:'Trial', source:'Calendly' },
-  { name:'Subashini',          email:'subashinisrinivasan80@gmail.com',stage:'Demo',        source:'Calendly' },
-  { name:'Janani',             email:'jananijaanu922@gmail.com',       stage:'Demo',        source:'Calendly' },
-  { name:'Sushant Deshpande',  email:'sushaaant0412@gmail.com',       stage:'Pricing',     source:'Calendly' },
-  { name:'Vinita Pathak',      email:'mevinita05@gmail.com',          stage:'Demo',        source:'Calendly' },
-  { name:'Amisha Jhawar',      email:'amisdanceacademy@gmail.com',    stage:'Demo',        source:'Calendly' },
-  { name:'Priyanka Singh',     email:'priyanka0057@gmail.com',        stage:'Demo',        source:'Calendly' },
-  { name:'Lakshmi Gopal',      email:'lakshmigopal@gmail.com',        stage:'Trial',       source:'Granola' },
-  { name:'Yogendra',           email:'yogendra@gmail.com',            stage:'Warm',        source:'Granola' },
-  { name:'Sandeep Kaul',       email:'sandeepkaul@gmail.com',         stage:'Closed',      source:'Granola' },
-  { name:'Santhosh G',         email:'santhoshg@gmail.com',           stage:'Closed',      source:'Granola' },
-  { name:'Jithuu',             email:'jithuu@gmail.com',              stage:'Closed',      source:'Granola' },
-  { name:'John Pradeep',       email:'johnpradeep@gmail.com',         stage:'Closed',      source:'Granola' },
-];
-
-const SEED_CALLS = [
-  { lead_email:'niravgajera2018@gmail.com',  lead_name:'Niraj Gajera',   call_date:'2026-05-12T10:00:00+05:30', duration_mins:40, call_type:'Demo + Pricing', call_number:1, score:78,  talk_ratio_you:62, talk_ratio_them:38, next_step:'Send Freedom plan breakdown, confirm offer extension', granola_id:'5f22abda-aa59-47d9-a6b1-a98b4196bc9a' },
-  { lead_email:'sarang.bezalwar@gmail.com',  lead_name:'Sarang Bezalwar', call_date:'2026-05-08T11:00:00+05:30', duration_mins:55, call_type:'Full Demo',       call_number:1, score:72,  talk_ratio_you:58, talk_ratio_them:42, next_step:'Send Freedom plan PDF + testimonials', granola_id:'88f4e13a-1bd0-4620-84a0-2d7d833aa2b4' },
-  { lead_email:'prakash.inet@gmail.com',     lead_name:'Prakash Kumar',   call_date:'2026-05-07T10:30:00+05:30', duration_mins:30, call_type:'Technical Q&A',   call_number:2, score:65,  talk_ratio_you:55, talk_ratio_them:45, next_step:'Send international payment gateway FAQ', granola_id:'f6abfa40-dfb3-4de9-bfca-176275e834f5' },
-  { lead_email:'smritismart83@gmail.com',    lead_name:'Smriti',          call_date:'2026-05-12T07:00:00+05:30', duration_mins:10, call_type:'Pricing Follow-up',call_number:2, score:55,  talk_ratio_you:60, talk_ratio_them:40, next_step:'Send pricing comparison email', granola_id:'b3a70abb-c9f9-4ee1-a027-74022b0716e2' },
-  { lead_email:'kapilkools@gmail.com',       lead_name:'Kapil Kulshreshtha',call_date:'2026-05-12T09:30:00+05:30',duration_mins:30,call_type:'Demo',            call_number:1, score:74, talk_ratio_you:57, talk_ratio_them:43, next_step:'Send GST refund info + custom pricing' },
-  { lead_email:'bhartigoel2015@gmail.com',   lead_name:'Bharti Goel',     call_date:'2026-05-11T15:00:00+05:30', duration_mins:30, call_type:'Demo',            call_number:1, score:70,  talk_ratio_you:59, talk_ratio_them:41, next_step:'Send WhatsApp alternatives + GA demo' },
-  { lead_email:'sandeepkaul@gmail.com',      lead_name:'Sandeep Kaul',    call_date:'2026-05-05T11:00:00+05:30', duration_mins:45, call_type:'Pricing + Close', call_number:3, score:90,  talk_ratio_you:52, talk_ratio_them:48, next_step:'Send flow diagram + payment link — CLOSED ₹1L' },
-  { lead_email:'santhoshg@gmail.com',        lead_name:'Santhosh G',      call_date:'2026-04-20T10:00:00+05:30', duration_mins:30, call_type:'Pricing + Close', call_number:1, score:88,  talk_ratio_you:54, talk_ratio_them:46, next_step:'Send EMI quotation — CLOSED ₹75K' },
-  { lead_email:'jithuu@gmail.com',           lead_name:'Jithuu',          call_date:'2026-04-30T11:00:00+05:30', duration_mins:40, call_type:'Negotiation + Close',call_number:2,score:92, talk_ratio_you:50, talk_ratio_them:50, next_step:'International payment link sent — CLOSED ₹3L' },
-  { lead_email:'johnpradeep@gmail.com',      lead_name:'John Pradeep',    call_date:'2026-04-29T10:00:00+05:30', duration_mins:45, call_type:'Negotiation + Close',call_number:2,score:89, talk_ratio_you:53, talk_ratio_them:47, next_step:'Setup waived — CLOSED ₹3.6L' },
-];
-
-const SEED_OBJECTIONS = [
-  { lead_email:'niravgajera2018@gmail.com',  question:'Can the May 17 offer deadline be extended?',       rating:'missed',  category:'pricing',    your_answer:'Said you\'d check with team — left unresolved.', better_answer:'Offer conditional extension with token amount to lock pricing.' },
-  { lead_email:'niravgajera2018@gmail.com',  question:'Multiple language audio tracks on same course?',   rating:'partial', category:'product',    your_answer:'Said separate courses needed but didn\'t explain workflow.', better_answer:'Separate course per language + 100% coupon on Pro plan for existing students.' },
-  { lead_email:'sarang.bezalwar@gmail.com',  question:'How does this compare to ClassPlus?',              rating:'partial', category:'competitor', your_answer:'Community features as USP — good but could be sharper.', better_answer:'Lead with creator-first vs institute-first positioning and Razorpay advantage.' },
-  { lead_email:'prakash.inet@gmail.com',     question:'What international payment gateways are supported?',rating:'missed', category:'technical',  your_answer:'Only mentioned Stripe briefly, no full answer.', better_answer:'Stripe for international — USD/EUR/GBP. Indian creators need Stripe with international payments enabled. Gateway fee 5% intl vs 1.5% Razorpay.' },
-  { lead_email:'smritismart83@gmail.com',    question:'What is included in Enterprise vs Standard plan?', rating:'partial', category:'pricing',    your_answer:'Deferred to email — missed chance to anchor value on call.', better_answer:'60-second verbal summary: Standard ₹25K = branded dashboard + unlimited courses. Enterprise ₹1L adds custom apps, dedicated manager, custom website, Zoom 300.' },
-];
-
-const SEED_FOLLOWUPS = [
-  { lead_email:'niravgajera2018@gmail.com',  action:'Send Freedom plan offer — deadline May 17',         urgency:'hot',  done:false },
-  { lead_email:'smritismart83@gmail.com',    action:'Send pricing email (₹25K vs ₹1L breakdown)',        urgency:'hot',  done:false },
-  { lead_email:'kapilkools@gmail.com',       action:'GST refund + custom pricing confirmation',          urgency:'hot',  done:false },
-  { lead_email:'bhartigoel2015@gmail.com',   action:'WhatsApp alternatives + Google Analytics demo',    urgency:'warm', done:false },
-  { lead_email:'skillstsb@gmail.com',        action:'Send brochure — team is reviewing',                urgency:'warm', done:false },
-  { lead_email:'holisticwellnessapproach4u@gmail.com', action:'Reach out after Siddharth community session', urgency:'cool', done:false },
-  { lead_email:'sarang.bezalwar@gmail.com',  action:'Follow up with Freedom plan PDF + testimonials',   urgency:'warm', done:false },
-];
 
 // ══════════════════════════════════════
 // SUPABASE DATA LAYER
@@ -6111,7 +5737,6 @@ function renderSupabaseStatus(connected) {
     }
   });
 }
-
 
 // ══════════════════════════════════════
 // PIPELINE — LIVE FROM SUPABASE
@@ -6230,8 +5855,6 @@ function renderPipelineTable(data) {
   renderWeeklyTrend(data);
 }
 
-
-
 function updatePrepBanner() {
   const upcoming = getUpcomingCalendlyEvents(1);
   const next = upcoming[0];
@@ -6260,7 +5883,6 @@ function updatePrepBanner() {
     btn.href = next.join_url;
   }
 }
-
 
 // ══════════════════════════════════════
 // SYNC CALENDLY — SINGLE FUNCTION
@@ -6424,7 +6046,6 @@ function renderOverviewUpcoming() {
   }).join('');
 }
 
-
 // ══════════════════════════════════════
 // OVERVIEW TAB — LIVE UPDATERS
 // ══════════════════════════════════════
@@ -6529,7 +6150,6 @@ function updateOverviewKPIs(data) {
 // ── Hook syncCalendlyLive to also update overview ──
 const _origSync = typeof syncCalendlyLive !== 'undefined' ? syncCalendlyLive : null;
 // syncCalendlyLiveWithOverview removed — syncCalendlyLive() now handles both tabs
-
 
 // ══════════════════════════════════════
 // OVERVIEW — ACTIVE LEADS + COMPETITOR
@@ -6639,7 +6259,6 @@ function renderCompetitorMentions(data) {
 
 // pipeline patch moved to renderPipeline()
 
-
 // ══════════════════════════════════════
 // OVERVIEW — WEEKLY TREND CHART
 // Buckets pipeline call_dates into Mon–Sun
@@ -6730,13 +6349,12 @@ function renderWeeklyTrend(data) {
   if (bestNoteEl) bestNoteEl.textContent = fmtWeekLabel(bestKey);
 }
 
-
 // ══════════════════════════════════════
 // GRANOLA SYNC — PRE-ANALYSED BY CLAUDE
 // 8 pipeline meetings · analysed Jun 11 2026
 // Push directly to Supabase — no API call needed
 // ══════════════════════════════════════
-const GRANOLA_ANALYSIS_RESULTS = [{"granola_id":"e58587a2","lead_email":"chiragchopra786@gmail.com","lead_name":"Chirag Chopra","call_date":"2026-05-19T18:30:00+05:30","call_type":"Competitor Pricing Discussion","score":72,"talk_ratio_you":45,"talk_ratio_them":55,"summary":"Abhinav handled a tough pricing negotiation with Chirag who is moving from Graphy. Came down to 1L+GST (Freedom+App only, 5% commission). Graphy subscription ending in 2-3 days creates real urgency. AI essay grading requirement was addressed via MCP beta.","next_step":"Follow up with Chirag by tomorrow with final 1L+GST payment link. Confirm Freedom+App package details on WhatsApp.","coaching_tip":"Practice establishing price anchor early — ask for budget expectation before revealing your price. Abhinav modeled this well by asking 'what is your expectation' before discounting.","objections":[{"question":"Platform is 5x premium vs ClassPlus — why should I pay that?","category":"pricing","rating":"good","your_answer":"Established community-first model value, asked for budget expectation first, then reduced to 1L+GST removing non-needed components.","better_answer":"Lead with specific ROI examples — coaches who moved from ClassPlus and their revenue growth. Numbers beat features in price objections."},{"question":"ClassPlus charges 20k for 2-3 years, you're at 1L+","category":"competitor","rating":"good","your_answer":"Explained ClassPlus iOS shared app, no white label, data sharing concerns. Focused on long-term scalability difference.","better_answer":"Have a one-slide comparison ready showing 3-year TCO: ClassPlus 20k vs TagMango 1L but with white label, gamification, community — calculate the LTV difference."},{"question":"I don't want to touch 5 figures upfront as a new educator","category":"pricing","rating":"partial","your_answer":"Removed website and SM to get to 1L. Still above threshold.","better_answer":"Offer deferred billing — pay 25K now, 75K in 60 days once first batch launches. Creates commitment without full upfront risk."}],"buying_signals":["Graphy subscription ending in 2-3 days — urgency is real","Agreed to pay 1L+GST after negotiation","4L Instagram followers — serious educator"],"risk_signals":["Price sensitive, capital constrained","Multiple platform comparisons ongoing","No formal commitment made on call"]},{"granola_id":"da41a9fe","lead_email":"evcglobalventures@gmail.com","lead_name":"Jagan","call_date":"2026-05-27T14:30:00+05:30","call_type":"Pricing Discussion","score":65,"talk_ratio_you":58,"talk_ratio_them":42,"summary":"Pricing call covering Enterprise Plus (50k) vs full Enterprise with website (75k/88.5K with GST). Jagan needs team discussion before deciding. Understood the offer structure clearly. Asked good clarifying questions about domain, commission timing, and app process.","next_step":"Follow up Monday with Jagan. Confirm: Enterprise Plus 50K or Enterprise 75K with website? Prepare payment link.","coaching_tip":"When a lead says 'I'll discuss with my team' — get a specific person's name and their concern upfront so you can address it before Monday. Ask: 'What specific question does your partner have?'","objections":[{"question":"Confused about domain usage — brand name vs personal name vs ILH?","category":"product","rating":"good","your_answer":"Explained both options clearly — social presence determines which to use, ILH example given.","better_answer":"Share a visual showing how ILH uses brand domain vs coach personal page. Makes the decision concrete."},{"question":"Commission happens immediately per transaction or monthly?","category":"product","rating":"good","your_answer":"Clarified it's per transaction immediately via payment gateway.","better_answer":"Good answer — add that settlement takes T+3 working days so cash flow is predictable."}],"buying_signals":["Said 'I'll inform you as soon as possible'","Asked detailed onboarding questions — post-purchase thinking","Confirmed Monday follow-up"],"risk_signals":["Multiple decision makers involved","Did not confirm which plan (50K or 75K)","Still in team discussion phase"]},{"granola_id":"4db679e7","lead_email":"priyabeautyhub@gmail.com","lead_name":"Priya Lakshmi","call_date":"2026-05-29T18:00:00+05:30","call_type":"Demo - ILH Referral","score":78,"talk_ratio_you":62,"talk_ratio_them":38,"summary":"Strong demo call with Priya, offline makeup artist going online. Enterprise Plus 50K ILH offer. She understood the platform well, asked practical questions about zoom cost after 3 years, timing of domain activation. Said she'll share payment on WhatsApp after call.","next_step":"Check WhatsApp for Priya's payment confirmation. If not received within 24hrs, follow up with payment link and offer details email.","coaching_tip":"Talk ratio at 62% — slightly high for a demo. On ILH referral calls, prospect already knows the platform basics, so you can spend more time on their specific use case (makeup/beauty courses) rather than full platform demo.","objections":[{"question":"What happens to zoom subscription after 3 years — how much will it cost?","category":"pricing","rating":"partial","your_answer":"Said ~3000/mo but couldn't commit. Gave standard zoom business plan context.","better_answer":"Reframe: 3 years is 36 months. In that time you'll have a running academy. Zoom cost will be trivial vs your revenue. Lock in the asset now at zero cost."},{"question":"I haven't made any videos yet — can I start later?","category":"timing","rating":"good","your_answer":"Confirmed domain activation starts the count — so she can buy now and activate when ready.","better_answer":"This is a buying signal not an objection. Confirm and move to payment: 'Perfect — the clock only starts when you're ready. Want me to send the payment link now?'"}],"buying_signals":["Said 'will share payment confirmation on WhatsApp'","Asked post-purchase questions (orientation, account manager)","Non-tech background removed from equation with SM support"],"risk_signals":["Not tech savvy — may need extra handholding","Did not complete payment on call"]},{"granola_id":"6a488624","lead_email":"trishatorcato@gmail.com","lead_name":"Trisha Torcato","call_date":"2026-05-29T17:00:00+05:30","call_type":"Demo - ILH Referral","score":55,"talk_ratio_you":65,"talk_ratio_them":35,"summary":"Long complex call with Trisha who had many technical questions. She is still evaluating fit — not convinced the platform matches her model (hybrid transformation coaching with free workshops). Concerned about email broadcast limits on basic, WhatsApp API cost, and overall complexity. Talk ratio heavily skewed toward Kritika explaining.","next_step":"Send Trisha a simplified one-pager: 'Here is exactly how your free-to-paid funnel works on TagMango in 3 steps.' Follow up Monday.","coaching_tip":"Talk ratio 65:35 is a red flag — when a prospect is confused and quiet, it often means they're mentally checking out. Use more questions: 'Does this match what you had in mind?' every 2-3 features.","objections":[{"question":"Only 10 email broadcasts per user on basic — this seems limiting","category":"product","rating":"missed","your_answer":"Explained difference between automations (unlimited) and broadcasts (10 limit). Got confusing.","better_answer":"Simplify: 'The 10 limit is for marketing blasts like offers. Your session reminders and confirmations are unlimited and fully automated — you never touch them again.' Then stop and ask if that's clear."},{"question":"Will the platform work for someone who doesn't sell pre-recorded courses?","category":"product","rating":"partial","your_answer":"Explained free workshop funnel, community building, then paid conversion.","better_answer":"Lead with her specific model: 'Your model is perfect for us — free webinar attracts leads, they join your community, you sell transformation programs. Here's a coach doing exactly that...'"}],"buying_signals":["Asked about implementation timeline","Explored free-to-paid funnel earnestly"],"risk_signals":["Not fully convinced platform matches her model","Tech complexity concerns","Very long hesitant responses throughout call"]},{"granola_id":"33474023","lead_email":"pratikshapatil6933@gmail.com","lead_name":"Pratiksha","call_date":"2026-06-01T12:30:00+05:30","call_type":"Demo - Moving from Graphy","score":70,"talk_ratio_you":60,"talk_ratio_them":40,"summary":"Solid discovery and demo call. Pratiksha is motivated to move from Graphy with clear pain points. Cash payment collection is her key requirement — addressed via advanced plan user addition or pro 100% coupon workaround. 10-15 day purchase timeline shared. Platform trial access requested.","next_step":"Send Pratiksha trial access credentials by EOD. Follow up in 3 days to confirm purchase intent and which plan (advanced vs pro).","coaching_tip":"When a prospect has a specific unusual requirement like cash payments, anchor the solution to the plan you want them on. 'The clean solution is Advanced — user addition is built for exactly your use case.' Don't offer the workaround first.","objections":[{"question":"Graphy charges one flat fee for 2 years — why do you have a setup fee plus monthly?","category":"pricing","rating":"good","your_answer":"Explained freedom basic has no recurring fee, setup is one-time for white labeling. Gave full pricing structure breakdown.","better_answer":"Use a 2-year TCO calculator: 'Graphy charges X for 2 years. Over 2 years, our basic plan costs Y setup + 0 monthly + 10% commission. At your revenue level, which works out cheaper?'"},{"question":"Can I accept cash payments from students?","category":"product","rating":"good","your_answer":"Advanced plan user addition or pro 100% coupon workaround both explained clearly.","better_answer":"Good handling. To close faster: 'Most coaches in your position go Advanced — user addition is clean and professional. Let me show you exactly how it looks.'"}],"buying_signals":["10-15 day clear purchase timeline","Specific plan comparison questions — post-purchase thinking","Clear Graphy pain points driving switch"],"risk_signals":["Wants trial before committing","AI features timeline uncertainty (2-3 months away)"]},{"granola_id":"bab04aea","lead_email":"jayagt@jayagophanetrainings.com","lead_name":"Jaya Gophane","call_date":"2026-06-01T12:00:00+05:30","call_type":"Demo - Moving from Teachable","score":68,"talk_ratio_you":58,"talk_ratio_them":42,"summary":"Detailed demo call with Jaya who has a large, loyal offline community. Interested in Advanced for community + gamification, plans to upgrade to Ultimate. She is technology-averse and lives remotely — success manager support is critical. Has clear vision for hybrid model but wants to start carefully.","next_step":"Send Jaya the Advanced plan payment link with a clear breakdown: Enterprise setup + Advanced monthly. Emphasize success manager will handle all tech setup.","coaching_tip":"Jaya said 'I've purchased many platforms I never used.' This is a red flag for non-activation. Address it directly: 'What made those platforms hard to use? We can ensure you won't face that here.' Then get a specific commitment date.","objections":[{"question":"I don't collect payments through platform — I use Razorpay during webinars","category":"product","rating":"partial","your_answer":"Said either payment method works. Did not push platform payment adoption.","better_answer":"Reframe: 'You can keep your webinar Razorpay for live sales. The platform checkout handles post-webinar enrollments automatically — no manual follow-up needed. That's your time back.'"},{"question":"I've purchased many platforms I haven't been able to use","category":"timing","rating":"missed","your_answer":"Did not directly address this concern.","better_answer":"Stop and address: 'What specifically made those hard to use? Because we assign a success manager whose only job for the first 90 days is to make sure you're using it. That's the difference.'"}],"buying_signals":["Clear budget willingness (advanced then ultimate)","Very specific feature requirements matching platform strengths","Strong community already built — migration is imminent"],"risk_signals":["History of buying and not using platforms","Tech-averse, remote location","No specific commitment date given"]},{"granola_id":"a1c8a2b2","lead_email":"lasakan06@gmail.com","lead_name":"Lasakan","call_date":"2026-05-29T18:30:00+05:30","call_type":"Demo - ILH International","score":48,"talk_ratio_you":63,"talk_ratio_them":37,"summary":"Challenging call with Lasakan from Sri Lanka. Enterprise Plus 50K offer discussed but a critical blocker emerged: Stripe shows USD pricing but students pay in SLR (Sri Lankan Rupees). No resolution found on call. Advanced plan with user addition suggested as workaround but doesn't solve the payment collection issue.","next_step":"Escalate SLR payment issue to tech team. Check if currency can be set to LKR on Stripe, or if a local Sri Lankan payment gateway can be integrated. Get answer before following up with Lasakan.","coaching_tip":"International leads need payment Gateway confirmation BEFORE the demo — not during. Add a pre-qualification question: 'What currency do your students pay in?' to your intake form for non-Indian leads.","objections":[{"question":"My students pay in SLR but Stripe shows USD — currency mismatch","category":"technical","rating":"missed","your_answer":"Could not resolve. Suggested advanced plan workaround which doesn't solve the issue.","better_answer":"Escalate immediately: 'Let me check with our tech team right now if we can enable LKR on Stripe or integrate a Sri Lankan gateway. Can I come back to you within 24 hours with a confirmed answer?'"}],"buying_signals":["ILH community referral — high trust","Came prepared with specific questions about payment and app costs"],"risk_signals":["Critical unresolved payment currency blocker","International compliance complexity","Low confidence in resolution"]},{"granola_id":"658da6f5","lead_email":"vaishalybharambe@yahoo.co.in","lead_name":"Vaishaly","call_date":"2026-06-10T16:30:00+05:30","call_type":"Pricing Negotiation","score":82,"talk_ratio_you":52,"talk_ratio_them":48,"summary":"Strong pricing call with Vaishaly, ILH diamond member. Knows exactly what she wants: Enterprise 75K + Pro annual 50K = 125K. Negotiated zoom webinar 500 people into pro plan. Asked about DRM on apps. 50K offer expired June 7 — held firm. Will pay tomorrow if zoom webinar 500 and DRM confirmed. Waiting for EOD response.","next_step":"Get manager approval for zoom webinar 500 in pro annual AND DRM confirmation on app. Send Vaishaly EOD confirmation and payment link. She wants to pay today/tomorrow.","coaching_tip":"When a serious buyer asks for two confirmations before paying, get them answered within 2 hours, not EOD. Every hour of delay gives her time to reconsider. Treat this as a hot close.","objections":[{"question":"Can I get the 50K Enterprise Plus offer even though it expired June 7?","category":"pricing","rating":"good","your_answer":"Held firm — offer expired, 75K is standard ILH price. Explained price block refunds started.","better_answer":"Good firmness. Add a future anchor: 'The 75K includes a website worth 25K — you're getting more than the 50K offer anyway.'"},{"question":"Can you get me more features from Advanced in the Pro version?","category":"product","rating":"good","your_answer":"Offered zoom webinar 500 in pro annual as the one add-on possible.","better_answer":"Strong move — giving one meaningful upgrade instead of multiple small ones. This creates perceived value without opening floodgates."},{"question":"Does the app have DRM screen recording protection?","category":"technical","rating":"partial","your_answer":"Said apps can't screenshot but needed to verify for pro plan specifically.","better_answer":"Confirm this before the call for any enterprise prospect. DRM is a common content protection question — have the definitive answer ready by plan tier."}],"buying_signals":["'We will pay it right across' — confirmed payment intent","Asked for specific package summary — ready to transact","Diamond ILH member — high-trust, pre-qualified"],"risk_signals":["Waiting for 2 confirmations — delay risk","Multiple decision makers (ma'am + Vaishaly)"]}];
+const GRANOLA_ANALYSIS_RESULTS = [{"granola_id":"e58587a2","lead_email":"chiragchopra786@gmail.com","lead_name":"Chirag Chopra","call_date":"2026-05-19T18:30:00+05:30","call_type":"Competitor Pricing Discussion","score":72,"talk_ratio_you":45,"talk_ratio_them":55,"summary":"Abhinav handled a tough pricing negotiation with Chirag who is moving from Graphy. Came down to 1L+GST (Freedom+App only, 5% commission). Graphy subscription ending in 2-3 days creates real urgency. AI essay grading requirement was addressed via MCP beta.","next_step":"Follow up with Chirag by tomorrow with final 1L+GST payment link. Confirm Freedom+App package details on WhatsApp.","coaching_tip":"Practice establishing price anchor early — ask for budget expectation before revealing your price. Abhinav modeled this well by asking 'what is your expectation' before discounting.","objections":[{"question":"Platform is 5x premium vs ClassPlus — why should I pay that?","category":"pricing","rating":"good","your_answer":"Established community-first model value, asked for budget expectation first, then reduced to 1L+GST removing non-needed components.","better_answer":"Lead with specific ROI examples — coaches who moved from ClassPlus and their revenue growth. Numbers beat features in price objections."},{"question":"ClassPlus charges 20k for 2-3 years, you're at 1L+","category":"competitor","rating":"good","your_answer":"Explained ClassPlus iOS shared app, no white label, data sharing concerns. Focused on long-term scalability difference.","better_answer":"Have a one-slide comparison ready showing 3-year TCO: ClassPlus 20k vs TagMango 1L but with white label, gamification, community — calculate the LTV difference."},{"question":"I don't want to touch 5 figures upfront as a new educator","category":"pricing","rating":"partial","your_answer":"Removed website and SM to get to 1L. Still above threshold.","better_answer":"Offer deferred billing — pay 25K now, 75K in 60 days once first batch launches. Creates commitment without full upfront risk."}],"buying_signals":["Graphy subscription ending in 2-3 days — urgency is real","Agreed to pay 1L+GST after negotiation","4L Instagram followers — serious educator"],"risk_signals":["Price sensitive, capital constrained","Multiple platform comparisons ongoing"]},{"granola_id":"da41a9fe","lead_email":"evcglobalventures@gmail.com","lead_name":"Jagan","call_date":"2026-05-27T14:30:00+05:30","call_type":"Pricing Discussion","score":65,"talk_ratio_you":58,"talk_ratio_them":42,"summary":"Pricing call covering Enterprise Plus (50k) vs full Enterprise with website (75k/88.5K with GST). Jagan needs team discussion before deciding. Understood the offer structure clearly. Asked good clarifying questions about domain, commission timing, and app process.","next_step":"Follow up Monday with Jagan. Confirm: Enterprise Plus 50K or Enterprise 75K with website? Prepare payment link.","coaching_tip":"When a lead says 'I'll discuss with my team' — get a specific person's name and their concern upfront so you can address it before Monday. Ask: 'What specific question does your partner have?'","objections":[{"question":"Confused about domain usage — brand name vs personal name vs ILH?","category":"product","rating":"good","your_answer":"Explained both options clearly — social presence determines which to use, ILH example given.","better_answer":"Share a visual showing how ILH uses brand domain vs coach personal page. Makes the decision concrete."},{"question":"Commission happens immediately per transaction or monthly?","category":"product","rating":"good","your_answer":"Clarified it's per transaction immediately via payment gateway.","better_answer":"Good answer — add that settlement takes T+3 working days so cash flow is predictable."}],"buying_signals":["Said 'I'll inform you as soon as possible'","Asked detailed onboarding questions — post-purchase thinking","Confirmed Monday follow-up"],"risk_signals":["Multiple decision makers involved","Did not confirm which plan (50K or 75K)"]},{"granola_id":"4db679e7","lead_email":"priyabeautyhub@gmail.com","lead_name":"Priya Lakshmi","call_date":"2026-05-29T18:00:00+05:30","call_type":"Demo - ILH Referral","score":78,"talk_ratio_you":62,"talk_ratio_them":38,"summary":"Strong demo call with Priya, offline makeup artist going online. Enterprise Plus 50K ILH offer. She understood the platform well, asked practical questions about zoom cost after 3 years, timing of domain activation. Said she'll share payment on WhatsApp after call.","next_step":"Check WhatsApp for Priya's payment confirmation. If not received within 24hrs, follow up with payment link and offer details email.","coaching_tip":"Talk ratio at 62% — slightly high for a demo. On ILH referral calls, prospect already knows the platform basics, so you can spend more time on their specific use case (makeup/beauty courses) rather than full platform demo.","objections":[{"question":"What happens to zoom subscription after 3 years — how much will it cost?","category":"pricing","rating":"partial","your_answer":"Said ~3000/mo but couldn't commit. Gave standard zoom business plan context.","better_answer":"Reframe: 3 years is 36 months. In that time you'll have a running academy. Zoom cost will be trivial vs your revenue. Lock in the asset now at zero cost."},{"question":"I haven't made any videos yet — can I start later?","category":"timing","rating":"good","your_answer":"Confirmed domain activation starts the count — so she can buy now and activate when ready.","better_answer":"This is a buying signal not an objection. Confirm and move to payment: 'Perfect — the clock only starts when you're ready. Want me to send the payment link now?'"}],"buying_signals":["Said 'will share payment confirmation on WhatsApp'","Asked post-purchase questions (orientation, account manager)","Non-tech background removed from equation with SM support"],"risk_signals":["Not tech savvy — may need extra handholding","Did not complete payment on call"]},{"granola_id":"6a488624","lead_email":"trishatorcato@gmail.com","lead_name":"Trisha Torcato","call_date":"2026-05-29T17:00:00+05:30","call_type":"Demo - ILH Referral","score":55,"talk_ratio_you":65,"talk_ratio_them":35,"summary":"Long complex call with Trisha who had many technical questions. She is still evaluating fit — not convinced the platform matches her model (hybrid transformation coaching with free workshops). Concerned about email broadcast limits on basic, WhatsApp API cost, and overall complexity. Talk ratio heavily skewed toward Kritika explaining.","next_step":"Send Trisha a simplified one-pager: 'Here is exactly how your free-to-paid funnel works on TagMango in 3 steps.' Follow up Monday.","coaching_tip":"Talk ratio 65:35 is a red flag — when a prospect is confused and quiet, it often means they're mentally checking out. Use more questions: 'Does this match what you had in mind?' every 2-3 features.","objections":[{"question":"Only 10 email broadcasts per user on basic — this seems limiting","category":"product","rating":"missed","your_answer":"Explained difference between automations (unlimited) and broadcasts (10 limit). Got confusing.","better_answer":"Simplify: 'The 10 limit is for marketing blasts like offers. Your session reminders and confirmations are unlimited and fully automated — you never touch them again.' Then stop and ask if that's clear"},{"question":"Will the platform work for someone who doesn't sell pre-recorded courses?","category":"product","rating":"partial","your_answer":"Explained free workshop funnel, community building, then paid conversion.","better_answer":"Lead with her specific model: 'Your model is perfect for us — free webinar attracts leads, they join your community, you sell transformation programs. Here's a coach doing exactly that...'"}],"buying_signals":["Asked about implementation timeline","Explored free-to-paid funnel earnestly"],"risk_signals":["Not fully convinced platform matches her model","Tech complexity concerns"]},{"granola_id":"33474023","lead_email":"pratikshapatil6933@gmail.com","lead_name":"Pratiksha","call_date":"2026-06-01T12:30:00+05:30","call_type":"Demo - Moving from Graphy","score":70,"talk_ratio_you":60,"talk_ratio_them":40,"summary":"Solid discovery and demo call. Pratiksha is motivated to move from Graphy with clear pain points. Cash payment collection is her key requirement — addressed via advanced plan user addition or pro 100% coupon workaround. 10-15 day purchase timeline shared. Platform trial access requested.","next_step":"Send Pratiksha trial access credentials by EOD. Follow up in 3 days to confirm purchase intent and which plan (advanced vs pro).","coaching_tip":"When a prospect has a specific unusual requirement like cash payments, anchor the solution to the plan you want them on. 'The clean solution is Advanced — user addition is built for exactly your use case.' Don't offer the workaround first.","objections":[{"question":"Graphy charges one flat fee for 2 years — why do you have a setup fee plus monthly?","category":"pricing","rating":"good","your_answer":"Explained freedom basic has no recurring fee, setup is one-time for white labeling. Gave full pricing structure breakdown.","better_answer":"Use a 2-year TCO calculator: 'Graphy charges X for 2 years. Over 2 years, our basic plan costs Y setup + 0 monthly + 10% commission. At your revenue level, which works out cheaper?'"},{"question":"Can I accept cash payments from students?","category":"product","rating":"good","your_answer":"Advanced plan user addition or pro 100% coupon workaround both explained clearly.","better_answer":"Good handling. To close faster: 'Most coaches in your position go Advanced — user addition is clean and professional. Let me show you exactly how it looks.'"}],"buying_signals":["10-15 day clear purchase timeline","Specific plan comparison questions — post-purchase thinking","Clear Graphy pain points driving switch"],"risk_signals":["Wants trial before committing","AI features timeline uncertainty (2-3 months away)"]},{"granola_id":"bab04aea","lead_email":"jayagt@jayagophanetrainings.com","lead_name":"Jaya Gophane","call_date":"2026-06-01T12:00:00+05:30","call_type":"Demo - Moving from Teachable","score":68,"talk_ratio_you":58,"talk_ratio_them":42,"summary":"Detailed demo call with Jaya who has a large, loyal offline community. Interested in Advanced for community + gamification, plans to upgrade to Ultimate. She is technology-averse and lives remotely — success manager support is critical. Has clear vision for hybrid model but wants to start carefully.","next_step":"Send Jaya the Advanced plan payment link with a clear breakdown: Enterprise setup + Advanced monthly. Emphasize success manager will handle all tech setup.","coaching_tip":"Jaya said 'I've purchased many platforms I never used.' This is a red flag for non-activation. Address it directly: 'What made those platforms hard to use? We can ensure you won't face that here.' Then get a specific commitment date.","objections":[{"question":"I don't collect payments through platform — I use Razorpay during webinars","category":"product","rating":"partial","your_answer":"Said either payment method works. Did not push platform payment adoption.","better_answer":"Reframe: 'You can keep your webinar Razorpay for live sales. The platform checkout handles post-webinar enrollments automatically — no manual follow-up needed. That's your time back.'"},{"question":"I've purchased many platforms I haven't been able to use","category":"timing","rating":"missed","your_answer":"Did not directly address this concern.","better_answer":"Stop and address: 'What specifically made those hard to use? Because we assign a success manager whose only job for the first 90 days is to make sure you're using it. That's the difference.'"}],"buying_signals":["Clear budget willingness (advanced then ultimate)","Very specific feature requirements matching platform strengths","Strong community already built — migration is imminent"],"risk_signals":["History of buying and not using platforms","Tech-averse, remote location"]},{"granola_id":"a1c8a2b2","lead_email":"lasakan06@gmail.com","lead_name":"Lasakan","call_date":"2026-05-29T18:30:00+05:30","call_type":"Demo - ILH International","score":48,"talk_ratio_you":63,"talk_ratio_them":37,"summary":"Challenging call with Lasakan from Sri Lanka. Enterprise Plus 50K offer discussed but a critical blocker emerged: Stripe shows USD pricing but students pay in SLR (Sri Lankan Rupees). No resolution found on call. Advanced plan with user addition suggested as workaround but doesn't solve the payment collection issue.","next_step":"Escalate SLR payment issue to tech team. Check if currency can be set to LKR on Stripe, or if a local Sri Lankan payment gateway can be integrated. Get answer before following up with Lasakan.","coaching_tip":"International leads need payment Gateway confirmation BEFORE the demo — not during. Add a pre-qualification question: 'What currency do your students pay in?' to your intake form for non-Indian leads.","objections":[{"question":"My students pay in SLR but Stripe shows USD — currency mismatch","category":"technical","rating":"missed","your_answer":"Could not resolve. Suggested advanced plan workaround which doesn't solve the issue.","better_answer":"Escalate immediately: 'Let me check with our tech team right now if we can enable LKR on Stripe or integrate a Sri Lankan gateway. Can I come back to you within 24 hours with a confirmed answer?'"}],"buying_signals":["ILH community referral — high trust","Came prepared with specific questions about payment and app costs"],"risk_signals":["Critical unresolved payment currency blocker","International compliance complexity"]},{"granola_id":"658da6f5","lead_email":"vaishalybharambe@yahoo.co.in","lead_name":"Vaishaly","call_date":"2026-06-10T16:30:00+05:30","call_type":"Pricing Negotiation","score":82,"talk_ratio_you":52,"talk_ratio_them":48,"summary":"Strong pricing call with Vaishaly, ILH diamond member. Knows exactly what she wants: Enterprise 75K + Pro annual 50K = 125K. Negotiated zoom webinar 500 people into pro plan. Asked about DRM on apps. 50K offer expired June 7 — held firm. Will pay tomorrow if zoom webinar 500 and DRM confirmed. Waiting for EOD response.","next_step":"Get manager approval for zoom webinar 500 in pro annual AND DRM confirmation on app. Send Vaishaly EOD confirmation and payment link. She wants to pay today/tomorrow.","coaching_tip":"When a serious buyer asks for two confirmations before paying, get them answered within 2 hours, not EOD. Every hour of delay gives her time to reconsider. Treat this as a hot close.","objections":[{"question":"Can I get the 50K Enterprise Plus offer even though it expired June 7?","category":"pricing","rating":"good","your_answer":"Held firm — offer expired, 75K is standard ILH price. Explained price block refunds started.","better_answer":"Good firmness. Add a future anchor: 'The 75K includes a website worth 25K — you're getting more than the 50K offer anyway.'"},{"question":"Can you get me more features from Advanced in the Pro version?","category":"product","rating":"good","your_answer":"Offered zoom webinar 500 in pro annual as the one add-on possible.","better_answer":"Strong move — giving one meaningful upgrade instead of multiple small ones. This creates perceived value without opening floodgates."},{"question":"Does the app have DRM screen recording protection?","category":"technical","rating":"partial","your_answer":"Said apps can't screenshot but needed to verify for pro plan specifically.","better_answer":"Confirm this before the call for any enterprise prospect. DRM is a common content protection question — have the definitive answer ready by plan tier."}],"buying_signals":["'We will pay it right across' — confirmed payment intent","Asked for specific package summary — ready to transact","Diamond ILH member — high-trust, pre-qualified"],"risk_signals":["Waiting for 2 confirmations — delay risk","Multiple decision makers (ma'am + Vaishaly)"]}];
 
 async function syncGranolaTranscripts() {
   const btn    = document.getElementById('granola-sync-btn');
@@ -6914,10 +6532,9 @@ window.addEventListener('load', async () => {
     }
   } catch(e) { console.warn('Daily init:', e); }
 
-  // Hide loading screen
-  setTimeout(() => {
-    document.getElementById('appLoader').classList.add('hidden');
-  }, 600);
+  // Hide loader immediately
+  const appLoader = document.getElementById('appLoader');
+  if (appLoader) appLoader.classList.add('hidden');
 
   // Connect Supabase
   try {
