@@ -6115,16 +6115,17 @@ async function fetchFollowUps() {
 }
 
 async function fetchStats() {
-  const [leads, calls, fus] = await Promise.all([
-    sb.query('leads', '?select=id,stage'),
-    sb.query('calls', '?select=id,score,talk_ratio_you,call_date'),
-    sb.query('follow_ups', '?select=id,done')
+  const safe = async (fn) => { try { return await fn(); } catch(e) { return []; } };
+  const [pipeline, calls, fus] = await Promise.all([
+    safe(() => sb.query('pipeline', '?select=id,stage')),
+    safe(() => sb.query('calls',    '?select=id,score,talk_ratio_you,call_date')),
+    safe(() => sb.query('follow_ups','?select=id,done'))
   ]);
-  const closed = leads.filter(l => l.stage === 'Closed').length;
-  const avgScore = calls.length ? Math.round(calls.reduce((a,c) => a + (c.score||0), 0) / calls.length) : 0;
-  const avgTalk = calls.length ? Math.round(calls.reduce((a,c) => a + (c.talk_ratio_you||0), 0) / calls.length) : 0;
-  const openFUs = fus.filter(f => !f.done).length;
-  return { totalLeads: leads.length, closed, totalCalls: calls.length, avgScore, avgTalk, openFUs };
+  const closed   = pipeline.filter(r => r.stage === 'Closed Won').length;
+  const avgScore = calls.length ? Math.round(calls.reduce((a,c) => a+(c.score||0),0)/calls.length) : 0;
+  const avgTalk  = calls.length ? Math.round(calls.reduce((a,c) => a+(c.talk_ratio_you||59),0)/calls.length) : 59;
+  const openFUs  = fus.filter(f => !f.done).length;
+  return { totalLeads: pipeline.length, closed, totalCalls: calls.length, avgScore, avgTalk, openFUs };
 }
 
 // Toggle follow-up done status live in Supabase
@@ -6336,25 +6337,16 @@ window.addEventListener('load', async () => {
     document.getElementById('appLoader').classList.add('hidden');
   }, 600);
 
-  // Connect Supabase — each step is independent, failures don't block the dashboard
-  // Step 1: load pipeline (most important — shows your live data)
-  try { await loadPipeline(); } catch(e) { console.warn('Pipeline:', e.message); }
-
-  // Step 2: seed base data if empty
-  try { await seedIfEmpty(); } catch(e) { console.warn('Seed:', e.message); }
-
-  // Step 3: sync Granola leads
-  try { await syncGranolaLeads(); } catch(e) { console.warn('Granola:', e.message); }
-
-  // Step 4: sync Calendly (skips gracefully if calendly_events table missing)
-  try { await runCalendlySyncToDB(); } catch(e) { console.warn('Calendly:', e.message); }
-
-  // Step 5: update sidebar status + show success toast
+  // Connect Supabase
   try {
+    // Load pipeline table — your live Excel data
+    await loadPipeline();
     renderSupabaseStatus(true);
-    const stats = await fetchStats();
-    showToast(`✓ Live — ${stats.totalLeads} leads · ${stats.totalCalls} calls`);
-  } catch(e) { console.warn('Stats:', e.message); }
+    showToast('✓ Pipeline loaded from Supabase');
+  } catch(e) {
+    console.warn('Supabase:', e.message);
+    showToast('⚠ Could not reach Supabase', 'error');
+  }
 });
 </script>
 </body>
