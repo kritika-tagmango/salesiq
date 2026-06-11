@@ -3255,84 +3255,68 @@ function getWEEKS() {
   if (!WEEKS) {
     WEEKS = {
       0: {
-        label: "This week",
-        dateRange: "Jun 9–11, 2026",
-        isPartial: true,
-        daysElapsed: 3,
-        callsByDay: [
-          { day:"Mon", date:"Jun 9",  total:0, client:0, internal:0 },
-          { day:"Tue", date:"Jun 10", total:3, client:3, internal:0 },
-          { day:"Wed", date:"Jun 11", total:5, client:5, internal:0 },
-          { day:"Thu", date:"Jun 12", total:0, client:0, internal:0 },
-          { day:"Fri", date:"Jun 13", total:0, client:0, internal:0 },
-          { day:"Sat", date:"Jun 14", total:0, client:0, internal:0 },
-          { day:"Sun", date:"Jun 15", total:0, client:0, internal:0 }
+        label:"This week", dateRange:"Jun 9–11, 2026", isPartial:true, daysElapsed:3,
+        callsByDay:[
+          {day:"Mon",date:"Jun 9", total:0,client:0,internal:0},
+          {day:"Tue",date:"Jun 10",total:3,client:3,internal:0},
+          {day:"Wed",date:"Jun 11",total:5,client:5,internal:0},
+          {day:"Thu",date:"Jun 12",total:0,client:0,internal:0},
+          {day:"Fri",date:"Jun 13",total:0,client:0,internal:0},
+          {day:"Sat",date:"Jun 14",total:0,client:0,internal:0},
+          {day:"Sun",date:"Jun 15",total:0,client:0,internal:0}
         ],
-        totalCalls:8, clientCalls:8, avgScore:70, talkRatio:56,
-        topObjection:"What is included in Enterprise vs Freedom?",
-        topSource:"ILH Community",
-        highlights:["Vaishaly hot close — waiting on zoom webinar 500 confirmation","5 calls today — Neetu, Siddharth, Shrikant, Vrukshika, Vaijayanthi","Rachit Sharma — Graphy with 50+ exclusive creators, high-value prospect"],
+        kpis:{totalCalls:8,avgPerDay:2.7,talkRatioYou:56,closures:0,pipeline:245000,objections:3,openFollowUps:2,totalCallTime:"4h"},
+        vsLastWeek:{totalCalls:15,closures:0,pipeline:245000},
+        highlights:["Vaishaly hot close — zoom webinar 500 + DRM pending","5 calls Jun 11: Siddharth, Shrikant, Vrukshika, Vaijayanthi, Neetu","Rachit Sharma — 50+ exclusive creators, high-value prospect"],
         deals:[{name:"Vaishaly",stage:"Hot close",value:"₹1.25L",note:"Pay tomorrow if zoom+DRM confirmed"}]
       },
-      "-1": {
-        label: "Last week",
-        dateRange: "Jun 2–8, 2026",
-        isPartial: false,
-        daysElapsed: 7,
-        callsByDay: [
-          { day:"Mon", date:"Jun 2",  total:3, client:3, internal:0 },
-          { day:"Tue", date:"Jun 3",  total:3, client:3, internal:0 },
-          { day:"Wed", date:"Jun 4",  total:2, client:2, internal:0 },
-          { day:"Thu", date:"Jun 5",  total:6, client:5, internal:1 },
-          { day:"Fri", date:"Jun 6",  total:0, client:0, internal:0 },
-          { day:"Sat", date:"Jun 7",  total:0, client:0, internal:0 },
-          { day:"Sun", date:"Jun 8",  total:1, client:1, internal:0 }
+      "-1":{
+        label:"Last week", dateRange:"Jun 2–8, 2026", isPartial:false, daysElapsed:7,
+        callsByDay:[
+          {day:"Mon",date:"Jun 2", total:3,client:3,internal:0},
+          {day:"Tue",date:"Jun 3", total:3,client:3,internal:0},
+          {day:"Wed",date:"Jun 4", total:2,client:2,internal:0},
+          {day:"Thu",date:"Jun 5", total:6,client:5,internal:1},
+          {day:"Fri",date:"Jun 6", total:0,client:0,internal:0},
+          {day:"Sat",date:"Jun 7", total:0,client:0,internal:0},
+          {day:"Sun",date:"Jun 8", total:1,client:1,internal:0}
         ],
-        totalCalls:15, clientCalls:14, avgScore:65, talkRatio:59,
-        topObjection:"Setup fee + monthly vs Graphy flat fee",
-        topSource:"ILH Community",
-        highlights:["Vani — second follow-up, evaluating platform","Shraddha Rath — 1000+ community, on Exly","Umesh — on Circle.so with 1000+ paid students"],
-        deals:[{name:"Pratiksha",stage:"In Conversation",value:"₹1L",note:"10-15 day timeline"},{name:"Jaya Gophane",stage:"In Conversation",value:"₹85K",note:"Advanced plan interest"}]
+        kpis:{totalCalls:15,avgPerDay:2.1,talkRatioYou:59,closures:0,pipeline:330000,objections:5,openFollowUps:4,totalCallTime:"7.5h"},
+        vsLastWeek:{totalCalls:18,closures:0,pipeline:0},
+        highlights:["Vani — second follow-up, evaluating platform","Shraddha Rath — 1000+ community, on Exly","Umesh — Circle.so with 1000+ paid students"],
+        deals:[{name:"Pratiksha",stage:"In Conversation",value:"₹1L",note:"10-15 day timeline"},{name:"Jaya",stage:"In Conversation",value:"₹85K",note:"Advanced plan"}]
       },
-      "-2": {
-        label: "May 25–31",
-        dateRange: "May 25–31, 2026",
-        isPartial: false,
-        daysElapsed: 7,
-        callsByDay: [
-          { day:"Mon", date:"May 25", total:4, client:3, internal:1 },
-          { day:"Tue", date:"May 26", total:4, client:4, internal:0 },
-          { day:"Wed", date:"May 27", total:3, client:3, internal:0 },
-          { day:"Thu", date:"May 28", total:2, client:2, internal:0 },
-          { day:"Fri", date:"May 29", total:5, client:5, internal:0 },
-          { day:"Sat", date:"May 30", total:0, client:0, internal:0 },
-          { day:"Sun", date:"May 31", total:0, client:0, internal:0 }
+      "-2":{
+        label:"May 25–31", dateRange:"May 25–31, 2026", isPartial:false, daysElapsed:7,
+        callsByDay:[
+          {day:"Mon",date:"May 25",total:4,client:3,internal:1},
+          {day:"Tue",date:"May 26",total:4,client:4,internal:0},
+          {day:"Wed",date:"May 27",total:3,client:3,internal:0},
+          {day:"Thu",date:"May 28",total:2,client:2,internal:0},
+          {day:"Fri",date:"May 29",total:5,client:5,internal:0},
+          {day:"Sat",date:"May 30",total:0,client:0,internal:0},
+          {day:"Sun",date:"May 31",total:0,client:0,internal:0}
         ],
-        totalCalls:18, clientCalls:17, avgScore:63, talkRatio:60,
-        topObjection:"Cash payment collection from students",
-        topSource:"ILH Community",
-        highlights:["Lasakan — SLR currency blocker needs tech escalation","Trisha — not fully convinced, needs one-pager","Priya — confirmed on WhatsApp, check payment"],
-        deals:[{name:"Lasakan",stage:"Blocked",value:"₹50K",note:"Payment gateway blocker"},{name:"Trisha",stage:"Nurture",value:"₹50K",note:"Needs one-pager"},{name:"Priya",stage:"In Conversation",value:"₹50K",note:"Check WhatsApp"}]
+        kpis:{totalCalls:18,avgPerDay:2.6,talkRatioYou:60,closures:0,pipeline:150000,objections:6,openFollowUps:5,totalCallTime:"9h"},
+        vsLastWeek:{totalCalls:21,closures:0,pipeline:0},
+        highlights:["Lasakan — SLR currency blocker needs tech escalation","Trisha — not fully convinced, send one-pager","Priya — confirmed on WhatsApp, check payment"],
+        deals:[{name:"Lasakan",stage:"Blocked",value:"₹50K",note:"Payment gateway"},{name:"Priya",stage:"In Conversation",value:"₹50K",note:"Check WhatsApp"}]
       },
-      "-3": {
-        label: "May 18–24",
-        dateRange: "May 18–24, 2026",
-        isPartial: false,
-        daysElapsed: 7,
-        callsByDay: [
-          { day:"Mon", date:"May 18", total:4, client:4, internal:0 },
-          { day:"Tue", date:"May 19", total:7, client:6, internal:1 },
-          { day:"Wed", date:"May 20", total:3, client:3, internal:0 },
-          { day:"Thu", date:"May 21", total:2, client:2, internal:0 },
-          { day:"Fri", date:"May 22", total:5, client:4, internal:1 },
-          { day:"Sat", date:"May 23", total:0, client:0, internal:0 },
-          { day:"Sun", date:"May 24", total:0, client:0, internal:0 }
+      "-3":{
+        label:"May 18–24", dateRange:"May 18–24, 2026", isPartial:false, daysElapsed:7,
+        callsByDay:[
+          {day:"Mon",date:"May 18",total:4,client:4,internal:0},
+          {day:"Tue",date:"May 19",total:7,client:6,internal:1},
+          {day:"Wed",date:"May 20",total:3,client:3,internal:0},
+          {day:"Thu",date:"May 21",total:2,client:2,internal:0},
+          {day:"Fri",date:"May 22",total:5,client:4,internal:1},
+          {day:"Sat",date:"May 23",total:0,client:0,internal:0},
+          {day:"Sun",date:"May 24",total:0,client:0,internal:0}
         ],
-        totalCalls:21, clientCalls:19, avgScore:68, talkRatio:58,
-        topObjection:"How does TagMango compare to Graphy/ClassPlus?",
-        topSource:"ILH Community + Direct",
-        highlights:["Chirag Chopra — pricing negotiated to ₹1L+GST","Abhinav handled Chirag call — good coaching moment","Siddharth Mokle — first call, Freedom plan ₹25K interest"],
-        deals:[{name:"Chirag",stage:"MIA",value:"₹1L",note:"Agreed ₹1L+GST, Graphy expired"},{name:"Siddharth",stage:"In Conversation",value:"₹25K",note:"First call done"}]
+        kpis:{totalCalls:21,avgPerDay:3.0,talkRatioYou:58,closures:0,pipeline:100000,objections:4,openFollowUps:3,totalCallTime:"10.5h"},
+        vsLastWeek:{totalCalls:5,closures:0,pipeline:0},
+        highlights:["Chirag Chopra — negotiated to ₹1L+GST, Graphy expiring","Abhinav handled pricing call — coaching moment on price anchoring","Siddharth Mokle — Freedom plan ₹25K interest"],
+        deals:[{name:"Chirag",stage:"MIA",value:"₹1L",note:"Agreed ₹1L+GST"}]
       }
     };
   }
@@ -3342,12 +3326,12 @@ function getWEEKS() {
 let currentWeekOffset = 0;
 
 function getData() {
-  return WEEKS[currentWeekOffset] || WEEKS[0];
+  return getWEEKS()[currentWeekOffset] || getWEEKS()[0];
 }
 
 function shiftWeek(dir) {
   const newOffset = currentWeekOffset + dir;
-  if (!WEEKS[newOffset]) return;
+  if (!getWEEKS()[newOffset]) return;
   currentWeekOffset = newOffset;
   renderAll();
 }
@@ -3707,35 +3691,17 @@ function getMONTHS() {
     MONTHS = {
       "2026-06": {
         label:"Jun 2026", partial:true, daysElapsed:11, totalDays:30,
-        dailyCalls:[
-          2,0,3,2,4,0,0,  // Jun 1-7
-          1,2,6,5,0,0,0,  // Jun 8-14 (today Jun 11 = 5 calls)
-          0,0,0,0,0,0,0,  // Jun 15-21
-          0,0,0,0,0,0,0,  // Jun 22-28
-          0,0             // Jun 29-30
-        ],
-        totalCalls:23, clientCalls:22, closedDeals:0, pipelineValue:245000,
-        avgScore:70, talkRatioAvg:57, topStage:"In Conversation",
-        revenueAchieved:0,
-        topObjections:["Enterprise vs Freedom features","Setup fee vs flat fee","App deployment timeline"],
-        newLeads:8, hotLeads:1,
-        keyMoments:["Vaishaly — hot close pending zoom webinar + DRM confirmation","Pratiksha — 10-15 day timeline, trial access needed","Jaya Gophane — Advanced plan interest, tech support critical"]
+        dailyCalls:[0,2,0,3,2,4,0, 0,1,2,6,5,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0],
+        revenueByWeek:[0,0,0,0],
+        kpis:{totalCalls:23,clientCalls:22,avgPerDay:2.1,talkRatioYou:57,closures:0,revenue:0,pipeline:245000,convRate:0,avgTAT:2.1,objections:8,peakDay:"Jun 11",peakCount:5,competitors:["Graphy","Teachable"]},
+        objections:["Enterprise vs Freedom features","Setup fee vs Graphy flat fee","App deployment timeline","WhatsApp API cost"]
       },
       "2026-05": {
         label:"May 2026", partial:false, daysElapsed:31, totalDays:31,
-        dailyCalls:[
-          0,0,0,1,0,0,0,  // May 1-7
-          0,0,0,0,3,0,0,  // May 8-14 (May 12 = 3 calls)
-          0,0,0,0,7,3,2,  // May 15-21
-          5,0,0,0,4,4,3,  // May 22-28
-          5,0,0           // May 29-31
-        ],
-        totalCalls:37, clientCalls:34, closedDeals:5, pipelineValue:0,
-        revenueAchieved:300000,
-        avgScore:65, talkRatioAvg:59, topStage:"Closed Won",
-        topObjections:["Pricing vs Graphy flat fee","WhatsApp API cost","Commission percentage"],
-        newLeads:15, hotLeads:3,
-        keyMoments:["5 Closed Won — Priya, Trisha, Lasakan, Saadhana, Vaishaly (₹3L total revenue)","Chirag Chopra — MIA after agreeing ₹1L+GST","ILH community referral wave — 8 ILH leads this month"]
+        dailyCalls:[0,0,0,1,0,0,0, 0,0,0,0,3,0,0, 0,0,0,0,7,3,2, 5,0,0,0,4,4,3, 5,0,0],
+        revenueByWeek:[0,30000,120000,150000],
+        kpis:{totalCalls:37,clientCalls:34,avgPerDay:1.1,talkRatioYou:59,closures:5,revenue:300000,pipeline:0,convRate:15,avgTAT:3.2,objections:18,peakDay:"May 19",peakCount:7,competitors:["Graphy","ClassPlus","Teachable","Apex"]},
+        objections:["Pricing vs Graphy flat fee","Commission percentage","WhatsApp API cost","App deployment timeline"]
       }
     };
   }
@@ -3748,13 +3714,13 @@ function shiftMonthMo(dir) {
   const [y, m] = currentMonth.split("-").map(Number);
   const d = new Date(y, m - 1 + dir, 1);
   const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
-  if (!MONTHS[key]) return;
+  if (!getMONTHS()[key]) return;
   currentMonth = key;
   render();
 }
 
 function render() {
-  const D = MONTHS[currentMonth];
+  const D = getMONTHS()[currentMonth];
   document.getElementById("mnav").textContent = D.label;
   document.getElementById("topbarSub").textContent =
     `— ${D.label}${D.partial ? " · in progress" : ""}`;
