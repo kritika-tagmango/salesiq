@@ -3250,185 +3250,94 @@ window.onload = () => {
 // ══════════════════════════════════════
 
 // ── REAL DATA from Granola + Calendly ──
-const WEEKS = {
-  0: { // current week (May 11–14)
-    label: "This week",
-    dateRange: "May 11–14, 2026",
-    isPartial: true,
-    daysElapsed: 4,
-
-    // calls per day (Mon–Sun), internal calls excluded
-    callsByDay: [
-      { day:"Mon", date:"May 11", total:2, client:1, internal:1 },
-      { day:"Tue", date:"May 12", total:5, client:5, internal:0 },
-      { day:"Wed", date:"May 13", total:3, client:1, internal:2 },
-      { day:"Thu", date:"May 14", total:1, client:0, internal:1 },
-      { day:"Fri", date:"May 15", total:1, client:1, internal:0 },  // calendly booked
-      { day:"Sat", date:"May 16", total:0, client:0, internal:0 },
-      { day:"Sun", date:"May 17", total:0, client:0, internal:0 },
-    ],
-
-    kpis: {
-      totalCalls: 7,          // client calls only (excl internal)
-      avgPerDay: 1.8,         // over 4 days
-      closures: 0,
-      pipeline: "₹75K–1.5L+",
-      pipelineNum: 150000,
-      openFollowUps: 7,
-      talkRatioYou: 60,
-      talkRatioThem: 40,
-      objections: 4,
-      competitors: 3,
-      avgCallDuration: 30,    // mins
-      totalCallTime: 210,     // mins (7 × 30)
-    },
-
-    vsLastWeek: {
-      totalCalls: { val: 7, prev: 19, unit: "" },
-      closures:   { val: 0, prev: 2,  unit: "" },
-      pipeline:   { val: 150, prev: 105, unit: "K" },
-      talkRatio:  { val: 60, prev: 58, unit: "%" },
-    },
-
-    callsByDay_last: [2, 6, 5, 3, 3, 0, 0], // last week per day
-
-    outcomes: [
-      { label:"Calls taken", count:7, pct:100, color:"var(--accent2)", bg:"var(--accent)" },
-      { label:"Demo completed", count:6, pct:86, color:"var(--blue)", bg:"var(--blue)" },
-      { label:"Pricing discussed", count:5, pct:71, color:"var(--amber)", bg:"var(--amber)" },
-      { label:"Follow-up set", count:5, pct:71, color:"var(--green)", bg:"var(--green)" },
-      { label:"Closed", count:0, pct:0, color:"var(--muted)", bg:"var(--muted)" },
-    ],
-
-    objections: [
-      { q:"Offer deadline / timeline mismatch", freq:3, category:"Pricing", pill:"ctag-a" },
-      { q:"Competitor has better feature (Graphy iOS, etc.)", freq:2, category:"Competitor", pill:"ctag-p" },
-      { q:"Need team sign-off before deciding", freq:2, category:"Decision", pill:"ctag-b" },
-      { q:"Bad prior WhatsApp API experience", freq:1, category:"Technical", pill:"ctag-r" },
-      { q:"GST / international payment friction", freq:1, category:"Billing", pill:"ctag-g" },
-    ],
-
-    competitors: [
-      { name:"Graphy", mentions:2, note:"Bharti migrating from Graphy (3 yrs)", winRate:71 },
-      { name:"ClickFunnels", mentions:1, note:"Kapil's current membership tool", winRate:80 },
-      { name:"AI Sensei", mentions:2, note:"Negative — both leads had bad experience", winRate:null },
-    ],
-
-    talkPatterns: [
-      { label:"Avg you spoke", val:60, benchmark:55, fillColor:"var(--amber)" },
-      { label:"Avg client spoke", val:40, benchmark:45, fillColor:"var(--green)" },
-      { label:"Questions you asked", val:3.1, benchmark:5, fillColor:"var(--accent2)", unit:"" },
-      { label:"Next step set rate", val:71, benchmark:80, fillColor:"var(--blue)", unit:"%" },
-    ],
-
-    followUps: [
-      { action:"Send Freedom plan offer to Niraj Gajera", meta:"May 12 call · deadline May 17", urgency:"hot", done:false },
-      { action:"Send pricing email to Smriti (₹25K vs ₹1L breakdown)", meta:"May 12 call · missed window", urgency:"hot", done:false },
-      { action:"GST refund + custom pricing for Kapil Kulshreshtha", meta:"May 12 call · follow-up was May 13", urgency:"hot", done:false },
-      { action:"WhatsApp alternatives + GA demo for Bharti Goel", meta:"May 12 call · enterprise potential", urgency:"warm", done:false },
-      { action:"Send brochure to TSB Skills", meta:"May 11 call · team reviewing", urgency:"warm", done:false },
-      { action:"Reach out to Nilesh T after Siddharth community session", meta:"May 12 call · free plan trial", urgency:"cool", done:false },
-      { action:"Maven Analytics dashboard access by May 18", meta:"Internal · Monday deadline", urgency:"warm", done:false },
-    ],
-
-    pipeline: [
-      { initials:"KK", name:"Kapil Kulshreshtha", stage:"Hot", stageClass:"ctag-a", sub:"Enterprise/Ultimate · Australia · $4M biz", value:"₹1L+", valueColor:"var(--amber)", bg:"linear-gradient(135deg,#f59e0b,#fb923c)" },
-      { initials:"BG", name:"Bharti Goel", stage:"Hot", stageClass:"ctag-a", sub:"Enterprise ₹1L · Graphy migrator", value:"₹1L", valueColor:"var(--amber)", bg:"linear-gradient(135deg,#f472b6,#fb7185)" },
-      { initials:"NG", name:"Niraj Gajera", stage:"Warm", stageClass:"ctag-b", sub:"Freedom ₹25K · 1 month timeline", value:"₹25K", valueColor:"var(--accent2)", bg:"linear-gradient(135deg,#7c5cfc,#a855f7)" },
-      { initials:"TS", name:"TSB Skills", stage:"Warm", stageClass:"ctag-b", sub:"Freedom ₹25K · team decision pending", value:"₹25K", valueColor:"var(--accent2)", bg:"linear-gradient(135deg,#0ea5e9,#22d3ee)" },
-      { initials:"SM", name:"Smriti", stage:"Warm", stageClass:"ctag-b", sub:"₹25K or ₹1L · pricing email pending", value:"₹25K–₹1L", valueColor:"var(--accent2)", bg:"linear-gradient(135deg,#22d3a0,#06b6d4)" },
-    ],
-
-    insight: "Tuesday was your heaviest day — 5 back-to-back client calls from 11 AM to 4 PM. You spoke 60% on average this week vs the 55% closed-deal benchmark. The May 17 offer deadline affects 3 active leads this week — Niraj, Nilesh T, and TSB Skills. No closures yet but pipeline value is up ₹45K vs last week.",
-  },
-
-  "-1": { // last week (May 4–8)
-    label: "Last week",
-    dateRange: "May 4–8, 2026",
-    isPartial: false,
-    daysElapsed: 5,
-
-    callsByDay: [
-      { day:"Mon", date:"May 4",  total:5, client:5, internal:0 },
-      { day:"Tue", date:"May 5",  total:4, client:4, internal:0 },
-      { day:"Wed", date:"May 6",  total:4, client:3, internal:1 },
-      { day:"Thu", date:"May 7",  total:5, client:5, internal:0 },
-      { day:"Fri", date:"May 8",  total:4, client:3, internal:1 },
-      { day:"Sat", date:"May 9",  total:0, client:0, internal:0 },
-      { day:"Sun", date:"May 10", total:0, client:0, internal:0 },
-    ],
-
-    kpis: {
-      totalCalls: 19,
-      avgPerDay: 3.8,
-      closures: 2,
-      pipeline: "₹1.05L",
-      pipelineNum: 105000,
-      openFollowUps: 9,
-      talkRatioYou: 58,
-      talkRatioThem: 42,
-      objections: 7,
-      competitors: 4,
-      avgCallDuration: 30,
-      totalCallTime: 570,
-    },
-
-    vsLastWeek: {
-      totalCalls: { val:19, prev:14, unit:"" },
-      closures:   { val:2,  prev:1,  unit:"" },
-      pipeline:   { val:105, prev:80, unit:"K" },
-      talkRatio:  { val:58, prev:61, unit:"%" },
-    },
-
-    outcomes: [
-      { label:"Calls taken", count:19, pct:100, color:"var(--accent2)", bg:"var(--accent)" },
-      { label:"Demo completed", count:17, pct:89, color:"var(--blue)", bg:"var(--blue)" },
-      { label:"Pricing discussed", count:14, pct:74, color:"var(--amber)", bg:"var(--amber)" },
-      { label:"Follow-up set", count:9,  pct:47, color:"var(--green)", bg:"var(--green)" },
-      { label:"Closed", count:2, pct:11, color:"var(--green)", bg:"var(--green)" },
-    ],
-
-    objections: [
-      { q:"Cash flow / can't pay upfront", freq:4, category:"Pricing", pill:"ctag-a" },
-      { q:"Competitor cheaper / no setup fee", freq:3, category:"Competitor", pill:"ctag-p" },
-      { q:"Need to test free plan first", freq:3, category:"Objection", pill:"ctag-b" },
-      { q:"Payment deferment until apps live", freq:2, category:"Billing", pill:"ctag-r" },
-      { q:"Want more discount", freq:2, category:"Pricing", pill:"ctag-a" },
-    ],
-
-    competitors: [
-      { name:"Graphy", mentions:2, note:"2 leads using or considering Graphy", winRate:71 },
-      { name:"Graphy", mentions:1, note:"No setup fee angle", winRate:71 },
-      { name:"Teachable", mentions:1, note:"International leads comparing", winRate:75 },
-      { name:"Sales Process", mentions:1, note:"John Pradeep's prior platform", winRate:100 },
-    ],
-
-    talkPatterns: [
-      { label:"Avg you spoke", val:58, benchmark:55, fillColor:"var(--amber)" },
-      { label:"Avg client spoke", val:42, benchmark:45, fillColor:"var(--green)" },
-      { label:"Questions you asked", val:3.4, benchmark:5, fillColor:"var(--accent2)", unit:"" },
-      { label:"Next step set rate", val:47, benchmark:80, fillColor:"var(--blue)", unit:"%" },
-    ],
-
-    followUps: [
-      { action:"Flow diagram + payment link for Sandeep Kaul", meta:"May 5 call · enterprise signed", urgency:"hot", done:true },
-      { action:"Quotation email for Santhosh G", meta:"May 5 · cash flow EMI offer", urgency:"hot", done:true },
-      { action:"Follow-up Yogendra on Graphy comparison", meta:"May 4 · 2-day decision window", urgency:"hot", done:false },
-      { action:"Prakash — international gateway written FAQ", meta:"May 7 call · technical follow-up", urgency:"warm", done:false },
-      { action:"Gunjan Dewan — check on May 10 deadline decision", meta:"May 5 · Freedom offer", urgency:"warm", done:false },
-      { action:"Renu — follow up before May 10 offer expiry", meta:"May 5 · interested before deadline", urgency:"warm", done:false },
-    ],
-
-    pipeline: [
-      { initials:"SC", name:"Sandeep Kaul", stage:"Closed", stageClass:"ctag-g", sub:"Enterprise · apps + deferred billing", value:"₹1L", valueColor:"var(--green)", bg:"linear-gradient(135deg,#22d3a0,#06b6d4)" },
-      { initials:"SG", name:"Santhosh G", stage:"Closed", stageClass:"ctag-g", sub:"Freedom + Pro · no-cost EMI", value:"₹75K", valueColor:"var(--green)", bg:"linear-gradient(135deg,#7c5cfc,#a855f7)" },
-      { initials:"YN", name:"Yogendra", stage:"Warm", stageClass:"ctag-b", sub:"Enterprise vs Graphy · 2-day window", value:"₹1L+", valueColor:"var(--accent2)", bg:"linear-gradient(135deg,#f59e0b,#fb923c)" },
-      { initials:"PK", name:"Prakash Kumar", stage:"Warm", stageClass:"ctag-b", sub:"Technical queries · intl payments", value:"₹25K", valueColor:"var(--accent2)", bg:"linear-gradient(135deg,#f472b6,#fb7185)" },
-    ],
-
-    insight: "Your strongest week of the month with 19 client calls and 2 closes (Sandeep ₹1L + Santhosh ₹75K). Talk ratio improved to 58% — closer to the 55% benchmark. Next-step set rate was low at 47% — many calls ended without a concrete commitment. The cash flow objection came up 4 times; the no-cost EMI offer was your most effective closer.",
+let WEEKS = null;
+function getWEEKS() {
+  if (!WEEKS) {
+    WEEKS = {
+      0: {
+        label: "This week",
+        dateRange: "Jun 9–11, 2026",
+        isPartial: true,
+        daysElapsed: 3,
+        callsByDay: [
+          { day:"Mon", date:"Jun 9",  total:0, client:0, internal:0 },
+          { day:"Tue", date:"Jun 10", total:3, client:3, internal:0 },
+          { day:"Wed", date:"Jun 11", total:5, client:5, internal:0 },
+          { day:"Thu", date:"Jun 12", total:0, client:0, internal:0 },
+          { day:"Fri", date:"Jun 13", total:0, client:0, internal:0 },
+          { day:"Sat", date:"Jun 14", total:0, client:0, internal:0 },
+          { day:"Sun", date:"Jun 15", total:0, client:0, internal:0 }
+        ],
+        totalCalls:8, clientCalls:8, avgScore:70, talkRatio:56,
+        topObjection:"What is included in Enterprise vs Freedom?",
+        topSource:"ILH Community",
+        highlights:["Vaishaly hot close — waiting on zoom webinar 500 confirmation","5 calls today — Neetu, Siddharth, Shrikant, Vrukshika, Vaijayanthi","Rachit Sharma — Graphy with 50+ exclusive creators, high-value prospect"],
+        deals:[{name:"Vaishaly",stage:"Hot close",value:"₹1.25L",note:"Pay tomorrow if zoom+DRM confirmed"}]
+      },
+      "-1": {
+        label: "Last week",
+        dateRange: "Jun 2–8, 2026",
+        isPartial: false,
+        daysElapsed: 7,
+        callsByDay: [
+          { day:"Mon", date:"Jun 2",  total:3, client:3, internal:0 },
+          { day:"Tue", date:"Jun 3",  total:3, client:3, internal:0 },
+          { day:"Wed", date:"Jun 4",  total:2, client:2, internal:0 },
+          { day:"Thu", date:"Jun 5",  total:6, client:5, internal:1 },
+          { day:"Fri", date:"Jun 6",  total:0, client:0, internal:0 },
+          { day:"Sat", date:"Jun 7",  total:0, client:0, internal:0 },
+          { day:"Sun", date:"Jun 8",  total:1, client:1, internal:0 }
+        ],
+        totalCalls:15, clientCalls:14, avgScore:65, talkRatio:59,
+        topObjection:"Setup fee + monthly vs Graphy flat fee",
+        topSource:"ILH Community",
+        highlights:["Vani — second follow-up, evaluating platform","Shraddha Rath — 1000+ community, on Exly","Umesh — on Circle.so with 1000+ paid students"],
+        deals:[{name:"Pratiksha",stage:"In Conversation",value:"₹1L",note:"10-15 day timeline"},{name:"Jaya Gophane",stage:"In Conversation",value:"₹85K",note:"Advanced plan interest"}]
+      },
+      "-2": {
+        label: "May 25–31",
+        dateRange: "May 25–31, 2026",
+        isPartial: false,
+        daysElapsed: 7,
+        callsByDay: [
+          { day:"Mon", date:"May 25", total:4, client:3, internal:1 },
+          { day:"Tue", date:"May 26", total:4, client:4, internal:0 },
+          { day:"Wed", date:"May 27", total:3, client:3, internal:0 },
+          { day:"Thu", date:"May 28", total:2, client:2, internal:0 },
+          { day:"Fri", date:"May 29", total:5, client:5, internal:0 },
+          { day:"Sat", date:"May 30", total:0, client:0, internal:0 },
+          { day:"Sun", date:"May 31", total:0, client:0, internal:0 }
+        ],
+        totalCalls:18, clientCalls:17, avgScore:63, talkRatio:60,
+        topObjection:"Cash payment collection from students",
+        topSource:"ILH Community",
+        highlights:["Lasakan — SLR currency blocker needs tech escalation","Trisha — not fully convinced, needs one-pager","Priya — confirmed on WhatsApp, check payment"],
+        deals:[{name:"Lasakan",stage:"Blocked",value:"₹50K",note:"Payment gateway blocker"},{name:"Trisha",stage:"Nurture",value:"₹50K",note:"Needs one-pager"},{name:"Priya",stage:"In Conversation",value:"₹50K",note:"Check WhatsApp"}]
+      },
+      "-3": {
+        label: "May 18–24",
+        dateRange: "May 18–24, 2026",
+        isPartial: false,
+        daysElapsed: 7,
+        callsByDay: [
+          { day:"Mon", date:"May 18", total:4, client:4, internal:0 },
+          { day:"Tue", date:"May 19", total:7, client:6, internal:1 },
+          { day:"Wed", date:"May 20", total:3, client:3, internal:0 },
+          { day:"Thu", date:"May 21", total:2, client:2, internal:0 },
+          { day:"Fri", date:"May 22", total:5, client:4, internal:1 },
+          { day:"Sat", date:"May 23", total:0, client:0, internal:0 },
+          { day:"Sun", date:"May 24", total:0, client:0, internal:0 }
+        ],
+        totalCalls:21, clientCalls:19, avgScore:68, talkRatio:58,
+        topObjection:"How does TagMango compare to Graphy/ClassPlus?",
+        topSource:"ILH Community + Direct",
+        highlights:["Chirag Chopra — pricing negotiated to ₹1L+GST","Abhinav handled Chirag call — good coaching moment","Siddharth Mokle — first call, Freedom plan ₹25K interest"],
+        deals:[{name:"Chirag",stage:"MIA",value:"₹1L",note:"Agreed ₹1L+GST, Graphy expired"},{name:"Siddharth",stage:"In Conversation",value:"₹25K",note:"First call done"}]
+      }
+    };
   }
-};
+  return WEEKS;
+}
 
 let currentWeekOffset = 0;
 
@@ -3792,177 +3701,46 @@ window.onload = renderAll;
 // ══════════════════════════════════════
 
 // ── REAL DATA from Granola (Apr 20 – May 14) + sync notes ──
-const MONTHS = {
-  "2026-05": {
-    label:"May 2026", partial:true, daysElapsed:14, totalDays:31,
-    // Client calls per calendar day (1-indexed, 0 = no data / non-working)
-    // May 1 = Friday (idx 0), May 14 = Thursday (idx 13)
-    dailyCalls:[
-      0,  // May 1 (Sat – holiday)
-      0,  // May 2 (Sun) — 1 call but weekend
-      0,  // May 3 (Sun)
-      6,  // May 4 Mon — Yogendra×2, Prakash, Amisha, Vinita, Priyanka, Townhall
-      5,  // May 5 Tue — Sandeep, Gunjan, Renu, Priyanka Singh, Akash
-      3,  // May 6 Wed — Lakshmi, Priyanka, CRM disc
-      6,  // May 7 Thu — Subashini, Prabhav, Khushi, Dr Sumali, Prakash, Closure sync
-      4,  // May 8 Fri — Sarang, Janani, Sushant, Maven CRM
-      0,  // May 9 Sat
-      0,  // May 10 Sun
-      2,  // May 11 Mon — Townhall, TSB Skills
-      5,  // May 12 Tue — Nilesh, Kapil, Bharti, Smriti, Niraj
-      2,  // May 13 Wed — Maven Analytics, AI Sales Coach
-      1,  // May 14 Thu (today, partial)
-    ],
-    // Weeks W1=May4–8, W2=May11–14(partial)
-    weeklyClient:[19, 7],
-    weekLabels:["W1 May 4–8","W2 May 11–14"],
-    kpis:{
-      totalCalls:45,       // all meetings including internal
-      clientCalls:34,      // excl internal syncs/townhalls
-      closures:2,          // Sandeep + (Santhosh confirmed May)
-      revenue:"₹1.75L",   // Sandeep ₹1L + Santhosh ₹75K
-      revenueNum:175000,
-      pipeline:"₹5L+",
-      pipelineNum:500000,
-      avgPerDay:3.2,       // client calls / working days
-      talkRatioYou:59,
-      talkRatioThem:41,
-      convRate:6,          // 2/34 × 100 ≈ 6%
-      avgTAT:3.8,          // days to close
-      objections:18,
-      competitors:6,
-      totalCallTime:1020,  // 34 × 30 min
-      peakDay:"May 4 & May 7", peakCount:6,
-      bestWeek:"W1 (May 4–8)", bestWeekCalls:19,
-    },
-    funnel:[
-      {icon:"📞",label:"Client calls taken",n:34,pct:100,color:"var(--accent2)",bg:"var(--accent)"},
-      {icon:"🖥️",label:"Full demos completed",n:28,pct:82,color:"var(--blue)",bg:"var(--blue)"},
-      {icon:"💰",label:"Pricing discussed",n:22,pct:65,color:"var(--amber)",bg:"var(--amber)"},
-      {icon:"📋",label:"Follow-up committed",n:18,pct:53,color:"var(--green)",bg:"var(--green)"},
-      {icon:"🏆",label:"Closed",n:2,pct:6,color:"var(--green)",bg:"var(--green)"},
-    ],
-    objections:[
-      {q:"Offer deadline / not ready to decide now",freq:8,cat:"Timing",color:"var(--amber)"},
-      {q:"Need to discuss internally / team sign-off",freq:6,cat:"Decision",color:"var(--blue)"},
-      {q:"Pricing too high / budget constraints",freq:5,cat:"Pricing",color:"var(--red)"},
-      {q:"WhatsApp integration gap (no native API)",freq:5,cat:"Technical",color:"var(--pink)"},
-      {q:"Competitor has cheaper / better feature",freq:4,cat:"Competitor",color:"var(--accent2)"},
-      {q:"App deployment timeline (45–60 days)",freq:3,cat:"Timeline",color:"var(--muted2)"},
-      {q:"Already on another platform, costly to switch",freq:3,cat:"Switching",color:"var(--muted2)"},
-      {q:"Platform mismatch / wrong audience",freq:2,cat:"Mismatch",color:"var(--muted)"},
-    ],
-    competitors:[
-      {name:"Graphy",mentions:3,winRate:71,note:"iOS pricing, WhatsApp, lead mgmt pain"},
-      {name:"ClickFunnels",mentions:1,winRate:80,note:"No gamification / progression"},
-      {name:"Sales Process",mentions:1,winRate:100,note:"No Razorpay – Indian payments gap"},
-      {name:"Teachable",mentions:1,winRate:75,note:"Bulk user upload, username login"},
-    ],
-    talkPatterns:[
-      {label:"Avg you spoke",val:59,benchmark:55,color:"var(--amber)"},
-      {label:"Avg client spoke",val:41,benchmark:45,color:"var(--green)"},
-      {label:"Discovery Qs per call",val:3.1,benchmark:5,color:"var(--accent2)"},
-      {label:"Next step set rate",val:53,benchmark:80,color:"var(--blue)"},
-      {label:"Demo-to-pricing speed",val:28,benchmark:25,color:"var(--amber)",unit:" min"},
-    ],
-    leadSources:[
-      {label:"Calendly (inbound)",pct:48,color:"#7c5cfc"},
-      {label:"ILH community",pct:22,color:"#22d3a0"},
-      {label:"Referral / ScaleX",pct:14,color:"#f59e0b"},
-      {label:"Ads (Instagram/Google)",pct:10,color:"#f472b6"},
-      {label:"Direct / WhatsApp",pct:6,color:"#60a5fa"},
-    ],
-    // Revenue by week (partial May)
-    revenueByWeek:[
-      {w:"W1 May4–8", rev:175000, pipeline:380000},
-      {w:"W2 May11–14", rev:0,    pipeline:150000},
-    ],
-    insight:{
-      topWin:"Two closes (Sandeep ₹1L + Santhosh ₹75K) confirmed this month. Both used the no-cost EMI / deferred billing lever. The May 17 Freedom offer is your single biggest urgency driver — 4 active leads are time-sensitive.",
-      bigGap:"Your next-step set rate is 53% vs an 80% benchmark from closed deals. Almost half of calls are ending without a committed next action — the biggest single lever to fix this month.",
-      trend:"Talk ratio crept up to 59% this month (benchmark 55%). Two consecutive heavy weeks (May 4–8 was 19 calls) — pacing is strong. WhatsApp API friction appeared in 5 separate calls — worth preparing a dedicated one-liner counter.",
-      coaching:"Offer deadlines (May 3 → 10 → 17) are being used as rolling urgency triggers. Lead quality is mixed — 2 platform mismatches (Ravindra, Janani) consumed call time. Pre-qualify more aggressively on Calendly form answers before booking.",
-    },
-  },
-
-  "2026-04": {
-    label:"Apr 2026", partial:true, daysElapsed:11, totalDays:30,
-    // Apr 20–30 only (data starts Apr 20)
-    dailyCalls:[
-      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, // Apr 1–19 no data
-      5, // Apr 20 Mon
-      0, // Apr 21 Tue
-      4, // Apr 22 Wed
-      2, // Apr 23 Thu
-      3, // Apr 24 Fri
-      0, // Apr 25 Sat
-      0, // Apr 26 Sun
-      2, // Apr 27 Mon
-      5, // Apr 28 Tue
-      2, // Apr 29 Wed
-      5, // Apr 30 Thu
-    ],
-    weeklyClient:[9,12],
-    weekLabels:["W4 Apr20–24","W5 Apr28–30"],
-    kpis:{
-      totalCalls:28, clientCalls:21,
-      closures:5,
-      revenue:"₹5.76L",
-      revenueNum:576000,
-      pipeline:"₹9L+",
-      pipelineNum:900000,
-      avgPerDay:3.1,
-      talkRatioYou:58, talkRatioThem:42,
-      convRate:24, avgTAT:4.2,
-      objections:12, competitors:4,
-      totalCallTime:630,
-      peakDay:"Apr 20, 28, 30", peakCount:5,
-      bestWeek:"W5 (Apr 28–30)", bestWeekCalls:12,
-    },
-    funnel:[
-      {icon:"📞",label:"Client calls taken",n:21,pct:100,color:"var(--accent2)",bg:"var(--accent)"},
-      {icon:"🖥️",label:"Full demos completed",n:18,pct:86,color:"var(--blue)",bg:"var(--blue)"},
-      {icon:"💰",label:"Pricing discussed",n:16,pct:76,color:"var(--amber)",bg:"var(--amber)"},
-      {icon:"📋",label:"Follow-up committed",n:12,pct:57,color:"var(--green)",bg:"var(--green)"},
-      {icon:"🏆",label:"Closed",n:5,pct:24,color:"var(--green)",bg:"var(--green)"},
-    ],
-    objections:[
-      {q:"Pricing too high / want more discount",freq:6,cat:"Pricing",color:"var(--amber)"},
-      {q:"Need to discuss internally",freq:5,cat:"Decision",color:"var(--blue)"},
-      {q:"Payment deferment (apps not live yet)",freq:3,cat:"Billing",color:"var(--red)"},
-      {q:"Competitor cheaper (Graphy, Sales Process)",freq:3,cat:"Competitor",color:"var(--accent2)"},
-      {q:"WhatsApp API not native",freq:2,cat:"Technical",color:"var(--pink)"},
-    ],
-    competitors:[
-      {name:"Graphy",mentions:2,winRate:71,note:"No setup fee, iOS pricing"},
-      {name:"Sales Process",mentions:1,winRate:100,note:"No Razorpay (John Pradeep)"},
-      {name:"Zoho CRM",mentions:1,winRate:85,note:"Cost/complexity issue"},
-    ],
-    talkPatterns:[
-      {label:"Avg you spoke",val:58,benchmark:55,color:"var(--amber)"},
-      {label:"Avg client spoke",val:42,benchmark:45,color:"var(--green)"},
-      {label:"Discovery Qs per call",val:3.4,benchmark:5,color:"var(--accent2)"},
-      {label:"Next step set rate",val:57,benchmark:80,color:"var(--blue)"},
-      {label:"Demo-to-pricing speed",val:26,benchmark:25,color:"var(--green)",unit:" min"},
-    ],
-    leadSources:[
-      {label:"Calendly (inbound)",pct:52,color:"#7c5cfc"},
-      {label:"ILH community",pct:28,color:"#22d3a0"},
-      {label:"Referral / ScaleX",pct:12,color:"#f59e0b"},
-      {label:"Ads",pct:8,color:"#f472b6"},
-    ],
-    revenueByWeek:[
-      {w:"W4 Apr20–24",rev:200000,pipeline:400000},
-      {w:"W5 Apr28–30",rev:376000,pipeline:500000},
-    ],
-    insight:{
-      topWin:"Your strongest stretch — 5 closures including Jithuu (₹3L), John Pradeep (₹3.6L pending), Sital Tripathy, Santhosh G, Sandeep Kaul. The international payment link to remove GST was your most effective close tactic this month.",
-      bigGap:"21 SQLs, 5 closures (~24% conversion) — below the team benchmark. 2 days unavailable + 3 hrs/week on CRM testing reduced selling time. High-ticket leads pushed into May.",
-      trend:"April data is partial (starts Apr 20). Revenue was heavily driven by Radish One (50% contribution per Townhall notes). ILH community was the top performing lead source with 28% of leads.",
-      coaching:"The rolling offer deadline (Apr → May 3 → May 10 → May 17) is working as an urgency trigger. Standardise the international payment link pitch earlier in pricing discussions — it closed 2 of 5 deals.",
-    },
+let MONTHS = null;
+function getMONTHS() {
+  if (!MONTHS) {
+    MONTHS = {
+      "2026-06": {
+        label:"Jun 2026", partial:true, daysElapsed:11, totalDays:30,
+        dailyCalls:[
+          2,0,3,2,4,0,0,  // Jun 1-7
+          1,2,6,5,0,0,0,  // Jun 8-14 (today Jun 11 = 5 calls)
+          0,0,0,0,0,0,0,  // Jun 15-21
+          0,0,0,0,0,0,0,  // Jun 22-28
+          0,0             // Jun 29-30
+        ],
+        totalCalls:23, clientCalls:22, closedDeals:0, pipelineValue:245000,
+        avgScore:70, talkRatioAvg:57, topStage:"In Conversation",
+        revenueAchieved:0,
+        topObjections:["Enterprise vs Freedom features","Setup fee vs flat fee","App deployment timeline"],
+        newLeads:8, hotLeads:1,
+        keyMoments:["Vaishaly — hot close pending zoom webinar + DRM confirmation","Pratiksha — 10-15 day timeline, trial access needed","Jaya Gophane — Advanced plan interest, tech support critical"]
+      },
+      "2026-05": {
+        label:"May 2026", partial:false, daysElapsed:31, totalDays:31,
+        dailyCalls:[
+          0,0,0,1,0,0,0,  // May 1-7
+          0,0,0,0,3,0,0,  // May 8-14 (May 12 = 3 calls)
+          0,0,0,0,7,3,2,  // May 15-21
+          5,0,0,0,4,4,3,  // May 22-28
+          5,0,0           // May 29-31
+        ],
+        totalCalls:37, clientCalls:34, closedDeals:5, pipelineValue:0,
+        revenueAchieved:300000,
+        avgScore:65, talkRatioAvg:59, topStage:"Closed Won",
+        topObjections:["Pricing vs Graphy flat fee","WhatsApp API cost","Commission percentage"],
+        newLeads:15, hotLeads:3,
+        keyMoments:["5 Closed Won — Priya, Trisha, Lasakan, Saadhana, Vaishaly (₹3L total revenue)","Chirag Chopra — MIA after agreeing ₹1L+GST","ILH community referral wave — 8 ILH leads this month"]
+      }
+    };
   }
-};
+  return MONTHS;
+}
 
 let currentMonth = "2026-05";
 
@@ -4396,222 +4174,205 @@ window.onload = () => {
 // ── REAL DATA from Granola (last 30 days, client calls only) ──
 const CALLS = [
   {
-    id: "5f22abda-aa59-47d9-a6b1-a98b4196bc9a",
-    name: "Niraj Gajera",
-    email: "niravgajera2018@gmail.com",
-    date: "May 12, 2026",
-    time: "4:00 PM",
-    type: "Demo + Pricing",
-    tags: ["pricing","demo"],
-    tagLabels: [{l:"Pricing push",c:"ctag-amber"},{l:"Demo",c:"ctag-blue"},{l:"Offer deadline",c:"ctag-red"}],
-    score: 78,
-    duration: "~40 min",
-    talkRatio: {me:62, them:38},
-    callNumber: 1,
-    summary: "Niraj creates content around loans, credit scores, financial literacy and real estate. Looking for a platform to host courses and workshops. Interested in the Freedom plan at ₹25,000 but has a 1-month decision timeline. Offer deadline is May 17 — creating urgency. Asked about WhatsApp communication and custom domain.",
-    openQs: 2,
-    nextStep: "Send Freedom plan breakdown by EOD, check with team on offer extension",
-    qaLog: [
-      {
-        q: "Can the same video content support multiple language audio tracks?",
-        timestamp: "~12 min",
-        yourAnswer: "Partially answered — said separate courses needed for each language but didn't explain the workflow clearly.",
-        betterAnswer: "Each language version requires a completely separate course with its own payment page. You'd create Course A (Hindi) and Course A (English) as separate entities. The Pro plan's 100% coupon feature makes it easy to give existing students access to alternate language versions at no extra cost.",
-        rating: "partial",
-        type: "product"
-      },
-      {
-        q: "What is the payment commission on the Basic plan?",
-        timestamp: "~25 min",
-        yourAnswer: "Clearly answered — 10% on every sale, reduces to 5% on Pro.",
-        betterAnswer: null,
-        rating: "good",
-        type: "pricing"
-      },
-      {
-        q: "Can the May 17 offer deadline be extended for his 1-month timeline?",
-        timestamp: "~35 min",
-        yourAnswer: "Said you'd check with the team — left it unresolved. No commitment made.",
-        betterAnswer: "Proactively offer a conditional extension: 'If you can confirm intent (even a partial token amount) by May 17, we can lock in the lifetime pricing for you.' This removes the binary deadline and gives him a path forward without losing the urgency.",
-        rating: "missed",
-        type: "objection"
-      }
-    ],
-    signals: {
-      buying: ["Mentioned domain name (niravgajera.co) — showing intent to commit", "Asked about WhatsApp communication — planning post-purchase workflow", "Knows competing platforms but chose to explore Tagmango"],
-      risks: ["1-month timeline vs May 17 offer — creates friction", "No team yet — solo creator, lower complexity need", "Unfamiliar with platform functionality — needs nurturing"],
-      nextsteps: ["Send Freedom plan PDF with pricing breakdown", "Confirm offer extension eligibility with team", "Follow up within 48 hours"],
-      competitor: []
-    }
-  },
-  {
-    id: "88f4e13a-1bd0-4620-84a0-2d7d833aa2b4",
-    name: "Sarang Bezalwar",
-    email: "sarang.bezalwar@gmail.com",
-    date: "May 8, 2026",
-    time: "11:00 AM",
-    type: "Full Demo",
-    tags: ["demo","pricing"],
-    tagLabels: [{l:"Full demo",c:"ctag-blue"},{l:"Pricing",c:"ctag-amber"},{l:"1 month TL",c:"ctag-purple"}],
+    id: "e58587a2",
+    name: "Chirag Chopra",
+    email: "chiragchopra786@gmail.com",
+    date: "May 19, 2026",
+    time: "6:30 PM",
+    type: "Competitor Pricing",
+    tags: ["pricing","competitor"],
+    tagLabels: [{l:"Price sensitive",c:"ctag-red"},{l:"Graphy exit",c:"ctag-amber"},{l:"Urgent",c:"ctag-red"}],
     score: 72,
-    duration: "~55 min",
-    talkRatio: {me:58, them:42},
-    callNumber: 1,
-    summary: "Sarang has 24 years corporate experience, runs Fortunate Brands for career counseling across Maharashtra. Conducting workshops, 1-on-1 sessions, has 2 corporate clients. Wants landing pages, workshop enrollment, course creation, payment integration. Has NOT tried other platforms. Timeline is 1 month. Interested in Freedom plan but wants full breakdown before deciding.",
+    duration: "~45 min",
+    talkRatio: {me:45, them:55},
+    callNumber: 2,
+    summary: "Abhinav handled a tough pricing negotiation. Chirag is moving from Graphy — subscription ending in 2-3 days. AI essay grading is his core requirement. Compared with ClassPlus and Apex. Negotiated down to ₹1L+GST (Freedom+App, no website, no SM, 5% commission). Agreed to decide by next day.",
     openQs: 1,
-    nextStep: "Send Freedom plan detailed breakdown, check Zoom subscription offer availability",
+    nextStep: "Send payment link for ₹1L+GST (Freedom+App). Follow up on WhatsApp today.",
     qaLog: [
-      {
-        q: "Is the Freedom plan ₹25,000 a one-time fee or annual?",
-        timestamp: "~38 min",
-        yourAnswer: "Explained correctly — normally annual, but current May 17 offer makes it one-time lifetime.",
-        betterAnswer: null,
-        rating: "good",
-        type: "pricing"
-      },
-      {
-        q: "How is this different from platforms like ClassPlus?",
-        timestamp: "~44 min",
-        yourAnswer: "Answered with community features as USP — gamification, channels, leaderboards. Good but could have been sharper.",
-        betterAnswer: "Lead with the creator-first positioning: 'ClassPlus is built for coaching institutes with large student batches. Tagmango is built for individual creators and consultants — you get a fully branded platform under your domain with community features that ClassPlus doesn't offer at this price point. The gamification and engagement tools are designed for solopreneurs like you to retain students without a team.'",
-        rating: "partial",
-        type: "competitor"
-      },
-      {
-        q: "Will the Zoom subscription be included or need separate purchase?",
-        timestamp: "~47 min",
-        yourAnswer: "Answered well — included in certain setups, specifically in the May 17 offer bundle.",
-        betterAnswer: null,
-        rating: "good",
-        type: "product"
-      }
+      {q:"Why are you 5x more expensive than ClassPlus?",timestamp:"~15 min",yourAnswer:"Explained white-label system, iOS app ownership, community-first model. Established value before discounting.",betterAnswer:"Lead with 3-year TCO: ClassPlus ₹20K but no white label + data sharing. TagMango ₹1L but owned app + LTV growth. Show a coach who moved from ClassPlus."},
+      {q:"Can you match ClassPlus pricing?",timestamp:"~28 min",yourAnswer:"Asked for budget expectation first — then removed website and SM to reach ₹1L. Good strategic move.",betterAnswer:"Strong handling. Next time pre-qualify budget before the pitch to set anchor earlier."},
+      {q:"I don't want to pay monthly subscription fees",timestamp:"~35 min",yourAnswer:"Offered 5% commission model on basic plan — no monthly fees.",betterAnswer:"Confirm explicitly: 'On Freedom+Basic, after this ₹1L setup, you pay zero monthly — only 5% commission per sale. That's it.'"}
     ],
-    signals: {
-      buying: ["Never used a platform before — no switching friction", "Has 2 corporate clients already — immediate revenue potential", "Proactively asked about support — wants to move forward confidently"],
-      risks: ["1-month decision timeline — offer expires May 17", "Asked about discounts — price-sensitive", "Solo operator — may be overwhelmed by feature set"],
-      nextsteps: ["Send detailed Freedom plan PDF", "Include testimonials from solo coaches in similar niches", "Offer 1-on-1 onboarding call as incentive to close before May 17"],
-      competitor: ["ClassPlus mentioned — differentiate on creator-focus and community features"]
-    }
+    objections: [{cat:"pricing",q:"5x premium vs ClassPlus",handled:"good"},{cat:"competitor",q:"ClassPlus ₹20K for 3 years",handled:"good"},{cat:"pricing",q:"Capital constrained as new educator",handled:"partial"}],
+    buyingSignals: ["Graphy subscription ending in 2-3 days","Agreed to ₹1L+GST after negotiation","4L Instagram followers — serious educator"],
+    riskSignals: ["Multiple platform comparisons","No formal payment commitment on call"],
+    coachingTip: "Practice asking for budget expectation early — before revealing your price. Abhinav modeled this well by asking 'what is your expectation' first."
   },
   {
-    id: "f6abfa40-dfb3-4de9-bfca-176275e834f5",
-    name: "Prakash Kumar",
-    email: "prakash.inet@gmail.com",
-    date: "May 7, 2026",
-    time: "5:00 PM",
-    type: "Technical Q&A",
-    tags: ["technical","follow-up"],
-    tagLabels: [{l:"Technical",c:"ctag-pink"},{l:"Follow-up #2",c:"ctag-green"},{l:"Intl payments",c:"ctag-blue"}],
+    id: "da41a9fe",
+    name: "Jagan",
+    email: "evcglobalventures@gmail.com",
+    date: "May 27, 2026",
+    time: "2:30 PM",
+    type: "Pricing Discussion",
+    tags: ["pricing","follow-up"],
+    tagLabels: [{l:"Team decision",c:"ctag-amber"},{l:"Enterprise",c:"ctag-blue"}],
     score: 65,
     duration: "~30 min",
-    talkRatio: {me:55, them:45},
+    talkRatio: {me:58, them:42},
     callNumber: 2,
-    summary: "Follow-up call focused on specific platform mechanics — multi-language courses, discount/coupon system, course access limits, international payment gateways. Prakash has multilingual content needs (private notes confirm he asked about international payment gateway). Good technical depth in questions — advanced buyer.",
+    summary: "Discussed Enterprise Plus (₹50K) vs full Enterprise with website (₹75K / ₹88.5K with GST). Jagan needs team discussion before deciding. Understood the offer structure clearly. Asked about domain naming strategy and WhatsApp automation. Will confirm by Monday.",
     openQs: 1,
-    nextStep: "Confirm international payment gateway support details and send written summary",
+    nextStep: "Follow up Monday. Ask: Enterprise Plus ₹50K or Enterprise ₹75K with website? Send payment link.",
     qaLog: [
-      {
-        q: "Can the same course support multiple language audio tracks?",
-        timestamp: "~5 min",
-        yourAnswer: "Correctly explained separate courses needed per language. Also explained the coupon workaround for Pro plan.",
-        betterAnswer: null,
-        rating: "good",
-        type: "product"
-      },
-      {
-        q: "What international payment gateways are supported?",
-        timestamp: "~22 min",
-        yourAnswer: "Only mentioned Stripe briefly. Did not give a full answer on international gateway coverage or limitations.",
-        betterAnswer: "Tagmango supports Stripe for international payments. For international buyers, Stripe handles USD, EUR, GBP and most major currencies. Indian creators need a Stripe account with international payments enabled. There's no additional setup on Tagmango's side — it connects directly to your Stripe dashboard. Worth confirming if he has an existing Stripe account or needs setup guidance.",
-        rating: "missed",
-        type: "technical"
-      },
-      {
-        q: "What is the minimum pricing for a course on Basic plan?",
-        timestamp: "~18 min",
-        yourAnswer: "Correctly stated ₹50 minimum on Basic plan. Also offered the dummy checkout page workaround.",
-        betterAnswer: null,
-        rating: "good",
-        type: "pricing"
-      }
+      {q:"Should I use brand name or personal name for the domain?",timestamp:"~18 min",yourAnswer:"Explained ILH example — social presence determines choice. Both options possible.",betterAnswer:"Share a visual showing ILH brand domain vs coach personal page. Concrete examples close faster."},
+      {q:"Does commission happen per transaction or monthly?",timestamp:"~22 min",yourAnswer:"Clarified per transaction immediately via payment gateway.",betterAnswer:"Good. Add: 'Settlement is T+3 working days so your cash flow is predictable from day one.'"}
     ],
-    signals: {
-      buying: ["Multi-language content plans — significant production investment ahead", "Asking about international payments — larger audience intent", "Second call — continued engagement signal"],
-      risks: ["International payment gap — if Stripe isn't ready, may be a blocker", "Technical questions unanswered in writing — trust risk"],
-      nextsteps: ["Send written FAQ on international payment gateway setup", "Confirm Stripe international status for Indian creators", "Offer to connect with technical team for gateway walkthrough"],
-      competitor: []
-    }
+    objections: [{cat:"product",q:"Domain naming confusion",handled:"good"},{cat:"product",q:"Commission timing",handled:"good"}],
+    buyingSignals: ["'I'll inform you as soon as possible'","Asked detailed onboarding questions — post-purchase thinking"],
+    riskSignals: ["Multiple decision makers","Plan not confirmed (50K vs 75K)"],
+    coachingTip: "When a lead says 'I'll discuss with my team' — get the partner's specific concern upfront so you can address it before Monday."
   },
   {
-    id: "b3a70abb-c9f9-4ee1-a027-74022b0716e2",
-    name: "Smriti",
-    email: "smritismart83@gmail.com",
-    date: "May 12, 2026",
-    time: "1:30 PM",
-    type: "Pricing Follow-up",
-    tags: ["pricing","follow-up"],
-    tagLabels: [{l:"Pricing",c:"ctag-amber"},{l:"Follow-up",c:"ctag-green"},{l:"Short call",c:"ctag-purple"}],
-    score: 55,
-    duration: "~10 min",
-    talkRatio: {me:60, them:40},
-    callNumber: 2,
-    summary: "Short call — Smriti missed the scheduled 12 PM meeting due to laptop issues. Discussed two pricing options previously presented by Lavina: Enterprise (₹1 lakh + GST) vs Standard (₹25K). Action: send detailed pricing via email. Low engagement signal — short call, no questions, connectivity issues.",
-    openQs: 0,
-    nextStep: "Send detailed pricing comparison email as committed on call",
-    qaLog: [
-      {
-        q: "What is included in the Enterprise vs Standard plan?",
-        timestamp: "~4 min",
-        yourAnswer: "Didn't go into detail — deferred to email follow-up.",
-        betterAnswer: "Even on a short call, a 60-second verbal summary would have anchored the value: 'Standard at ₹25K gives you the branded dashboard, unlimited courses, Basic payment integration. Enterprise at ₹1L adds custom mobile apps for iOS/Android, a dedicated success manager, custom website design, and Zoom for 300 participants. The apps alone would cost ₹3–4L to build independently.' Send the email, but plant this anchor first.",
-        rating: "partial",
-        type: "pricing"
-      }
-    ],
-    signals: {
-      buying: ["Two calls — continued engagement", "Preferred email communication — give her time to evaluate"],
-      risks: ["Low engagement on call", "Connectivity issue may indicate low priority", "No questions asked — passive buyer signal"],
-      nextsteps: ["Send pricing email within 24 hours as committed", "Include a clear CTA and deadline in email", "Follow up in 3 days if no response"],
-      competitor: []
-    }
-  },
-  {
-    id: "859f92eb-734b-4a9d-9ed1-09e477026f27",
-    name: "Janani",
-    email: "jananijaanu922@gmail.com",
-    date: "May 8, 2026",
-    time: "2:30 PM",
-    type: "Demo",
-    tags: ["demo"],
-    tagLabels: [{l:"Demo",c:"ctag-blue"},{l:"First call",c:"ctag-green"}],
-    score: 70,
+    id: "4db679e7",
+    name: "Priya Lakshmi",
+    email: "priyabeautyhub@gmail.com",
+    date: "May 29, 2026",
+    time: "6:00 PM",
+    type: "Demo (ILH Referral)",
+    tags: ["demo","ilh","closed"],
+    tagLabels: [{l:"ILH referral",c:"ctag-blue"},{l:"Offline → Online",c:"ctag-amber"},{l:"High intent",c:"ctag-green"}],
+    score: 78,
     duration: "~35 min",
-    talkRatio: {me:60, them:40},
+    talkRatio: {me:62, them:38},
     callNumber: 1,
-    summary: "First call — product demo for Janani.",
+    summary: "Priya is an offline makeup artist going online. Enterprise Plus ₹50K ILH offer presented. Full demo of email automations, zoom, storage. Confirmed domain activation starts the 3-year count so she can buy now and start later. Said she'll confirm payment on WhatsApp after call.",
     openQs: 0,
-    nextStep: "Follow up with summary and next steps",
-    qaLog: [],
-    signals: { buying: [], risks: [], nextsteps: ["Send follow-up email"], competitor: [] }
+    nextStep: "Check WhatsApp for payment confirmation. If not received, follow up with payment link + offer email.",
+    qaLog: [
+      {q:"What happens to zoom subscription after 3 years?",timestamp:"~20 min",yourAnswer:"Said ~₹3000/mo but couldn't commit to exact pricing.",betterAnswer:"Reframe: 'In 3 years your academy will be running. Zoom cost will be trivial vs your revenue. Lock the asset now at zero cost.'"},
+      {q:"I haven't made any videos yet — can I start later?",timestamp:"~28 min",yourAnswer:"Confirmed domain activation starts the count — buy now, activate when ready.",betterAnswer:"This is a buying signal not an objection. Say: 'Perfect — the clock only starts when you're ready. Want me to send the payment link now?'"}
+    ],
+    objections: [{cat:"timing",q:"Not prepared yet — no videos",handled:"good"},{cat:"pricing",q:"Zoom cost after 3 years",handled:"partial"}],
+    buyingSignals: ["Said will confirm on WhatsApp","Asked post-purchase questions (orientation, account manager)","Non-tech background resolved by SM"],
+    riskSignals: ["Did not complete payment on call","Not tech savvy"],
+    coachingTip: "Talk ratio 62:38 is slightly high for ILH referral calls — they already know the platform. Spend more time on their specific use case."
   },
   {
-    id: "b0bec917-e768-46d7-80dd-a1837764ab10",
-    name: "Sushant Deshpande",
-    email: "sushaaant0412@gmail.com",
-    date: "May 8, 2026",
-    time: "4:00 PM",
-    type: "Demo",
-    tags: ["demo","pricing"],
-    tagLabels: [{l:"Demo",c:"ctag-blue"},{l:"Pricing",c:"ctag-amber"}],
-    score: 74,
-    duration: "~40 min",
-    talkRatio: {me:57, them:43},
+    id: "6a488624",
+    name: "Trisha Torcato",
+    email: "trishatorcato@gmail.com",
+    date: "May 29, 2026",
+    time: "5:00 PM",
+    type: "Demo (ILH Referral)",
+    tags: ["demo","ilh","nurture"],
+    tagLabels: [{l:"ILH referral",c:"ctag-blue"},{l:"Not convinced",c:"ctag-red"},{l:"Needs follow-up",c:"ctag-amber"}],
+    score: 55,
+    duration: "~45 min",
+    talkRatio: {me:65, them:35},
     callNumber: 1,
-    summary: "Demo and pricing discussion with Sushant.",
+    summary: "Trisha is a homeopathic physician focused on mind transformation coaching. Long complex call with many technical questions. Concerned about email broadcast limit (10/user on basic), WhatsApp API cost, and platform complexity. Not fully convinced the platform fits her hybrid model. Told to decide by Monday.",
+    openQs: 3,
+    nextStep: "Send Trisha a simplified one-pager: 'Here is exactly how your free-to-paid funnel works on TagMango in 3 steps.'",
+    qaLog: [
+      {q:"Only 10 email broadcasts per user — this seems limiting",timestamp:"~25 min",yourAnswer:"Explained automations (unlimited) vs broadcasts (10 limit). Got confusing for her.",betterAnswer:"Simplify: 'The 10 limit is for marketing blasts like offers. Your session reminders and confirmations are unlimited and fully automated — you never touch them again.'"},
+      {q:"Will this platform work if I don't sell pre-recorded courses?",timestamp:"~35 min",yourAnswer:"Explained free workshop funnel, community building, then paid conversion.",betterAnswer:"Lead with her specific model: 'Your model is perfect — free webinar → community → paid transformation program. Here is a coach doing exactly this.'"}
+    ],
+    objections: [{cat:"product",q:"Email broadcast limit on basic",handled:"missed"},{cat:"product",q:"Platform fit for hybrid coaching",handled:"partial"}],
+    buyingSignals: ["Asked about implementation timeline","Explored free-to-paid funnel earnestly"],
+    riskSignals: ["Talk ratio 65:35 — she checked out","Not fully convinced platform fits her model","Very long hesitant responses"],
+    coachingTip: "Talk ratio 65:35 is a red flag. When a prospect goes quiet, use more check-in questions every 2-3 features: 'Does this match what you had in mind?'"
+  },
+  {
+    id: "33474023",
+    name: "Pratiksha",
+    email: "pratikshapatil6933@gmail.com",
+    date: "Jun 1, 2026",
+    time: "12:30 PM",
+    type: "Demo (Graphy migration)",
+    tags: ["demo","graphy","in-progress"],
+    tagLabels: [{l:"Graphy migration",c:"ctag-amber"},{l:"10-15 days",c:"ctag-green"},{l:"Cash payments",c:"ctag-blue"}],
+    score: 70,
+    duration: "~40 min",
+    talkRatio: {me:60, them:40},
+    callNumber: 1,
+    summary: "Pratiksha runs import-export training on Graphy. Clear pain points: payment gateway variety, AI features, webinar technical issues. Key requirement is cash payment collection (students pay cash). Addressed via Advanced plan (user addition) or Pro (100% coupon workaround). 10-15 day purchase timeline. Requested trial access.",
     openQs: 1,
-    nextStep: "Send pricing details and follow up",
-    qaLog: [],
-    signals: { buying: [], risks: [], nextsteps: ["Send follow-up"], competitor: [] }
+    nextStep: "Send trial access credentials by EOD. Follow up in 3 days to confirm plan choice (Advanced vs Pro).",
+    qaLog: [
+      {q:"Setup fee + monthly vs Graphy's single flat fee — what's the difference?",timestamp:"~12 min",yourAnswer:"Full pricing structure explained — freedom basic has zero recurring, setup is one-time.",betterAnswer:"Use a 2-year TCO comparison at her revenue level. Show the number, not just the structure."},
+      {q:"Can I accept cash payments from offline students?",timestamp:"~20 min",yourAnswer:"Advanced plan user addition or Pro 100% coupon both explained clearly.",betterAnswer:"Good. To close faster: 'Most coaches in your position go Advanced — user addition is the clean solution. Let me show you how it looks.'"}
+    ],
+    objections: [{cat:"pricing",q:"Graphy flat fee vs setup+monthly",handled:"good"},{cat:"product",q:"Cash payment collection",handled:"good"}],
+    buyingSignals: ["10-15 day clear purchase timeline","Specific plan comparison questions","Clear Graphy pain points driving switch"],
+    riskSignals: ["Wants trial before committing","AI features 2-3 months away"],
+    coachingTip: "When a prospect has a specific requirement like cash payments, anchor to the plan you want them on immediately — don't offer the workaround first."
+  },
+  {
+    id: "bab04aea",
+    name: "Jaya Gophane",
+    email: "jayagt@jayagophanetrainings.com",
+    date: "Jun 1, 2026",
+    time: "12:00 PM",
+    type: "Demo (Teachable migration)",
+    tags: ["demo","teachable","gamification"],
+    tagLabels: [{l:"Teachable exit",c:"ctag-amber"},{l:"Gamification",c:"ctag-blue"},{l:"Advanced plan",c:"ctag-green"}],
+    score: 68,
+    duration: "~45 min",
+    talkRatio: {me:58, them:42},
+    callNumber: 1,
+    summary: "Jaya has 750 workshops and 700 WhatsApp groups. Personal development + neuroscience, on Teachable. Very loyal students, 30%+ webinar conversion. Wants Advanced plan for community + gamification, plans to upgrade to Ultimate. Tech-averse, lives remotely. Plans to start carefully — no rush.",
+    openQs: 1,
+    nextStep: "Send Advanced plan payment link. Emphasise success manager handles all tech setup from day one.",
+    qaLog: [
+      {q:"I collect payments via Razorpay during webinars — do I need to use your checkout?",timestamp:"~30 min",yourAnswer:"Said either works. Did not push platform payment adoption.",betterAnswer:"Reframe: 'Keep Razorpay for live webinars. Our checkout handles post-webinar enrollments automatically — no manual follow-up needed. That's your time back.'"},
+      {q:"I've purchased many platforms I haven't been able to use",timestamp:"~38 min",yourAnswer:"Did not directly address this concern.",betterAnswer:"Stop and address: 'What made those hard to use? Because we assign a success manager whose only job is to make sure you're using it in the first 90 days. That's the difference.'"}
+    ],
+    objections: [{cat:"product",q:"Razorpay vs platform payment",handled:"partial"},{cat:"timing",q:"History of buying and not using platforms",handled:"missed"}],
+    buyingSignals: ["Clear budget willingness (Advanced → Ultimate)","Very specific feature requirements matching platform","Strong community already built"],
+    riskSignals: ["History of buying platforms and not using","Tech-averse, remote location","No specific commitment date"],
+    coachingTip: "When a prospect mentions 'I've bought platforms before and not used them' — stop and address it directly. This is the #1 risk signal for non-activation."
+  },
+  {
+    id: "a1c8a2b2",
+    name: "Lasakan",
+    email: "lasakan06@gmail.com",
+    date: "May 29, 2026",
+    time: "6:30 PM",
+    type: "Demo (ILH International)",
+    tags: ["demo","ilh","blocked"],
+    tagLabels: [{l:"ILH referral",c:"ctag-blue"},{l:"Payment blocker",c:"ctag-red"},{l:"Sri Lanka",c:"ctag-amber"}],
+    score: 48,
+    duration: "~25 min",
+    talkRatio: {me:63, them:37},
+    callNumber: 1,
+    summary: "Lasakan is based in Sri Lanka. Enterprise Plus ₹50K offer discussed. Critical blocker: Stripe shows USD pricing but students pay in SLR (Sri Lankan Rupees). No resolution found on call. Advanced plan with user addition suggested as workaround but doesn't solve the payment collection issue.",
+    openQs: 2,
+    nextStep: "Escalate SLR currency issue to tech team. Check if LKR is enabled on Stripe or if a Sri Lankan gateway can be integrated. Get answer within 24 hours.",
+    qaLog: [
+      {q:"My students pay in Sri Lankan Rupees but Stripe shows USD — can you fix this?",timestamp:"~15 min",yourAnswer:"Could not resolve. Suggested Advanced plan with user addition as workaround.",betterAnswer:"Escalate immediately: 'Let me check with our tech team right now on enabling LKR on Stripe. Can I come back to you within 24 hours with a confirmed answer?' — then do it."}
+    ],
+    objections: [{cat:"technical",q:"SLR currency mismatch with Stripe USD",handled:"missed"}],
+    buyingSignals: ["ILH community referral — high trust","Came prepared with specific questions"],
+    riskSignals: ["Critical unresolved currency blocker","International compliance complexity","Low confidence in resolution"],
+    coachingTip: "International leads need payment gateway confirmation BEFORE the demo. Add 'What currency do your students pay in?' to your intake form for non-Indian leads."
+  },
+  {
+    id: "658da6f5",
+    name: "Vaishaly",
+    email: "vaishalybharambe@yahoo.co.in",
+    date: "Jun 10, 2026",
+    time: "4:30 PM",
+    type: "Pricing Negotiation",
+    tags: ["pricing","negotiation","hot"],
+    tagLabels: [{l:"Hot close",c:"ctag-red"},{l:"ILH Diamond",c:"ctag-blue"},{l:"Pay tomorrow",c:"ctag-green"}],
+    score: 82,
+    duration: "~35 min",
+    talkRatio: {me:52, them:48},
+    callNumber: 3,
+    summary: "Vaishaly is an ILH diamond member. Discussed Enterprise ₹75K + Pro annual ₹50K = ₹1.25L total. Wants zoom webinar 500 people in Pro. Asked about DRM for content protection. The ₹50K Enterprise Plus offer expired June 7 — held firm at ₹75K. Will pay tomorrow if zoom webinar 500 and DRM confirmed.",
+    openQs: 2,
+    nextStep: "Get manager approval for zoom webinar 500 in Pro annual AND DRM confirmation. Send EOD. She wants to pay TODAY — treat as hot close.",
+    qaLog: [
+      {q:"Can I get the ₹50K Enterprise Plus offer even though it expired?",timestamp:"~8 min",yourAnswer:"Held firm — offer expired, ₹75K is standard ILH price. Explained price block refunds.",betterAnswer:"Strong firmness. Add a future anchor: 'The ₹75K includes a website worth ₹25K — you're getting more than the ₹50K offer anyway.'"},
+      {q:"Can you include zoom webinar 500 people in the Pro plan?",timestamp:"~18 min",yourAnswer:"Said needs manager approval. Offered to confirm by EOD.",betterAnswer:"Strong move giving one meaningful upgrade. Get this confirmed in 2 hours, not EOD — every hour of delay gives her time to reconsider."},
+      {q:"Does the app have DRM screen recording protection?",timestamp:"~25 min",yourAnswer:"Said apps can't screenshot but needed verification for Pro plan.",betterAnswer:"Know DRM status by plan tier before every enterprise call. This is a common content protection question."}
+    ],
+    objections: [{cat:"pricing",q:"₹50K offer expired — want same price",handled:"good"},{cat:"product",q:"Zoom webinar 500 in Pro plan",handled:"good"},{cat:"technical",q:"DRM on apps",handled:"partial"}],
+    buyingSignals: ["'We will pay it right across'","Asked for package summary — ready to transact","ILH diamond member — pre-qualified"],
+    riskSignals: ["Waiting for 2 confirmations — delay risk","Multiple decision makers (ma'am + Vaishaly)"],
+    coachingTip: "When a serious buyer gives 2 conditions before paying, resolve both within 2 hours — not EOD. Every hour of delay creates doubt."
   }
 ];
 
