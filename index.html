@@ -2281,6 +2281,25 @@ ${tagStyles}
       </div>
 
 
+      <!-- UPCOMING CALLS FROM CALENDLY (live) -->
+      <div class="sec-hdr" id="upcoming-section-hdr" style="display:none">
+        <span class="sec-title">Upcoming calls</span>
+        <div class="sec-line"></div>
+        <span style="font-size:10px;color:var(--muted)" id="upcoming-count"></span>
+      </div>
+      <div class="panel" id="upcoming-section" style="margin-bottom:22px;display:none">
+        <div class="panel-hdr">
+          <div>
+            <div class="panel-title">This week's calls</div>
+            <div class="panel-sub">From Calendly · click Sync Calendly to refresh</div>
+          </div>
+          <span style="font-size:11px;color:var(--accent2);cursor:pointer" onclick="navTo('daily')">Daily view →</span>
+        </div>
+        <div class="panel-body" id="overview-upcoming-calls" style="padding:0 16px">
+          <div style="font-size:12px;color:var(--muted);padding:12px 0">Click Sync Calendly in Daily Insights to load</div>
+        </div>
+      </div>
+
       <!-- PIPELINE FROM SUPABASE -->
       <div class="sec-hdr" id="pipeline-hdr" style="display:none">
         <span class="sec-title">Live pipeline</span>
@@ -6357,48 +6376,49 @@ function updatePrepBanner() {
 
 
 // ══════════════════════════════════════
-// SYNC CALENDLY → DAILY TAB
-// Converts CALENDLY_SYNC_DATA into RAW_EVENTS
-// format and re-renders calendar + timeline
+// SYNC CALENDLY → DAILY TAB + OVERVIEW
 // ══════════════════════════════════════
 function syncCalendlyLive() {
   const lbl   = document.getElementById('liveLabel');
   const pulse = document.getElementById('syncPulse');
 
-  // Visual feedback
   lbl.textContent = 'Syncing…';
-  if (pulse) { pulse.style.background = 'var(--amber)'; pulse.style.boxShadow = '0 0 8px var(--amber)'; }
+  if (pulse) { pulse.style.background='var(--amber)'; pulse.style.boxShadow='0 0 8px var(--amber)'; }
 
   try {
-    // Convert CALENDLY_SYNC_DATA → RAW_EVENTS format
+    // CALENDLY_SYNC_DATA uses IST timestamps (e.g. "2026-06-11T11:30:00+05:30")
+    // Convert to UTC ISO for RAW_EVENTS which expects UTC
+    function istToUtc(istStr) {
+      // Strip the +05:30 offset and subtract 5h30m
+      const d = new Date(istStr); // JS handles +05:30 correctly
+      return d.toISOString();
+    }
+
     const newEvents = CALENDLY_SYNC_DATA
-      .filter(e => e.call_date && e.lead_name)
+      .filter(e => e.call_date)
       .map(e => ({
-        id:      e.calendly_id,
-        name:    e.lead_name || 'TBD',
-        email:   e.lead_email || '',
-        start:   new Date(e.call_date).toISOString().replace('Z', '').slice(0,16) + ':00Z',
-        end:     e.call_end ? new Date(e.call_end).toISOString().replace('Z','').slice(0,16) + ':00Z'
-                            : new Date(new Date(e.call_date).getTime() + 30*60000).toISOString().slice(0,16) + ':00Z',
+        id:      e.calendly_id || e.call_date,
+        name:    e.lead_name   || 'TBD',
+        email:   e.lead_email  || '',
+        start:   istToUtc(e.call_date),
+        end:     e.call_end ? istToUtc(e.call_end)
+                            : new Date(new Date(e.call_date).getTime() + 30*60000).toISOString(),
         joinUrl: e.join_url || '#',
         qa: [
-          e.whatsapp        ? {q:'WhatsApp',        a: e.whatsapp}         : null,
-          e.source          ? {q:'Source',           a: e.source}           : null,
-          e.sells_courses   ? {q:'Sells courses?',   a: e.sells_courses}    : null,
-          e.other_platforms ? {q:'Other platforms',  a: e.other_platforms}  : null,
-          e.community_size  ? {q:'Community size',   a: e.community_size}   : null,
-          e.timeline        ? {q:'Timeline',         a: e.timeline}         : null,
+          e.whatsapp        ? {q:'WhatsApp',        a:e.whatsapp}        : null,
+          e.source          ? {q:'Source',           a:e.source}          : null,
+          e.sells_courses   ? {q:'Sells courses?',   a:e.sells_courses}   : null,
+          e.other_platforms ? {q:'Other platforms',  a:e.other_platforms} : null,
+          e.community_size  ? {q:'Community size',   a:e.community_size}  : null,
+          e.timeline        ? {q:'Timeline',         a:e.timeline}        : null,
         ].filter(Boolean)
       }));
 
-    // Merge into RAW_EVENTS (add any not already present by id)
+    // Merge into RAW_EVENTS — replace existing by id, add new
     const existingIds = new Set(RAW_EVENTS.map(e => e.id));
     let added = 0;
     newEvents.forEach(e => {
-      if (!existingIds.has(e.id)) {
-        RAW_EVENTS.push(e);
-        added++;
-      }
+      if (!existingIds.has(e.id)) { RAW_EVENTS.push(e); added++; }
     });
 
     // Rebuild dayMap
@@ -6408,44 +6428,116 @@ function syncCalendlyLive() {
       if (!dayMap[k]) dayMap[k] = [];
       dayMap[k].push(e);
     });
-    Object.keys(dayMap).forEach(k => dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start)));
+    Object.keys(dayMap).forEach(k =>
+      dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start))
+    );
 
-    // Re-render everything
+    // Re-render daily tab
     renderCalendar();
     renderDaySummary();
     renderTimeline();
     updateTopbar();
 
-    // Update prep banner with today's real calls
+    // Update Overview prep banner
     updatePrepBanner();
 
-    // Update today badge count in sidebar
-    const todayCount = (dayMap[todayKey] || []).length;
+    // Update Overview upcoming calls section
+    renderOverviewUpcoming();
+
+    // Update sidebar today badge
     const badge = document.getElementById('todayBadge');
-    if (badge) badge.textContent = todayCount;
+    if (badge) badge.textContent = (dayMap[todayKey]||[]).length;
 
-    // Success state
-    const todayEvents = dayMap[todayKey] || [];
-    lbl.textContent = `${newEvents.length} calls synced`;
-    if (pulse) { pulse.style.background = 'var(--green)'; pulse.style.boxShadow = '0 0 8px var(--green)'; }
-
-    // Reset label after 3s
+    // Success
+    const todayCount = (dayMap[todayKey]||[]).length;
+    const juneCount  = newEvents.filter(e => e.start.startsWith('2026-06')).length;
+    lbl.textContent = `${newEvents.length} calls synced ✓`;
+    if (pulse) { pulse.style.background='var(--green)'; pulse.style.boxShadow='0 0 8px var(--green)'; }
     setTimeout(() => {
       lbl.textContent = 'Sync Calendly';
-      if (pulse) { pulse.style.background = ''; pulse.style.boxShadow = ''; }
+      if (pulse) { pulse.style.background=''; pulse.style.boxShadow=''; }
     }, 3000);
-
-    showToast(`✓ Calendly synced — ${todayEvents.length} calls today · ${added} new events added`);
+    showToast(`✓ Synced ${newEvents.length} calls — ${todayCount} today · ${juneCount} in June`);
 
   } catch(err) {
-    console.error('syncCalendlyLive error:', err);
+    console.error('syncCalendlyLive:', err);
     lbl.textContent = 'Sync failed';
-    if (pulse) { pulse.style.background = 'var(--red)'; pulse.style.boxShadow = '0 0 6px var(--red)'; }
-    setTimeout(() => {
-      lbl.textContent = 'Sync Calendly';
-      if (pulse) { pulse.style.background = ''; pulse.style.boxShadow = ''; }
-    }, 3000);
+    if (pulse) { pulse.style.background='var(--red)'; pulse.style.boxShadow='0 0 6px var(--red)'; }
+    setTimeout(() => { lbl.textContent='Sync Calendly'; if(pulse){pulse.style.background='';pulse.style.boxShadow='';} }, 3000);
   }
+}
+
+// ── Overview upcoming calls renderer ──
+function renderOverviewUpcoming() {
+  const el = document.getElementById('overview-upcoming-calls');
+  if (!el) return;
+
+  const upcoming = getUpcomingCalendlyEvents(7);
+  if (!upcoming.length) {
+    // Show section
+  const sec = document.getElementById('upcoming-section');
+  const secHdr = document.getElementById('upcoming-section-hdr');
+  const countEl = document.getElementById('upcoming-count');
+  if (sec) sec.style.display = 'block';
+  if (secHdr) secHdr.style.display = 'flex';
+
+  if (!upcoming.length) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--muted);padding:12px 0">No upcoming calls in next 7 days</div>';
+    if (countEl) countEl.textContent = '0 calls';
+    return;
+  }
+  if (countEl) countEl.textContent = upcoming.length + ' calls this week';
+    return;
+  }
+
+  // Group by day
+  const byDay = {};
+  upcoming.forEach(e => {
+    const ist = new Date(new Date(e.call_date||e.start).getTime());
+    const key = (e.call_date||e.start).slice(0,10);
+    if (!byDay[key]) byDay[key] = [];
+    byDay[key].push(e);
+  });
+
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  el.innerHTML = Object.entries(byDay).sort().map(([date, calls]) => {
+    const d = new Date(date + 'T00:00:00+05:30');
+    const isToday = date === todayKey;
+    const label = isToday ? 'Today' : `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]}`;
+
+    const callRows = calls.map(c => {
+      const dt = new Date(c.call_date || c.start);
+      const h = dt.getHours(), m = dt.getMinutes();
+      const ampm = h>=12?'PM':'AM'; const h12 = h%12||12;
+      const time = `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+      const initials = (c.lead_name||'?').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+      const avatarColors = ['linear-gradient(135deg,#7c5cfc,#a855f7)','linear-gradient(135deg,#0ea5e9,#22d3ee)','linear-gradient(135deg,#f472b6,#fb7185)','linear-gradient(135deg,#f59e0b,#fb923c)','linear-gradient(135deg,#22d3a0,#06b6d4)'];
+      const bg = avatarColors[(c.lead_name||'A').charCodeAt(0)%5];
+      const isNext = c.id === (getUpcomingCalendlyEvents(1)[0]||{}).id;
+      return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:default" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+        <div style="background:var(--surface2);border-radius:8px;padding:5px 8px;text-align:center;min-width:52px;flex-shrink:0;${isNext?'background:var(--glow2);border:1px solid var(--border3)':''}">
+          <div style="font-size:13px;font-weight:700;font-family:var(--mono);${isNext?'color:var(--accent2)':''}">${h12}:${String(m).padStart(2,'0')}</div>
+          <div style="font-size:9px;color:var(--muted)">${ampm}</div>
+        </div>
+        <div style="width:28px;height:28px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">${initials}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.lead_name||'TBD'}</div>
+          <div style="font-size:10px;color:var(--muted)">${c.call_type||'Discovery Call'}</div>
+        </div>
+        ${c.join_url && c.join_url!=='#' ? `<a href="${c.join_url}" target="_blank" style="font-size:10px;color:var(--accent2);text-decoration:none;white-space:nowrap;flex-shrink:0">Join →</a>` : ''}
+      </div>`;
+    }).join('');
+
+    return `<div style="margin-bottom:12px">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:${isToday?'var(--accent2)':'var(--muted)'};margin-bottom:4px;display:flex;align-items:center;gap:6px">
+        ${isToday?'<span style="width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);display:inline-block"></span>':''}
+        ${label} · ${calls.length} call${calls.length>1?'s':''}
+      </div>
+      ${callRows}
+    </div>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════
