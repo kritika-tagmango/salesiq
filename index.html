@@ -2759,7 +2759,10 @@ RAW_EVENTS.forEach(e => {
 Object.keys(dayMap).forEach(k => dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start)));
 
 // ── STATE ──
-let viewYear = 2026, viewMonth = 4; // 0-indexed: May = 4
+// Set calendar to current month dynamically
+const _now = new Date();
+const _istNow = new Date(_now.getTime() + 5.5*60*60*1000);
+let viewYear = _istNow.getUTCFullYear(), viewMonth = _istNow.getUTCMonth(); // 0-indexed, always current month
 const todayIST = nowIST();
 const todayKey = `${todayIST.getUTCFullYear()}-${String(todayIST.getUTCMonth()+1).padStart(2,'0')}-${String(todayIST.getUTCDate()).padStart(2,'0')}`;
 let selectedKey = todayKey;
