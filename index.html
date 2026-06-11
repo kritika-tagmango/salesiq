@@ -6163,43 +6163,20 @@ function filterPipeline() {
 function renderPipeline(data) {
   if (!data.length) return;
 
-  // Show sections
-  document.getElementById('pipeline-hdr').style.display = 'flex';
-  document.getElementById('pipeline-section').style.display = 'block';
+  // Show section
+  const hdr = document.getElementById('pipeline-hdr');
+  const sec = document.getElementById('pipeline-section');
+  if (hdr) hdr.style.display = 'flex';
+  if (sec) sec.style.display = 'block';
 
-  // KPI row
-  const total      = data.length;
-  const closed     = data.filter(r => r.stage === 'Closed Won');
-  const active     = data.filter(r => r.stage === 'In Conversation');
-  const totalRev   = closed.reduce((a,r) => a + (r.setup_amt||0) + (r.subscription_amt||0), 0);
-  const pipelineVal= active.reduce((a,r) => a + (r.setup_amt||0) + (r.subscription_amt||0), 0);
-  const p0count    = data.filter(r => r.priority === 'P0').length;
-
-  document.getElementById('pipeline-kpis').innerHTML = `
-    <div class="stat-card accent-card">
-      <div class="stat-header"><span class="stat-label">Total leads</span><div class="stat-icon si-purple">👥</div></div>
-      <div class="stat-value" style="color:var(--accent2)">${total}</div>
-      <div class="stat-delta"><span class="delta d-up">▲ ${closed.length} closed</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-header"><span class="stat-label">Revenue closed</span><div class="stat-icon si-green">💰</div></div>
-      <div class="stat-value" style="color:var(--green)">₹${(totalRev/1000).toFixed(0)}K</div>
-      <div class="stat-delta"><span class="delta d-up">${closed.length} deals</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-header"><span class="stat-label">Active pipeline</span><div class="stat-icon si-amber">📋</div></div>
-      <div class="stat-value" style="color:var(--amber)">₹${(pipelineVal/1000).toFixed(0)}K</div>
-      <div class="stat-delta"><span class="delta d-neu">${active.length} in progress</span></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-header"><span class="stat-label">P0 priority</span><div class="stat-icon si-red">🔥</div></div>
-      <div class="stat-value" style="color:var(--red)">${p0count}</div>
-      <div class="stat-delta"><span class="delta d-neu">need immediate action</span></div>
-    </div>
-  `;
-
-  document.getElementById('pipeline-title').textContent = `Pipeline · ${total} leads`;
-  document.getElementById('pipeline-sub').textContent   = `${closed.length} closed · ${active.length} in conversation`;
+  // Update header labels
+  const total  = data.length;
+  const closed = data.filter(r => r.stage === 'Closed Won').length;
+  const active = data.filter(r => r.stage === 'In Conversation').length;
+  const titleEl = document.getElementById('pipeline-title');
+  const subEl   = document.getElementById('pipeline-sub');
+  if (titleEl) titleEl.textContent = `Pipeline · ${total} leads`;
+  if (subEl)   subEl.textContent   = `${closed} closed · ${active} in conversation`;
 
   renderPipelineTable(data);
 }
