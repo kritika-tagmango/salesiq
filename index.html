@@ -3265,10 +3265,41 @@ function getWEEKS() {
           {day:"Sat",date:"Jun 14",total:0,client:0,internal:0},
           {day:"Sun",date:"Jun 15",total:0,client:0,internal:0}
         ],
-        kpis:{totalCalls:8,avgPerDay:2.7,talkRatioYou:56,closures:0,pipeline:245000,objections:3,openFollowUps:2,totalCallTime:"4h"},
-        vsLastWeek:{totalCalls:15,closures:0,pipeline:245000},
-        highlights:["Vaishaly hot close — zoom webinar 500 + DRM pending","5 calls Jun 11: Siddharth, Shrikant, Vrukshika, Vaijayanthi, Neetu","Rachit Sharma — 50+ exclusive creators, high-value prospect"],
-        deals:[{name:"Vaishaly",stage:"Hot close",value:"₹1.25L",note:"Pay tomorrow if zoom+DRM confirmed"}]
+        callsByDay_last:[0,3,6,2,5,0,0],
+        kpis:{totalCalls:8,avgPerDay:2.7,talkRatioYou:56,talkRatioThem:44,closures:0,pipeline:"₹2.45L",objections:3,openFollowUps:2,totalCallTime:240,competitors:2},
+        vsLastWeek:{totalCalls:{val:8,prev:15},closures:{val:0,prev:0},pipeline:{val:245,prev:330}},
+        outcomes:[
+          {label:"Calls taken",count:8,pct:100,bg:"var(--accent2)",color:"var(--accent2)"},
+          {label:"Demo completed",count:6,pct:75,bg:"var(--blue)",color:"var(--blue)"},
+          {label:"Pricing discussed",count:4,pct:50,bg:"var(--amber)",color:"var(--amber)"},
+          {label:"Follow-up set",count:3,pct:38,bg:"var(--green)",color:"var(--green)"},
+          {label:"Closed",count:0,pct:0,bg:"var(--muted2)",color:"var(--muted2)"}
+        ],
+        objections:[
+          {q:"Enterprise vs Freedom — what's different?",freq:3,category:"Product",pill:"obj-pill-b"},
+          {q:"App deployment timeline — 45 days too long?",freq:2,category:"Timing",pill:"obj-pill-a"},
+          {q:"WhatsApp API — why separate purchase?",freq:2,category:"Technical",pill:"obj-pill-p"}
+        ],
+        talkPatterns:[
+          {label:"Questions asked / call",val:3.2,benchmark:5,fillColor:"var(--amber)",unit:""},
+          {label:"Avg call duration",val:35,benchmark:30,fillColor:"var(--blue)",unit:"m"},
+          {label:"Objections handled",val:3,benchmark:4,fillColor:"var(--green)",unit:""}
+        ],
+        competitors:[
+          {name:"Graphy",mentions:3,note:"3 leads migrating from Graphy this week",winRate:null},
+          {name:"Teachable",mentions:1,note:"Jaya Gophane — moving after 750 workshops",winRate:null}
+        ],
+        pipeline:[
+          {name:"Vaishaly",initials:"VB",bg:"linear-gradient(135deg,#7c5cfc,#a855f7)",stage:"Hot",stageClass:"sp-hot",sub:"Pricing negotiation · ₹1.25L · pay tomorrow",value:"₹1.25L",valueColor:"var(--green)"},
+          {name:"Pratiksha",initials:"PP",bg:"linear-gradient(135deg,#f59e0b,#fb923c)",stage:"Active",stageClass:"sp-demo",sub:"Graphy migration · 10-15 day timeline",value:"₹1L",valueColor:"var(--amber)"},
+          {name:"Jaya Gophane",initials:"JG",bg:"linear-gradient(135deg,#0ea5e9,#22d3ee)",stage:"Active",stageClass:"sp-demo",sub:"Teachable → Advanced plan interest",value:"₹85K",valueColor:"var(--amber)"}
+        ],
+        followUps:[
+          {action:"Get manager approval — zoom webinar 500 + DRM for Vaishaly",meta:"Vaishaly · pay tomorrow if confirmed",urgency:"hot",done:false},
+          {action:"Send trial access credentials to Pratiksha",meta:"Pratiksha · 10-15 day timeline",urgency:"hot",done:false},
+          {action:"Send Advanced plan payment link to Jaya",meta:"Jaya · emphasise SM handles all tech",urgency:"warm",done:false}
+        ],
+        insight:"Strong week in terms of volume (8 calls). Vaishaly is a hot close — don't let the zoom webinar confirmation go past today. Watch your talk ratio at 56% — good progress but still slightly above the 55% target. Main coaching gap this week: missed objection handling on 'history of not using platforms' with Jaya — address platform activation risk directly next call."
       },
       "-1":{
         label:"Last week", dateRange:"Jun 2–8, 2026", isPartial:false, daysElapsed:7,
@@ -3281,10 +3312,42 @@ function getWEEKS() {
           {day:"Sat",date:"Jun 7", total:0,client:0,internal:0},
           {day:"Sun",date:"Jun 8", total:1,client:1,internal:0}
         ],
-        kpis:{totalCalls:15,avgPerDay:2.1,talkRatioYou:59,closures:0,pipeline:330000,objections:5,openFollowUps:4,totalCallTime:"7.5h"},
-        vsLastWeek:{totalCalls:18,closures:0,pipeline:0},
-        highlights:["Vani — second follow-up, evaluating platform","Shraddha Rath — 1000+ community, on Exly","Umesh — Circle.so with 1000+ paid students"],
-        deals:[{name:"Pratiksha",stage:"In Conversation",value:"₹1L",note:"10-15 day timeline"},{name:"Jaya",stage:"In Conversation",value:"₹85K",note:"Advanced plan"}]
+        callsByDay_last:[4,7,3,2,5,0,0],
+        kpis:{totalCalls:15,avgPerDay:2.1,talkRatioYou:59,talkRatioThem:41,closures:0,pipeline:"₹3.3L",objections:5,openFollowUps:4,totalCallTime:450,competitors:2},
+        vsLastWeek:{totalCalls:{val:15,prev:18},closures:{val:0,prev:0},pipeline:{val:330,prev:0}},
+        outcomes:[
+          {label:"Calls taken",count:15,pct:100,bg:"var(--accent2)",color:"var(--accent2)"},
+          {label:"Demo completed",count:11,pct:73,bg:"var(--blue)",color:"var(--blue)"},
+          {label:"Pricing discussed",count:6,pct:40,bg:"var(--amber)",color:"var(--amber)"},
+          {label:"Follow-up set",count:5,pct:33,bg:"var(--green)",color:"var(--green)"},
+          {label:"Closed",count:0,pct:0,bg:"var(--muted2)",color:"var(--muted2)"}
+        ],
+        objections:[
+          {q:"Setup fee + monthly vs Graphy flat fee",freq:4,category:"Pricing",pill:"obj-pill-r"},
+          {q:"Cash payment collection from students",freq:3,category:"Product",pill:"obj-pill-b"},
+          {q:"WhatsApp API integration cost",freq:3,category:"Technical",pill:"obj-pill-p"}
+        ],
+        talkPatterns:[
+          {label:"Questions asked / call",val:2.8,benchmark:5,fillColor:"var(--amber)",unit:""},
+          {label:"Avg call duration",val:38,benchmark:30,fillColor:"var(--blue)",unit:"m"},
+          {label:"Objections handled",val:4,benchmark:4,fillColor:"var(--green)",unit:""}
+        ],
+        competitors:[
+          {name:"Graphy",mentions:3,note:"Pratiksha actively migrating"},
+          {name:"Teachable",mentions:2,note:"Jaya + Shraddha exploring alternatives"}
+        ],
+        pipeline:[
+          {name:"Pratiksha",initials:"PP",bg:"linear-gradient(135deg,#f59e0b,#fb923c)",stage:"Active",stageClass:"sp-demo",sub:"10-15 day timeline · send trial access",value:"₹1L",valueColor:"var(--amber)"},
+          {name:"Jaya Gophane",initials:"JG",bg:"linear-gradient(135deg,#0ea5e9,#22d3ee)",stage:"Active",stageClass:"sp-demo",sub:"Advanced plan · SM support critical",value:"₹85K",valueColor:"var(--amber)"},
+          {name:"Umesh",initials:"UM",bg:"linear-gradient(135deg,#22d3a0,#06b6d4)",stage:"New",stageClass:"sp-new",sub:"Circle.so · 1000+ paid students",value:"₹1L",valueColor:"var(--muted)"}
+        ],
+        followUps:[
+          {action:"Send trial access to Pratiksha by EOD",meta:"Pratiksha · 10-15 day timeline",urgency:"hot",done:false},
+          {action:"Send Advanced payment link to Jaya",meta:"Jaya · history of non-activation — address it",urgency:"warm",done:false},
+          {action:"Escalate SLR currency issue to tech team",meta:"Lasakan · Sri Lanka payment blocker",urgency:"warm",done:false},
+          {action:"Check Priya Lakshmi WhatsApp for payment",meta:"Priya · said she'll confirm",urgency:"warm",done:false}
+        ],
+        insight:"15 calls this week with 0 closures — focus on moving active deals to payment. Pratiksha is your hottest prospect (10-15 day timeline). Talk ratio at 59% — 4% above target. Prioritise asking more questions: you're at 2.8/call vs 5 benchmark. ILH referral wave is strong but conversion needs to accelerate."
       },
       "-2":{
         label:"May 25–31", dateRange:"May 25–31, 2026", isPartial:false, daysElapsed:7,
@@ -3297,10 +3360,41 @@ function getWEEKS() {
           {day:"Sat",date:"May 30",total:0,client:0,internal:0},
           {day:"Sun",date:"May 31",total:0,client:0,internal:0}
         ],
-        kpis:{totalCalls:18,avgPerDay:2.6,talkRatioYou:60,closures:0,pipeline:150000,objections:6,openFollowUps:5,totalCallTime:"9h"},
-        vsLastWeek:{totalCalls:21,closures:0,pipeline:0},
-        highlights:["Lasakan — SLR currency blocker needs tech escalation","Trisha — not fully convinced, send one-pager","Priya — confirmed on WhatsApp, check payment"],
-        deals:[{name:"Lasakan",stage:"Blocked",value:"₹50K",note:"Payment gateway"},{name:"Priya",stage:"In Conversation",value:"₹50K",note:"Check WhatsApp"}]
+        callsByDay_last:[4,7,3,2,5,0,0],
+        kpis:{totalCalls:18,avgPerDay:2.6,talkRatioYou:60,talkRatioThem:40,closures:3,pipeline:"₹1.5L",objections:6,openFollowUps:3,totalCallTime:540,competitors:2},
+        vsLastWeek:{totalCalls:{val:18,prev:21},closures:{val:3,prev:0},pipeline:{val:150,prev:0}},
+        outcomes:[
+          {label:"Calls taken",count:18,pct:100,bg:"var(--accent2)",color:"var(--accent2)"},
+          {label:"Demo completed",count:14,pct:78,bg:"var(--blue)",color:"var(--blue)"},
+          {label:"Pricing discussed",count:9,pct:50,bg:"var(--amber)",color:"var(--amber)"},
+          {label:"Follow-up set",count:6,pct:33,bg:"var(--green)",color:"var(--green)"},
+          {label:"Closed",count:3,pct:17,bg:"var(--green)",color:"var(--green)"}
+        ],
+        objections:[
+          {q:"Enterprise Plus vs standard — what's excluded?",freq:5,category:"Product",pill:"obj-pill-b"},
+          {q:"Zoom subscription after 3 years?",freq:3,category:"Pricing",pill:"obj-pill-r"},
+          {q:"Success manager ratio — how available?",freq:2,category:"Product",pill:"obj-pill-b"}
+        ],
+        talkPatterns:[
+          {label:"Questions asked / call",val:3.5,benchmark:5,fillColor:"var(--amber)",unit:""},
+          {label:"Avg call duration",val:32,benchmark:30,fillColor:"var(--blue)",unit:"m"},
+          {label:"Objections handled",val:5,benchmark:4,fillColor:"var(--green)",unit:""}
+        ],
+        competitors:[
+          {name:"Graphy",mentions:1,note:"ILH offer driving switches"},
+          {name:"ClassPlus",mentions:1,note:"Chirag comparing iOS app quality"}
+        ],
+        pipeline:[
+          {name:"Priya Lakshmi",initials:"PL",bg:"linear-gradient(135deg,#f472b6,#fb7185)",stage:"Active",stageClass:"sp-demo",sub:"Said will confirm on WhatsApp",value:"₹50K",valueColor:"var(--amber)"},
+          {name:"Lasakan",initials:"LA",bg:"linear-gradient(135deg,#7c5cfc,#a855f7)",stage:"Blocked",stageClass:"sp-neg",sub:"SLR currency blocker unresolved",value:"₹50K",valueColor:"var(--red)"},
+          {name:"Trisha",initials:"TT",bg:"linear-gradient(135deg,#0ea5e9,#22d3ee)",stage:"Nurture",stageClass:"sp-fup",sub:"Not convinced · send one-pager",value:"₹50K",valueColor:"var(--muted)"}
+        ],
+        followUps:[
+          {action:"Check Priya WhatsApp for payment confirmation",meta:"Priya Lakshmi · Enterprise Plus ₹50K",urgency:"hot",done:false},
+          {action:"Escalate SLR payment to tech — find Sri Lanka gateway",meta:"Lasakan · critical blocker",urgency:"warm",done:false},
+          {action:"Send Trisha simplified 3-step one-pager",meta:"Trisha · free-to-paid funnel",urgency:"warm",done:false}
+        ],
+        insight:"3 closures this week (Lasakan, Priya, Trisha from ILH batch). Talk ratio at 60% — slightly high for ILH referral calls. On ILH calls, prospects know the platform — spend less time on features, more on their specific business case. Lasakan's currency blocker is a risk — resolve it fast or it kills the deal."
       },
       "-3":{
         label:"May 18–24", dateRange:"May 18–24, 2026", isPartial:false, daysElapsed:7,
@@ -3313,10 +3407,41 @@ function getWEEKS() {
           {day:"Sat",date:"May 23",total:0,client:0,internal:0},
           {day:"Sun",date:"May 24",total:0,client:0,internal:0}
         ],
-        kpis:{totalCalls:21,avgPerDay:3.0,talkRatioYou:58,closures:0,pipeline:100000,objections:4,openFollowUps:3,totalCallTime:"10.5h"},
-        vsLastWeek:{totalCalls:5,closures:0,pipeline:0},
-        highlights:["Chirag Chopra — negotiated to ₹1L+GST, Graphy expiring","Abhinav handled pricing call — coaching moment on price anchoring","Siddharth Mokle — Freedom plan ₹25K interest"],
-        deals:[{name:"Chirag",stage:"MIA",value:"₹1L",note:"Agreed ₹1L+GST"}]
+        callsByDay_last:[0,0,0,0,3,0,0],
+        kpis:{totalCalls:21,avgPerDay:3.0,talkRatioYou:58,talkRatioThem:42,closures:2,pipeline:"₹1L",objections:4,openFollowUps:3,totalCallTime:630,competitors:3},
+        vsLastWeek:{totalCalls:{val:21,prev:5},closures:{val:2,prev:0},pipeline:{val:100,prev:0}},
+        outcomes:[
+          {label:"Calls taken",count:21,pct:100,bg:"var(--accent2)",color:"var(--accent2)"},
+          {label:"Demo completed",count:16,pct:76,bg:"var(--blue)",color:"var(--blue)"},
+          {label:"Pricing discussed",count:10,pct:48,bg:"var(--amber)",color:"var(--amber)"},
+          {label:"Follow-up set",count:7,pct:33,bg:"var(--green)",color:"var(--green)"},
+          {label:"Closed",count:2,pct:10,bg:"var(--green)",color:"var(--green)"}
+        ],
+        objections:[
+          {q:"Why 5x more expensive than ClassPlus?",freq:3,category:"Competitor",pill:"obj-pill-p"},
+          {q:"Commission model vs no-commission flat fee",freq:3,category:"Pricing",pill:"obj-pill-r"},
+          {q:"AI features availability timeline",freq:2,category:"Product",pill:"obj-pill-b"}
+        ],
+        talkPatterns:[
+          {label:"Questions asked / call",val:3.0,benchmark:5,fillColor:"var(--amber)",unit:""},
+          {label:"Avg call duration",val:40,benchmark:30,fillColor:"var(--blue)",unit:"m"},
+          {label:"Objections handled",val:3,benchmark:4,fillColor:"var(--green)",unit:""}
+        ],
+        competitors:[
+          {name:"Graphy",mentions:2,note:"Chirag + others migrating"},
+          {name:"ClassPlus",mentions:2,note:"Chirag pricing comparison — Abhinav handled"},
+          {name:"Apex",mentions:1,note:"Chirag evaluation — community differentiator resolved"}
+        ],
+        pipeline:[
+          {name:"Chirag Chopra",initials:"CC",bg:"linear-gradient(135deg,#f87171,#f472b6)",stage:"MIA",stageClass:"sp-neg",sub:"Agreed ₹1L+GST · Graphy expired · not responding",value:"₹1L",valueColor:"var(--red)"},
+          {name:"Jagan",initials:"JA",bg:"linear-gradient(135deg,#0ea5e9,#22d3ee)",stage:"Active",stageClass:"sp-demo",sub:"Enterprise pricing discussed · team decision",value:"₹75K",valueColor:"var(--amber)"}
+        ],
+        followUps:[
+          {action:"Follow up Chirag — Graphy must have expired by now",meta:"Chirag · agreed ₹1L+GST · MIA",urgency:"hot",done:false},
+          {action:"Follow up Jagan Monday with Enterprise payment link",meta:"Jagan · Enterprise Plus ₹50K",urgency:"warm",done:false},
+          {action:"Send Siddharth Freedom plan breakdown",meta:"Siddharth · ₹25K Freedom offer deadline May 21",urgency:"warm",done:false}
+        ],
+        insight:"Best volume week (21 calls). Chirag deal agreed but gone MIA — this is a pattern with price-negotiated deals. Follow up within 24h of agreeing pricing or the deal cools. Talk ratio at 58% — on track. Abhinav's coaching on price anchoring with Chirag was excellent — learn from it."
       }
     };
   }
@@ -3692,16 +3817,47 @@ function getMONTHS() {
       "2026-06": {
         label:"Jun 2026", partial:true, daysElapsed:11, totalDays:30,
         dailyCalls:[0,2,0,3,2,4,0, 0,1,2,6,5,0,0, 0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,0,0],
-        revenueByWeek:[0,0,0,0],
-        kpis:{totalCalls:23,clientCalls:22,avgPerDay:2.1,talkRatioYou:57,closures:0,revenue:0,pipeline:245000,convRate:0,avgTAT:2.1,objections:8,peakDay:"Jun 11",peakCount:5,competitors:["Graphy","Teachable"]},
-        objections:["Enterprise vs Freedom features","Setup fee vs Graphy flat fee","App deployment timeline","WhatsApp API cost"]
+        revenueByWeek:[
+          {week:"Jun 1",rev:0,pipeline:330000},
+          {week:"Jun 8",rev:0,pipeline:245000},
+          {week:"Jun 15",rev:0,pipeline:0},
+          {week:"Jun 22",rev:0,pipeline:0}
+        ],
+        kpis:{
+          totalCalls:23, clientCalls:22, avgPerDay:2.1, talkRatioYou:57,
+          closures:0, revenue:0, pipeline:245000, convRate:0,
+          avgTAT:2.1, objections:8, peakDay:"Jun 11", peakCount:5,
+          competitors:["Graphy","Teachable","ClassPlus"]
+        },
+        objections:[
+          {q:"Enterprise vs Freedom features",freq:5,category:"Product"},
+          {q:"Setup fee vs Graphy flat fee",freq:4,category:"Pricing"},
+          {q:"App deployment timeline",freq:3,category:"Timing"},
+          {q:"WhatsApp API cost",freq:3,category:"Technical"}
+        ]
       },
       "2026-05": {
         label:"May 2026", partial:false, daysElapsed:31, totalDays:31,
         dailyCalls:[0,0,0,1,0,0,0, 0,0,0,0,3,0,0, 0,0,0,0,7,3,2, 5,0,0,0,4,4,3, 5,0,0],
-        revenueByWeek:[0,30000,120000,150000],
-        kpis:{totalCalls:37,clientCalls:34,avgPerDay:1.1,talkRatioYou:59,closures:5,revenue:300000,pipeline:0,convRate:15,avgTAT:3.2,objections:18,peakDay:"May 19",peakCount:7,competitors:["Graphy","ClassPlus","Teachable","Apex"]},
-        objections:["Pricing vs Graphy flat fee","Commission percentage","WhatsApp API cost","App deployment timeline"]
+        revenueByWeek:[
+          {week:"May 4",  rev:0,      pipeline:100000},
+          {week:"May 11", rev:50000,  pipeline:200000},
+          {week:"May 18", rev:100000, pipeline:150000},
+          {week:"May 25", rev:150000, pipeline:50000}
+        ],
+        kpis:{
+          totalCalls:37, clientCalls:34, avgPerDay:1.1, talkRatioYou:59,
+          closures:5, revenue:300000, pipeline:0, convRate:15,
+          avgTAT:3.2, objections:18, peakDay:"May 19", peakCount:7,
+          competitors:["Graphy","ClassPlus","Teachable","Apex"]
+        },
+        objections:[
+          {q:"Pricing vs Graphy flat fee",freq:7,category:"Pricing"},
+          {q:"Commission percentage",freq:5,category:"Pricing"},
+          {q:"WhatsApp API cost",freq:4,category:"Technical"},
+          {q:"App deployment timeline",freq:3,category:"Timing"},
+          {q:"AI features availability",freq:3,category:"Product"}
+        ]
       }
     };
   }
