@@ -2323,7 +2323,7 @@ ${tagStyles}
   <div id="tab-daily" class="tab-pane" style="display:none;flex:1;flex-direction:column;overflow:hidden;min-width:0;">
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Daily Insights <span>— Loading…</span></div>
-    <div class="tb-pill"><div class="tb-pulse"></div><span id="liveLabel">Sync Calendly</span></div>
+    <div class="tb-pill" onclick="syncCalendlyLive()" style="cursor:pointer" title="Click to sync Calendly bookings"><div class="tb-pulse" id="syncPulse"></div><span id="liveLabel">Sync Calendly</span></div>
 
     <button class="tb-btn primary" id="joinBtn" style="display:none" onclick="joinNext()">Join next call →</button>
   </div>
@@ -6352,6 +6352,99 @@ function updatePrepBanner() {
     const btn = document.getElementById('banner-cta');
     btn.style.display = 'flex';
     btn.href = next.join_url;
+  }
+}
+
+
+// ══════════════════════════════════════
+// SYNC CALENDLY → DAILY TAB
+// Converts CALENDLY_SYNC_DATA into RAW_EVENTS
+// format and re-renders calendar + timeline
+// ══════════════════════════════════════
+function syncCalendlyLive() {
+  const lbl   = document.getElementById('liveLabel');
+  const pulse = document.getElementById('syncPulse');
+
+  // Visual feedback
+  lbl.textContent = 'Syncing…';
+  if (pulse) { pulse.style.background = 'var(--amber)'; pulse.style.boxShadow = '0 0 8px var(--amber)'; }
+
+  try {
+    // Convert CALENDLY_SYNC_DATA → RAW_EVENTS format
+    const newEvents = CALENDLY_SYNC_DATA
+      .filter(e => e.call_date && e.lead_name)
+      .map(e => ({
+        id:      e.calendly_id,
+        name:    e.lead_name || 'TBD',
+        email:   e.lead_email || '',
+        start:   new Date(e.call_date).toISOString().replace('Z', '').slice(0,16) + ':00Z',
+        end:     e.call_end ? new Date(e.call_end).toISOString().replace('Z','').slice(0,16) + ':00Z'
+                            : new Date(new Date(e.call_date).getTime() + 30*60000).toISOString().slice(0,16) + ':00Z',
+        joinUrl: e.join_url || '#',
+        qa: [
+          e.whatsapp        ? {q:'WhatsApp',        a: e.whatsapp}         : null,
+          e.source          ? {q:'Source',           a: e.source}           : null,
+          e.sells_courses   ? {q:'Sells courses?',   a: e.sells_courses}    : null,
+          e.other_platforms ? {q:'Other platforms',  a: e.other_platforms}  : null,
+          e.community_size  ? {q:'Community size',   a: e.community_size}   : null,
+          e.timeline        ? {q:'Timeline',         a: e.timeline}         : null,
+        ].filter(Boolean)
+      }));
+
+    // Merge into RAW_EVENTS (add any not already present by id)
+    const existingIds = new Set(RAW_EVENTS.map(e => e.id));
+    let added = 0;
+    newEvents.forEach(e => {
+      if (!existingIds.has(e.id)) {
+        RAW_EVENTS.push(e);
+        added++;
+      }
+    });
+
+    // Rebuild dayMap
+    Object.keys(dayMap).forEach(k => delete dayMap[k]);
+    RAW_EVENTS.forEach(e => {
+      const k = dateKey(e.start);
+      if (!dayMap[k]) dayMap[k] = [];
+      dayMap[k].push(e);
+    });
+    Object.keys(dayMap).forEach(k => dayMap[k].sort((a,b) => new Date(a.start)-new Date(b.start)));
+
+    // Re-render everything
+    renderCalendar();
+    renderDaySummary();
+    renderTimeline();
+    updateTopbar();
+
+    // Update prep banner with today's real calls
+    updatePrepBanner();
+
+    // Update today badge count in sidebar
+    const todayCount = (dayMap[todayKey] || []).length;
+    const badge = document.getElementById('todayBadge');
+    if (badge) badge.textContent = todayCount;
+
+    // Success state
+    const todayEvents = dayMap[todayKey] || [];
+    lbl.textContent = `${newEvents.length} calls synced`;
+    if (pulse) { pulse.style.background = 'var(--green)'; pulse.style.boxShadow = '0 0 8px var(--green)'; }
+
+    // Reset label after 3s
+    setTimeout(() => {
+      lbl.textContent = 'Sync Calendly';
+      if (pulse) { pulse.style.background = ''; pulse.style.boxShadow = ''; }
+    }, 3000);
+
+    showToast(`✓ Calendly synced — ${todayEvents.length} calls today · ${added} new events added`);
+
+  } catch(err) {
+    console.error('syncCalendlyLive error:', err);
+    lbl.textContent = 'Sync failed';
+    if (pulse) { pulse.style.background = 'var(--red)'; pulse.style.boxShadow = '0 0 6px var(--red)'; }
+    setTimeout(() => {
+      lbl.textContent = 'Sync Calendly';
+      if (pulse) { pulse.style.background = ''; pulse.style.boxShadow = ''; }
+    }, 3000);
   }
 }
 
