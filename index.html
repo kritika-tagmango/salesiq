@@ -1907,7 +1907,7 @@ ${tagStyles}
             <div class="stat-lbl">Active Leads</div>
             <div class="stat-icon si-purple">👥</div>
           </div>
-          <div class="stat-val" style="color:var(--accent2)">24</div>
+          <div class="stat-val" id="kpi-total-leads" style="color:var(--accent2)">—</div>
           <div class="stat-foot">
             <span class="delta d-up">▲ 4</span>
             <span class="stat-foot-note">vs last week</span>
@@ -1916,10 +1916,10 @@ ${tagStyles}
 
         <div class="stat-card">
           <div class="stat-top">
-            <div class="stat-lbl">Calls This Month</div>
+            <div class="stat-lbl">Closed Won</div>
             <div class="stat-icon si-blue">📞</div>
           </div>
-          <div class="stat-val" style="color:var(--blue)">38</div>
+          <div class="stat-val" id="kpi-closed" style="color:var(--green)">—</div>
           <div class="stat-foot">
             <span class="delta d-up">▲ 7</span>
             <span class="stat-foot-note">vs last month</span>
@@ -1928,10 +1928,10 @@ ${tagStyles}
 
         <div class="stat-card">
           <div class="stat-top">
-            <div class="stat-lbl">Avg. TAT</div>
+            <div class="stat-lbl">Pipeline Value</div>
             <div class="stat-icon si-amber">⏱</div>
           </div>
-          <div class="stat-val" style="color:var(--amber)">4.2<span style="font-size:14px;font-weight:400;color:var(--muted)">d</span></div>
+          <div class="stat-val" id="kpi-pipeline-val" style="color:var(--amber)">—</div>
           <div class="stat-foot">
             <span class="delta d-up">▲ 0.6d</span>
             <span class="stat-foot-note">faster</span>
@@ -1940,10 +1940,10 @@ ${tagStyles}
 
         <div class="stat-card">
           <div class="stat-top">
-            <div class="stat-lbl">Unanswered Qs</div>
+            <div class="stat-lbl">P0 Priority</div>
             <div class="stat-icon si-red">❓</div>
           </div>
-          <div class="stat-val" style="color:var(--red)">7</div>
+          <div class="stat-val" id="kpi-p0" style="color:var(--red)">—</div>
           <div class="stat-foot">
             <span class="delta d-down">▼ 2</span>
             <span class="stat-foot-note">still open</span>
@@ -6200,11 +6200,26 @@ const PRIORITY_STYLE = {
   'P2': { bg:'var(--surface2)',       color:'var(--muted2)', label:'P2' },
 };
 
+function updateOverviewKPIs(data) {
+  const closed   = data.filter(r => r.stage === 'Closed Won');
+  const active   = data.filter(r => r.stage === 'In Conversation');
+  const p0       = data.filter(r => r.priority === 'P0');
+  const closedRev = closed.reduce((a,r) => a+(r.setup_amt||0)+(r.subscription_amt||0), 0);
+  const pipelineV = active.reduce((a,r) => a+(r.setup_amt||0)+(r.subscription_amt||0), 0);
+
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  set('kpi-total-leads',   data.length);
+  set('kpi-closed',        closed.length);
+  set('kpi-pipeline-val',  '₹' + (pipelineV/1000).toFixed(0) + 'K');
+  set('kpi-p0',            p0.length);
+}
+
 async function loadPipeline() {
   try {
     const data = await sb.query('pipeline', '?select=*&order=call_date.desc');
     _pipelineData = data || [];
     renderPipeline(_pipelineData);
+  updateOverviewKPIs(_pipelineData);
   } catch(e) {
     console.warn('Pipeline load error:', e.message);
     document.getElementById('pipeline-sub').textContent = 'Could not load — check Supabase connection';
